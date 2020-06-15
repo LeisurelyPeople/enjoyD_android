@@ -16,7 +16,7 @@ abstract class BaseRVAdapter<T>(
         return BaseItemVH(onCreateBinding(parent, viewType)).also {
             if (onItemClick != null) {
                 it.binding.root.setOnClickListener { _ ->
-                    onItemClick.invoke(items[it.adapterPosition])
+                    onItemClick.invoke(items[it.bindingAdapterPosition])
                 }
             }
         }

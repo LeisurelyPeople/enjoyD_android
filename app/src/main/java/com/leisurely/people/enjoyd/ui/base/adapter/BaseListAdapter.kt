@@ -14,7 +14,7 @@ abstract class BaseListAdapter<T>(
         return BaseItemVH(onCreateBinding(parent, viewType)).also {
             if (onItemClick != null) {
                 it.binding.root.setOnClickListener { _ ->
-                    onItemClick.invoke(currentList[it.adapterPosition])
+                    onItemClick.invoke(currentList[it.bindingAdapterPosition])
                 }
             }
         }
