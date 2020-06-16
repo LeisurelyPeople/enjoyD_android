@@ -4,6 +4,16 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * RecyclerView.Adapter Base 클래스
+ * itemClick, item 관리 ([clear], [replaceAll], [add], [addToBeginning], [remove], [removeRange])
+ * [items]을 BaseRVAdapter 관리하기 때문에 MultiViewType RecyclerView 사용 시 일반적인 RecyclerView.Adapter 사용을 권장
+ *
+ *
+ * @author Wayne
+ * @since v1.0.0 / 2020.06.15
+ */
+
 typealias OnRecyclerViewItemClick<T> = ((T) -> Unit)
 
 abstract class BaseRVAdapter<T>(
@@ -14,7 +24,7 @@ abstract class BaseRVAdapter<T>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseItemVH {
         return BaseItemVH(onCreateBinding(parent, viewType)).also {
-            if (onItemClick != null) {
+            if (onItemClick != null) { // onItemClick 변수가 null 이 아닌 경우 자동으로 아이템 클릭 리스너 설정
                 it.binding.root.setOnClickListener { _ ->
                     onItemClick.invoke(items[it.bindingAdapterPosition])
                 }
@@ -39,11 +49,13 @@ abstract class BaseRVAdapter<T>(
 
     override fun getItemCount(): Int = items.size
 
+    /** 아이템 초기화 */
     fun clear() {
         items.clear()
         notifyDataSetChanged()
     }
 
+    /** 아이템 전체 대체  */
     fun replaceAll(replaceItems: List<T>?) {
         this.items.run {
             clear()
@@ -54,6 +66,7 @@ abstract class BaseRVAdapter<T>(
         notifyDataSetChanged()
     }
 
+    /** 아이템 추가 */
     fun add(item: T?) {
         this.items.run {
             item?.let {
@@ -63,6 +76,7 @@ abstract class BaseRVAdapter<T>(
         }
     }
 
+    /** 첫번째 위치에 아이템 추가 */
     fun addToBeginning(item: T?) {
         this.items.run {
             item?.let {
@@ -72,6 +86,7 @@ abstract class BaseRVAdapter<T>(
         }
     }
 
+    /** 리스트 아이템 추가 */
     fun addAll(addItems: List<T>?) {
         this.items.run {
             addItems?.let {
@@ -81,6 +96,7 @@ abstract class BaseRVAdapter<T>(
         }
     }
 
+    /** 원하는 아이템 제거 */
     fun remove(item: T?) {
         val position = this.items.indexOf(item)
         if (position > -1) {
@@ -89,6 +105,7 @@ abstract class BaseRVAdapter<T>(
         }
     }
 
+    /** [fromIdx], [toIdx] 값에 따른 아이템 제거 */
     fun removeRange(fromIdx: Int, toIdx: Int) {
         this.items.subList(fromIdx, toIdx).clear()
         notifyItemRangeChanged(fromIdx, toIdx - fromIdx)

@@ -9,6 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.leisurely.people.enjoyd.BR
 
+/**
+ * Fragment Base 클래스
+ * DataBinding 설정, ViewModel 설정, lifecycleOwner 설정 등의 역할을 하는 클래스
+ *
+ * @author Wayne
+ * @since v1.0.0 / 2020.06.15
+ */
+
 abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(@LayoutRes private val layoutRes: Int) :
     Fragment(layoutRes) {
 

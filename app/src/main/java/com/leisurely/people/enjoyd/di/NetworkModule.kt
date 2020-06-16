@@ -9,12 +9,21 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Retrofit, OkHttp, DI(네트워크) 설정, 뷰에서 API 접근을 위한 파일
+ *
+ * @author Wayne
+ * @since v1.0.0 / 2020.06.15
+ */
+
+/** 네트워크 모듈(DI) 설정 */
 val networkModule = module {
     factory { provideOkHttpClient() }
     factory { provideApi(get()) }
     single { provideRetrofit(get()) }
 }
 
+/** Retrofit 설정 */
 fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
     return Retrofit.Builder().baseUrl("Base url")
         .client(okHttpClient)
@@ -23,6 +32,7 @@ fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         .build()
 }
 
+/** OkHttp 설정 */
 fun provideOkHttpClient(): OkHttpClient {
     return OkHttpClient.Builder()
         .addInterceptor {
@@ -41,6 +51,7 @@ fun provideOkHttpClient(): OkHttpClient {
         .build()
 }
 
+/** Api 접근을 위한 메소드 */
 fun provideApi(retrofit: Retrofit): APIService {
     return retrofit.create(APIService::class.java)
 }

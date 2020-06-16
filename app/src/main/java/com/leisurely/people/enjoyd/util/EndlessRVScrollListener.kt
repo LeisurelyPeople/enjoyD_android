@@ -5,9 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 /**
- * 원본 코드 주소
- * https://gist.github.com/nesquena/d09dc68ff07e845cc622
- * https://github.com/codepath/android_guides/wiki/Endless-Scrolling-with-AdapterViews-and-RecyclerView
+ * RecyclerView paging 처리를 위한 클래스
+ * 원본 코드 (https://gist.github.com/nesquena/d09dc68ff07e845cc622)
+ * @author Wayne
+ * @since v1.0.0 / 2020.06.15
  */
 
 abstract class EndlessRVScrollListener(

@@ -10,6 +10,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 
+/**
+ * DialogFragment Base 클래스
+ *
+ * @author Wayne
+ * @since v1.0.0 / 2020.06.15
+ */
+
 abstract class BaseDialogFragment<B : ViewDataBinding>(private val layoutId: Int) :
     DialogFragment() {
 

@@ -6,6 +6,14 @@ import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.Glide
 import com.leisurely.people.enjoyd.R
 
+/**
+ * ImageView Extension 관리 파일
+ *
+ * @author Wayne
+ * @since v1.0.0 / 2020.06.15
+ */
+
+/** Url imageView */
 @BindingAdapter("imgUrl")
 fun ImageView.loadImageUrl(url: String?) {
     url?.let {
@@ -16,6 +24,7 @@ fun ImageView.loadImageUrl(url: String?) {
     }
 }
 
+/** Resource imageView */
 @BindingAdapter("imgRes")
 fun ImageView.setImageRes(resId: Int) {
     setImageResource(resId)
