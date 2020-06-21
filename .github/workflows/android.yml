@@ -122,8 +122,13 @@ jobs:
         run: ./gradlew androidDependencies
 
       # CI 5. 프로젝트 빌드
-      - name: CI 5. 프로젝트 빌드
-        run: ./gradlew compileDevelopDebugUnitTestJavaWithJavac
+      # CI 5-1. debug 버전 프로젝트 빌드
+      - name: CI 5. debug 버전 프로젝트 빌드
+        run: ./gradlew compileDebugJavaWithJavac
+
+      # CI 5-2. release 버전 프로젝트 빌드
+      - name: CI 5. release 버전 프로젝트 빌드
+        run: ./gradlew compileReleaseJavaWithJavac
 
       # CI 6. 프로젝트 Unit 테스트
       # CI 6-1. Push 일 경우 실행
