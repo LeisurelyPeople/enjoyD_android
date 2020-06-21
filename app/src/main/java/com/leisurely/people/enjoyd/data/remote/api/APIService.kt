@@ -7,6 +7,4 @@ package com.leisurely.people.enjoyd.data.remote.api
  * @since v1.0.0 / 2020.06.15
  */
 
-interface APIService {
-
-}
+interface APIService

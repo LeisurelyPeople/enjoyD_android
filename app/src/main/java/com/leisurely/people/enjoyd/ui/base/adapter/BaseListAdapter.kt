@@ -22,7 +22,8 @@ abstract class BaseListAdapter<T>(
         return BaseItemVH(onCreateBinding(parent, viewType)).also {
             if (onItemClick != null) { // onItemClick 변수가 null 이 아닌 경우 자동으로 아이템 클릭 리스너 설정
                 it.binding.root.setOnClickListener { _ ->
-                    val currentItem = currentList.getOrNull(it.bindingAdapterPosition) ?: return@setOnClickListener
+                    val currentItem = currentList.getOrNull(it.bindingAdapterPosition)
+                        ?: return@setOnClickListener
                     onItemClick.invoke((currentItem))
                 }
             }
