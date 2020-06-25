@@ -123,12 +123,12 @@ jobs:
 
       # CI 5. 프로젝트 빌드
       # CI 5-1. debug 버전 프로젝트 빌드
-      - name: CI 5. debug 버전 프로젝트 빌드
-        run: ./gradlew test
+      - name: CI 5-1. debug 버전 프로젝트 빌드
+        run: ./gradlew compiledebugUnitTestJavaWithJavac
 
       # CI 5-2. release 버전 프로젝트 빌드
-      - name: CI 5. release 버전 프로젝트 빌드
-        run: ./gradlew test
+      - name: CI 5-2. release 버전 프로젝트 빌드
+        run: ./gradlew compiledebugUnitTestJavaWithJavac
 
       # CI 6. 프로젝트 Unit 테스트 (참고 link : https://developer.android.com/studio/test/command-line?hl=ko)
       # CI 6-1. Push 일 경우 실행
