@@ -15,7 +15,7 @@ import java.util.*
  * 날짜 및 시간을 관리하는 유틸 클래스
  *
  * @author ricky
- * @since v11.4.0 / 2020.06.26
+ * @since v1.0.0 / 2020.06.26
  */
 
 /** "yyyyMMddhhmmss" 형식의 문자열로부터 시간점을 생성하는 serializer */
@@ -104,13 +104,16 @@ class TimePoint private constructor(
 
     companion object {
         /** 현재 시각 반환 */
-        val now = TimePoint(Calendar.getInstance())
+        val now
+            get() = TimePoint(Calendar.getInstance())
 
         /** 오늘 날짜 반환 (시·분·초 = 0) */
-        val today = TimePoint.now.onlyDate
+        val today
+            get() = TimePoint.now.onlyDate
 
         /** 오늘의 시간값만 반환 */
-        val time = TimePoint.now.onlyTime
+        val time
+            get() = TimePoint.now.onlyTime
 
         /**
          * [pattern] 포맷대로 [문자열][source]을 시간점으로 변환한다. 포맷 문자는

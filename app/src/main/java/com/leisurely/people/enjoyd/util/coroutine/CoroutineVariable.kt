@@ -8,7 +8,7 @@ import com.leisurely.people.enjoyd.BuildConfig
  * TODO 전역에서 쓰이는 파일들도 있으므로 논의를 통해 아래 변수들의 위치 조정이 필요함
  *
  * @author ricky
- * @since v11.4.0 / 2020.06.26
+ * @since v1.0.0 / 2020.06.26
  */
 
 // 전역 context
@@ -18,4 +18,4 @@ lateinit var appContext: Context
 val appVersion: String by lazy { BuildConfig.VERSION_NAME }
 
 // 지금 실행되는 코드가 Unit Test 인지 확인하는 flag
-var isTestable = false
+var isUnitTest = false

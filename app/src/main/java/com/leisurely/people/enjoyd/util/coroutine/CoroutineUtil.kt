@@ -12,7 +12,7 @@ import kotlin.coroutines.EmptyCoroutineContext
  * 코루틴을 유용하게 사용할 수 있는 함수 및 콜스택 유실을 대비하기 위한 object 를 관리하는 유틸 클래스
  *
  * @author ricky
- * @since v11.4.0 / 2020.06.26
+ * @since v1.0.0 / 2020.06.26
  */
 
 /** 모든 값을 비우고 싶을 때 사용하는 내부 변수 */

@@ -7,7 +7,7 @@ import com.leisurely.people.enjoyd.util.coroutine.appContext
  * 길이·치수 관련 데이터를 관리 (dp sp px)
  *
  * @author ricky
- * @since v11.2.0 / 2020.03.15
+ * @since v1.0.0 / 2020.06.15
  * @property rawValue 내부 저장용 값 (단위: px)
  *
  * px를 기준으로 operator 함수 생성
