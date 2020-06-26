@@ -17,11 +17,12 @@ import com.leisurely.people.enjoyd.BR
  * @since v1.0.0 / 2020.06.15
  */
 
-abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(@LayoutRes private val layoutRes: Int) :
-    Fragment(layoutRes) {
+abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
+    @LayoutRes private val layoutRes: Int
+) : Fragment(layoutRes) {
 
     protected val binding by lazy {
-        DataBindingUtil.bind<B>(view!!)!!
+        DataBindingUtil.bind<B>(requireView())!!
     }
 
     protected abstract val viewModel: VM

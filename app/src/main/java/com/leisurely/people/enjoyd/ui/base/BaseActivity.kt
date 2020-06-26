@@ -8,6 +8,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import com.leisurely.people.enjoyd.BR
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 
 /**
  * Activity Base 클래스
@@ -20,10 +24,15 @@ import com.leisurely.people.enjoyd.BR
 abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     @LayoutRes private val layoutRes: Int
 ) : AppCompatActivity() {
-
     protected lateinit var binding: B
 
     protected abstract val viewModel: VM
+
+    /**
+     * [Dispatchers.Main]을 기본으로 사용하고
+     * [onDestroy]에서 [cancel][CoroutineScope.cancel] 되는 코루틴 스코프
+     */
+    val uiScope: CoroutineScope = MainScope()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,5 +46,14 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
         viewModel.liveToastMessage.observe(this, Observer { message ->
             Toast.makeText(baseContext, message, Toast.LENGTH_SHORT).show()
         })
+    }
+
+    override fun onDestroy() {
+        uiScope.cancel()
+        super.onDestroy()
+    }
+
+    companion object {
+        private val TAG = BaseActivity::class.java.canonicalName
     }
 }
