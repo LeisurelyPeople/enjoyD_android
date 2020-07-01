@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="String" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/evaluation_poster"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/dummy_evaluation_poster"
+            app:layout_constraintDimensionRatio="W, 16:9"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/dummy_evaluation_poster" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/evaluation_poster"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/evaluation_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{data}"
+                android:textColor="#ffffff"
+                android:textSize="24dp"
+                tools:text="소녀의 세계" />
+
+            <TextView
+                android:id="@+id/evaluation_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2020"
+                android:textColor="#ffffff"
+                tools:text="2020" />
+
+            <RatingBar
+                android:id="@+id/evaluation_rating"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:isIndicator="false"
+                android:max="5"
+                android:numStars="5"
+                android:rating="0"
+                android:stepSize="0.5" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

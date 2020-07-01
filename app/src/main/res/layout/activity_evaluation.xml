@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="evaluationVM"
+            type="com.leisurely.people.enjoyd.ui.evaluation.EvaluationViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        tools:context=".ui.evaluation.EvaluationActivity">
+
+        <TextView
+            android:id="@+id/tv_evaluation_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="감상한 웹드라마 작품을 평가해주세요!" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_evaluations"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_evaluation_description" />
+
+        <!-- 탭 레이아웃 -->
+        <LinearLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="#ffffff"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <!-- 탭 버튼 레이아웃1 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/tab_layout_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/image_layout_home"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_margin="16dp"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@mipmap/ic_launcher" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- 탭 버튼 레이아웃2 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/tab_layout_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/image_layout_center"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_margin="16dp"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@mipmap/ic_launcher" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- 탭 버튼 레이아웃3 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/tab_layout_mypage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/image_layout_mypage"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_margin="16dp"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@mipmap/ic_launcher" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+        <!-- 탭 하단 바 레이아웃 -->
+        <FrameLayout
+            android:id="@+id/tab_under_bar_layout"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="#ffffff"
+            app:layout_constraintLeft_toLeftOf="@id/tab_layout"
+            app:layout_constraintRight_toRightOf="@id/tab_layout"
+            app:layout_constraintTop_toBottomOf="@+id/tab_layout">
+
+            <!-- 하단 선 -->
+            <ImageView
+                android:id="@+id/tab_under_bar"
+                android:layout_width="32dp"
+                android:layout_height="2dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:src="#d91414"
+                tools:ignore="MissingConstraints" />
+        </FrameLayout>
+
+        <!-- 플로팅 버튼 -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
