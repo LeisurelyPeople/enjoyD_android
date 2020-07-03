@@ -27,14 +27,15 @@ class EvaluationListAdapter : BaseListAdapter<String>(object : DiffUtil.ItemCall
 }) {
     override fun onBindView(binding: ViewDataBinding, viewHolder: BaseItemVH, item: String) {
         binding.setVariable(BR.data, item)
-        binding.root.evaluation_rating.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-            ratingBar.rating = rating
-        }
     }
 
     override fun onCreateBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         val binding =
             ItemEvaluationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return binding
+        return binding.apply {
+            root.evaluation_rating.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+                ratingBar.rating = rating
+            }
+        }
     }
 }
