@@ -7,8 +7,6 @@ import android.view.ViewPropertyAnimator
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.ActivityEvaluationBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity

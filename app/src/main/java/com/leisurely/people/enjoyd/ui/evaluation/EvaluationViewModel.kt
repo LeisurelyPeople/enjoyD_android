@@ -1,5 +1,6 @@
 package com.leisurely.people.enjoyd.ui.evaluation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 
@@ -10,21 +11,26 @@ import com.leisurely.people.enjoyd.ui.base.BaseViewModel
  * @since v1.0.0 / 2020.06.30
  */
 class EvaluationViewModel : BaseViewModel() {
-    val evaluations = MutableLiveData(listOf<String>())
-    val position = MutableLiveData(0)
+    private val _evaluations = MutableLiveData(listOf<String>())
+    val evaluations: LiveData<List<String>>
+        get() = _evaluations
+
+    private val _position = MutableLiveData(0)
+    val position: LiveData<Int>
+        get() = _position
 
     init {
-        evaluations.value = listOf("a", "b", "c", "d", "e", "f")
+        _evaluations.value = listOf("a", "b", "c", "d", "e", "f")
     }
 
     fun btnClick(pos: Int) {
-        evaluations.value = when (pos) {
+        _evaluations.value = when (pos) {
             0 -> listOf("a", "b", "c")
             1 -> listOf("a", "b", "c", "d")
             2 -> listOf("a", "b", "c", "d", "e")
             else -> listOf()
         }
 
-        this.position.value = pos
+        this._position.value = pos
     }
 }
