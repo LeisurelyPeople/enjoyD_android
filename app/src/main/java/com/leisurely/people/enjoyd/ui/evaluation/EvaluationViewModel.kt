@@ -11,8 +11,20 @@ import com.leisurely.people.enjoyd.ui.base.BaseViewModel
  */
 class EvaluationViewModel : BaseViewModel() {
     val evaluations = MutableLiveData(listOf<String>())
+    val position = MutableLiveData(0)
 
-    fun firstBtnClick(){
+    init {
         evaluations.value = listOf("a", "b", "c", "d", "e", "f")
+    }
+
+    fun btnClick(pos: Int) {
+        evaluations.value = when (pos) {
+            0 -> listOf("a", "b", "c")
+            1 -> listOf("a", "b", "c", "d")
+            2 -> listOf("a", "b", "c", "d", "e")
+            else -> listOf()
+        }
+
+        this.position.value = pos
     }
 }

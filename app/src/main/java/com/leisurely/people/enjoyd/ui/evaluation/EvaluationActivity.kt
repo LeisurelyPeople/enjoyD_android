@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.ViewPropertyAnimator
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.leisurely.people.enjoyd.R
@@ -15,8 +15,8 @@ import com.leisurely.people.enjoyd.ui.base.BaseActivity
 import com.leisurely.people.enjoyd.util.TextDecoration.ColorUtil
 import com.leisurely.people.enjoyd.util.TextDecoration.StyledText
 import com.leisurely.people.enjoyd.util.TextDecoration.TextDecorationUtil
-import com.leisurely.people.enjoyd.util.ext.submitList
 import kotlinx.android.synthetic.main.activity_evaluation.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 평가하기 액티비티
@@ -61,21 +61,10 @@ class EvaluationActivity : BaseActivity<ActivityEvaluationBinding, EvaluationVie
         val adapter = EvaluationListAdapter()
         rv_evaluations.adapter = adapter
 
-        rv_evaluations.submitList(listOf("a", "b", "c", "d", "e", "f"))
-
         // 각 탭 아이템 클릭 시
-        tab_layout_home.setOnClickListener {
-            startUnderBarAnimation(0)
-            rv_evaluations.submitList(listOf("a", "b", "c"))
-        }
-        tab_layout_center.setOnClickListener {
-            startUnderBarAnimation(1)
-            rv_evaluations.submitList(listOf("a", "b", "c", "d"))
-        }
-        tab_layout_mypage.setOnClickListener {
-            startUnderBarAnimation(2)
-            rv_evaluations.submitList(listOf("a", "b", "c", "d", "e"))
-        }
+        viewModel.position.observe(this, Observer { position ->
+            startUnderBarAnimation(position)
+        })
     }
 
     /** 하단 바 슬라이드 애니메이션을 시작한다. */
