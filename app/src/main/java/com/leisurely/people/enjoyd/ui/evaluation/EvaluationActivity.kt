@@ -57,7 +57,6 @@ class EvaluationActivity : BaseActivity<ActivityEvaluationBinding, EvaluationVie
             )
         )
 
-        rv_evaluations.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         val adapter = EvaluationListAdapter()
         rv_evaluations.adapter = adapter
 
