@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.ViewPropertyAnimator
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
-import androidx.activity.viewModels
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.leisurely.people.enjoyd.R
@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_evaluation.*
 class EvaluationActivity : BaseActivity<ActivityEvaluationBinding, EvaluationViewModel>(
     layoutRes = R.layout.activity_evaluation
 ) {
-    override val viewModel: EvaluationViewModel by viewModels()
+    override val viewModel: EvaluationViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
