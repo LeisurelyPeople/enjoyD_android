@@ -30,12 +30,11 @@ class EvaluationListAdapter : BaseListAdapter<String>(object : DiffUtil.ItemCall
     }
 
     override fun onCreateBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
-        val binding =
-            ItemEvaluationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return binding.apply {
-            root.evaluation_rating.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-                ratingBar.rating = rating
+        return ItemEvaluationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            .apply {
+                root.evaluation_rating.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+                    ratingBar.rating = rating
+                }
             }
-        }
     }
 }
