@@ -5,7 +5,7 @@ import com.kakao.auth.KakaoSDK
 import com.leisurely.people.enjoyd.BuildConfig
 import com.leisurely.people.enjoyd.di.networkModule
 import com.leisurely.people.enjoyd.di.viewModelModule
-import com.leisurely.people.enjoyd.ui.sociallogin.KakaoSDKAdapter
+import com.leisurely.people.enjoyd.ui.login.sociallogin.KakaoSDKAdapter
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

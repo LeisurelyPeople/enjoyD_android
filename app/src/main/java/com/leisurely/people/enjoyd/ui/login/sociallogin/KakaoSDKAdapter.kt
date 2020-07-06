@@ -1,4 +1,4 @@
-package com.leisurely.people.enjoyd.ui.sociallogin
+package com.leisurely.people.enjoyd.ui.login.sociallogin
 
 import android.content.Context
 import com.kakao.auth.*
