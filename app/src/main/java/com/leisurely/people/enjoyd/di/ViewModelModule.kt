@@ -2,6 +2,7 @@ package com.leisurely.people.enjoyd.di
 
 import com.leisurely.people.enjoyd.ui.evaluation.EvaluationViewModel
 import com.leisurely.people.enjoyd.ui.login.LoginViewModel
+import com.leisurely.people.enjoyd.ui.login.sociallogin.KakaoLogin
 import com.leisurely.people.enjoyd.ui.main.MainViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -17,5 +18,7 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { MainViewModel() }
     viewModel { EvaluationViewModel() }
-    viewModel { LoginViewModel() }
+    viewModel { (kakaoLogin: KakaoLogin) ->
+        LoginViewModel(kakaoLogin)
+    }
 }

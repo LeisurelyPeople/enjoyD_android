@@ -10,6 +10,7 @@ import com.kakao.usermgmt.UserManagement
 import com.kakao.usermgmt.callback.LogoutResponseCallback
 import com.kakao.usermgmt.callback.MeV2ResponseCallback
 import com.kakao.usermgmt.response.MeV2Response
+import com.kakao.usermgmt.response.model.UserAccount
 import com.kakao.util.exception.KakaoException
 import com.leisurely.people.enjoyd.ui.base.BaseSocialLogin
 import com.leisurely.people.enjoyd.ui.base.OnLoginFail
@@ -22,11 +23,11 @@ import com.leisurely.people.enjoyd.ui.base.OnLoginSuccess
  * @since v1.0.0 / 2020.07.06
  */
 
-class KakaoLogin<T>(
+class KakaoLogin(
     activity: AppCompatActivity,
-    onLoginSuccess: OnLoginSuccess<T>? = null,
+    onLoginSuccess: OnLoginSuccess<UserAccount>? = null,
     onLoginFail: OnLoginFail? = null
-): BaseSocialLogin<T>(activity, onLoginSuccess, onLoginFail) {
+) : BaseSocialLogin<UserAccount>(activity, onLoginSuccess, onLoginFail) {
 
     private var sessionCallback: SessionCallback? = null
 
@@ -72,15 +73,21 @@ class KakaoLogin<T>(
     }
 
     private fun requestProfile() {
-        val requestOptions = arrayListOf("kakao_account.email")
 
-        UserManagement.getInstance().me(requestOptions, object : MeV2ResponseCallback() {
+        UserManagement.getInstance().me(object : MeV2ResponseCallback() {
             override fun onSessionClosed(errorResult: ErrorResult) {
 
             }
 
             override fun onSuccess(result: MeV2Response) {
-                // 프로필 요청 성공
+                val userAccount: UserAccount? = result.kakaoAccount
+                userAccount?.let {
+                    callbackAsSuccess(userAccount)
+                }
+                /**
+                 * 서버 Api가 나온 후 UserAccount 값이 null 일 경우 처리 로직 추가
+                 */
+
             }
 
             override fun onFailure(errorResult: ErrorResult) {

@@ -1,10 +1,13 @@
 package com.leisurely.people.enjoyd.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.ActivityLoginBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
+import com.leisurely.people.enjoyd.ui.login.sociallogin.KakaoLogin
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 /**
  * 로그인 액티비티
@@ -15,9 +18,45 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layout.activity_login) {
 
-    override val viewModel: LoginViewModel by viewModel()
+    private val kakaoLogin by lazy {
+        KakaoLogin(this, onLoginSuccess = {
+            successLogin()
+        }, onLoginFail = {
+            viewModel.showToast(getString(R.string.connection_failed))
+            reStartActivity()
+        })
+    }
+
+    override val viewModel: LoginViewModel by viewModel {
+        parametersOf(kakaoLogin)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        kakaoLogin.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onDestroy() {
+        kakaoLogin.onDestroy()
+        super.onDestroy()
+    }
+
+    /**
+     * 소셜 로그인 고유 값을 통해 신규 유저인지 기존 유저인지 체크 후 회원가입 혹은 메인화면으로 전환 작업
+     */
+    private fun successLogin() {
+
+    }
+
+    private fun reStartActivity() {
+        val intent = intent.apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        }
+        finish()
+        startActivity(intent)
     }
 }
