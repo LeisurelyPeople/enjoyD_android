@@ -13,7 +13,7 @@
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#000000"
+        android:background="@color/layout_search_header_background"
         app:contentInsetStart="0dp">
 
         <ImageView
@@ -34,10 +34,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/layout_search_header_et_normal">
 
             <com.leisurely.people.enjoyd.ui.search.layout.SearchHeaderEditText
                 android:id="@+id/et_query"
+                style="@style/SearchEditTextStyle"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
@@ -45,8 +47,6 @@
                 android:gravity="center_vertical"
                 android:hint="검색어를 입력해주세요."
                 android:text="@={vm.query}"
-                android:textColor="#6a6a6a"
-                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/sv_search"
@@ -60,7 +60,8 @@
                 android:layout_marginRight="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:searchIcon="@drawable/icon_search" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 </layout>
