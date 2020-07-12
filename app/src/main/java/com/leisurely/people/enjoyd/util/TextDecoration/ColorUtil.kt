@@ -7,7 +7,7 @@ import android.text.TextUtils
  * 색상에 대한 유틸 클래스
  *
  * @author ricky
- * @since v11.4.0 / 2020.07.01
+ * @since v1.0.0 / 2020.07.01
  */
 object ColorUtil {
     private val TAG = ColorUtil::class.java.canonicalName
