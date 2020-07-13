@@ -20,7 +20,6 @@ class KakaoSDKAdapter(private val context: Context) : KakaoAdapter() {
 
             override fun getApprovalType(): ApprovalType = ApprovalType.INDIVIDUAL
 
-
             override fun isSaveFormData(): Boolean = true
         }
     }
