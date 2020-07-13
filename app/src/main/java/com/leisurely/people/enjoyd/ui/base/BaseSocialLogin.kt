@@ -22,15 +22,15 @@ abstract class BaseSocialLogin<T>(
 
     abstract fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
-    abstract fun login()
+    abstract fun login() // 소셜 로그인 처리 메소드
 
-    abstract fun logout()
+    abstract fun logout() // 소셜 로그인 로그아웃 처리 메소드
 
-    protected fun callbackAsFail(exception: Exception) {
+    protected fun callbackAsFail(exception: Exception) { // 로그인 실패 시 호출 되는 메소드
         onError?.invoke(exception)
     }
 
-    protected fun callbackAsSuccess(result: T) {
+    protected fun callbackAsSuccess(result: T) { // 로그인 성공 시 호출 되는 메소드
         onSuccess?.invoke(result)
     }
 }
