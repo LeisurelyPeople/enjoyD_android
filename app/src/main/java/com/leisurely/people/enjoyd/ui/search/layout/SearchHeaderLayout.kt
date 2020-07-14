@@ -1,5 +1,6 @@
 package com.leisurely.people.enjoyd.ui.search.layout
 
+import android.view.View
 import com.leisurely.people.enjoyd.ui.search.SearchActivity
 import com.leisurely.people.enjoyd.ui.search.SearchViewModel
 
@@ -9,7 +10,7 @@ import com.leisurely.people.enjoyd.ui.search.SearchViewModel
  * @author ricky
  * @since v1.0.0 / 2020.07.07
  */
-class SearchHeaderLayout(activity: SearchActivity, vm: SearchViewModel) {
+class SearchHeaderLayout(activity: SearchActivity, layout: View, vm: SearchViewModel) {
     val tag = this.javaClass.canonicalName
 
     private val searchHeaderEditText: SearchHeaderEditText by lazy {

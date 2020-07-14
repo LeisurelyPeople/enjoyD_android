@@ -7,6 +7,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
+import com.leisurely.people.enjoyd.util.time.TimePoint
 
 
 /**
@@ -19,9 +20,9 @@ class SearchViewModel : BaseViewModel() {
     val tag = this.javaClass.canonicalName
 
     /** 처음 들어갈 시 보여주는 추천 리스트 */
-    private val _defaults = MutableLiveData(listOf<String>())
-    val defaults: LiveData<List<String>>
-        get() = _defaults
+    private val _basics = MutableLiveData(listOf<String>())
+    val basics: LiveData<List<String>>
+        get() = _basics
 
     /** 최근 검색어 리스트 */
     private val _recents = MutableLiveData(listOf<String>())
@@ -54,5 +55,17 @@ class SearchViewModel : BaseViewModel() {
             // api 호출
             // recyclerview 에 반영
         }
+    }
+
+    init {
+        _basics.value = listOf(
+            "NEW 업데이트작",
+            "${TimePoint.today.month}월 인기 드라마",
+            "최신 업데이트작",
+            "평점 높은 작품",
+            "${TimePoint.today.month}월 인기 에피소드",
+            "#캠퍼스 로맨스",
+            "리뷰 TOP 화제 드라마"
+        )
     }
 }
