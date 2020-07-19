@@ -1,4 +1,4 @@
-package com.leisurely.people.enjoyd.ui.search.layout
+package com.leisurely.people.enjoyd.ui.search.header
 
 import android.content.Context
 import android.util.AttributeSet

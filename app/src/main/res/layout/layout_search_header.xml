@@ -16,10 +16,11 @@
         android:background="@color/layout_search_header_background"
         app:contentInsetStart="0dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
             android:paddingStart="16dp"
             android:paddingTop="16dp"
             android:paddingEnd="14dp"
@@ -37,31 +38,36 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/layout_search_header_et_normal">
 
-            <com.leisurely.people.enjoyd.ui.search.layout.SearchHeaderEditText
+            <com.leisurely.people.enjoyd.ui.search.header.SearchHeaderEditText
                 android:id="@+id/et_query"
                 style="@style/SearchEditTextStyle"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
                 android:addTextChangedListener="@{vm.queryWatcher}"
+                android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="검색어를 입력해주세요."
+                android:singleLine="true"
+                android:inputType="text"
                 android:text="@={vm.query}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/sv_search"
+                app:layout_constraintRight_toLeftOf="@+id/btn_search"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="검색어를 입력해주세요." />
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/sv_search"
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
+                android:layout_margin="8dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:searchIcon="@drawable/icon_search" />
+                app:srcCompat="@drawable/icon_search" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 </layout>

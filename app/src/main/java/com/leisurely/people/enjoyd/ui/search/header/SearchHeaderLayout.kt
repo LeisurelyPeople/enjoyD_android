@@ -1,9 +1,10 @@
-package com.leisurely.people.enjoyd.ui.search.layout
+package com.leisurely.people.enjoyd.ui.search.header
 
 import android.util.Log
 import android.view.View
 import com.leisurely.people.enjoyd.ui.search.SearchActivity
 import com.leisurely.people.enjoyd.ui.search.SearchViewModel
+import com.leisurely.people.enjoyd.util.ext.hideKeyboard
 import kotlinx.android.synthetic.main.layout_search_header.view.*
 
 /**
@@ -35,7 +36,13 @@ class SearchHeaderLayout(activity: SearchActivity, layout: View, vm: SearchViewM
     }
 
     init {
-        layout.et_query.onFocusChangeListener = queryOneFocusChangeListener
+        layout.apply {
+            et_query.onFocusChangeListener = queryOneFocusChangeListener
+
+            btn_back.setOnClickListener {
+                layout.hideKeyboard()
+            }
+        }
     }
 
 }

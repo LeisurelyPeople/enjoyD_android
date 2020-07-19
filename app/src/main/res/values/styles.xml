@@ -16,6 +16,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- 검색화면 헤더 EditText theme -->
     <style name="SearchEditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="colorControlNormal">@color/layout_search_header_et_text_color</item>
         <item name="colorControlActivated">@color/layout_search_header_et_text_color</item>
