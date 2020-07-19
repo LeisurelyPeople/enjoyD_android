@@ -4,6 +4,10 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="color_app_background">#212121</color>
+
+    <color name="color_black">#000000</color>
+
     <color name="layout_search_background">#212121</color>
 
     <color name="layout_search_header_background">#212121</color>
