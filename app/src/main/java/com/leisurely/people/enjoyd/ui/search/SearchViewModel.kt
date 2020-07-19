@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.leisurely.people.enjoyd.data.local.RecentSearch
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.time.TimePoint
 
@@ -25,8 +26,8 @@ class SearchViewModel : BaseViewModel() {
         get() = _basics
 
     /** 최근 검색어 리스트 */
-    private val _recents = MutableLiveData(listOf<String>())
-    val recents: LiveData<List<String>>
+    private val _recents = MutableLiveData(listOf<RecentSearch>())
+    val recents: LiveData<List<RecentSearch>>
         get() = _recents
 
     /** 카테고리별 이름 리스트 (프로그램 / 배우) */
@@ -52,6 +53,22 @@ class SearchViewModel : BaseViewModel() {
 
         override fun afterTextChanged(s: Editable) {
             Log.i(tag, "s : $s")
+
+            // TODO 현재 LiveData인 _recents 가 정상적으로 적용되지 않음. 아키텍처에 대해 확인 필요
+            if (s.isNotEmpty()) {
+                _recents.value = listOf(
+                    RecentSearch(0, "소녀의 세계"),
+                    RecentSearch(1, "소녀의 세계"),
+                    RecentSearch(2, "소녀의 세계"),
+                    RecentSearch(3, "소녀의 세계"),
+                    RecentSearch(4, "소녀의 세계"),
+                    RecentSearch(5, "소녀의 세계"),
+                    RecentSearch(6, "소녀의 세계"),
+                    RecentSearch(7, "소녀의 세계"),
+                    RecentSearch(8, "소녀의 세계")
+                )
+            }
+
             // api 호출
             // recyclerview 에 반영
         }
@@ -67,5 +84,7 @@ class SearchViewModel : BaseViewModel() {
             "#캠퍼스 로맨스",
             "리뷰 TOP 화제 드라마"
         )
+
+        _recents.value = listOf()
     }
 }

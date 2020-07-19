@@ -14,9 +14,18 @@ import kotlinx.android.synthetic.main.layout_search_basic.view.*
 class SearchBasicLayout(activity: SearchActivity, layout: View, vm: SearchViewModel) {
     val tag = this.javaClass.canonicalName
 
+    val activity: SearchActivity by lazy { activity }
+    val layout: View by lazy { layout }
+    val vm: SearchViewModel by lazy { vm }
+
     /** 추천 리스트 레이아웃을 초기화 한다. */
     init {
         val adapter = BasicListAdapter()
         layout.rv_basics.adapter = adapter
+    }
+
+    /** 추천 리스트 레이아웃을 감춘다. */
+    fun hideTimelineDataLayout() {
+        layout.visibility = View.GONE
     }
 }

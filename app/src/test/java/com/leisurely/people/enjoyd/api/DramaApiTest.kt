@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit
  */
 class DramaApiTest : AndroidBaseTest() {
     /** 간략한 드라마 정보 리스트 API 를 테스트한다. */
+    @Ignore("서버 API 호출 최소화")
     @Test
     fun dramasInfoTest() {
         val dramaInfoResponse = testApi.dramasInfo()
@@ -44,6 +45,7 @@ class DramaApiTest : AndroidBaseTest() {
     }
 
     /** 드라마 정보 검색 API 를 테스트한다. */
+    @Ignore("서버 API 호출 최소화")
     @Test
     fun dramasInfoSearchTest() {
         val dramaInfoSearchResponse = testApi.dramasInfoSearch()
