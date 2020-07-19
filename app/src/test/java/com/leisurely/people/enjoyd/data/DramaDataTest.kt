@@ -16,7 +16,7 @@ import org.junit.Test
  * Drama 관련 데이터 파싱을 테스트한다.
  *
  * @author ricky
- * @since v11.4.0 / 2020.07.12
+ * @since v1.0.0 / 2020.07.12
  */
 class DramaDataTest : AndroidBaseTest() {
     /** 자세한 드라마 데이터 파싱이 정상적으로 이루어지는지 확인한다. */

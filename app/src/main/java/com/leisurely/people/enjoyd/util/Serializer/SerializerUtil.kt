@@ -8,7 +8,7 @@ import kotlinx.serialization.json.*
  * kotlinx-serialization 관련 유틸리티
  *
  * @author ricky
- * @since v11.4.0 / 2020.07.12
+ * @since v1.0.0 / 2020.07.12
  */
 
 /** 기본 JSON 파서 */

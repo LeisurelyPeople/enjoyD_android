@@ -1,8 +1,6 @@
 package com.leisurely.people.enjoyd.ui.search.recent
 
-import android.util.Log
 import android.view.View
-import androidx.lifecycle.Observer
 import com.leisurely.people.enjoyd.ui.search.SearchActivity
 import com.leisurely.people.enjoyd.ui.search.SearchViewModel
 import kotlinx.android.synthetic.main.layout_search_recent.view.*

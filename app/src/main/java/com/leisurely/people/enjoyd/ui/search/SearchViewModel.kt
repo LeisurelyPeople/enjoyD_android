@@ -7,6 +7,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.leisurely.people.enjoyd.data.local.RecentSearch
+import com.leisurely.people.enjoyd.data.remote.search.AutoResult
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.time.TimePoint
 
@@ -31,12 +32,15 @@ class SearchViewModel : BaseViewModel() {
         get() = _recents
 
     /** 카테고리별 이름 리스트 (프로그램 / 배우) */
-    private val _categories = MutableLiveData(listOf<String>())
-    val categories: LiveData<List<String>>
-        get() = _categories
+    private val _autoResults = MutableLiveData(listOf<AutoResult>())
+    val autoResults: LiveData<List<AutoResult>>
+        get() = _autoResults
 
     /** 검색 쿼리 텍스트 */
     val query = ObservableField<String>()
+
+    /** 검색을 위한 액션을 취했는지 안했는지를 감별하는 flag 값 (editText 버튼을 눌렀을 시 false) */
+    val initClick = ObservableField<Boolean>().apply { set(false) }
 
     /**
      * 검색 쿼리 textWatcher
@@ -54,8 +58,8 @@ class SearchViewModel : BaseViewModel() {
         override fun afterTextChanged(s: Editable) {
             Log.i(tag, "s : $s")
 
-            // TODO 현재 LiveData인 _recents 가 정상적으로 적용되지 않음. 아키텍처에 대해 확인 필요
-            if (s.isNotEmpty()) {
+            // TODO 현재 LiveData인 _recents / _autoResults 가 정상적으로 적용되지 않음. 아키텍처에 대해 확인 필요
+            if (s.isEmpty()) {
                 _recents.value = listOf(
                     RecentSearch(0, "소녀의 세계"),
                     RecentSearch(1, "소녀의 세계"),
@@ -67,7 +71,18 @@ class SearchViewModel : BaseViewModel() {
                     RecentSearch(7, "소녀의 세계"),
                     RecentSearch(8, "소녀의 세계")
                 )
-            }
+            } else
+                _autoResults.value = listOf(
+                    AutoResult(true, "프로그램"),
+                    AutoResult(false, "소녀의 세계"),
+                    AutoResult(false, "소녀의 세계"),
+                    AutoResult(false, "소녀의 세계"),
+                    AutoResult(false, "소녀의 세계"),
+                    AutoResult(true, "배우"),
+                    AutoResult(false, "아이린"),
+                    AutoResult(false, "태연"),
+                    AutoResult(false, "혜리")
+                )
 
             // api 호출
             // recyclerview 에 반영
@@ -86,5 +101,7 @@ class SearchViewModel : BaseViewModel() {
         )
 
         _recents.value = listOf()
+
+        _autoResults.value = listOf()
     }
 }

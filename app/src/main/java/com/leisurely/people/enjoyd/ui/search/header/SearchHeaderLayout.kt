@@ -2,6 +2,7 @@ package com.leisurely.people.enjoyd.ui.search.header
 
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.leisurely.people.enjoyd.ui.search.SearchActivity
 import com.leisurely.people.enjoyd.ui.search.SearchViewModel
 import com.leisurely.people.enjoyd.util.ext.hideKeyboard
@@ -27,6 +28,9 @@ class SearchHeaderLayout(activity: SearchActivity, layout: View, vm: SearchViewM
     private val queryOneFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
         Log.i(tag, "$hasFocus")
         if (hasFocus) {
+            // 빈 화면일 때, 한번이라도 클릭했을 때 & 안 클릭했을 때 보여주는 화면이 다르므로 vm 의 값 변경
+            vm.initClick.set(true)
+
             activity.searchBasicLayout?.hideTimelineDataLayout()
             activity.initSearchRecentLayout()
 
@@ -41,6 +45,14 @@ class SearchHeaderLayout(activity: SearchActivity, layout: View, vm: SearchViewM
 
             btn_back.setOnClickListener {
                 layout.hideKeyboard()
+            }
+
+            btn_search.setOnClickListener {
+                if (vm.query.get().isNullOrEmpty()) {
+                    Toast.makeText(this.context, "검색하기 위해 한 글자라도 입력해야 합니다.", Toast.LENGTH_SHORT)
+                        .show()
+                } else
+                    layout.hideKeyboard()
             }
         }
     }
