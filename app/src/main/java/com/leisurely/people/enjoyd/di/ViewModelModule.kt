@@ -19,6 +19,6 @@ val viewModelModule = module {
     viewModel { MainViewModel() }
     viewModel { EvaluationViewModel() }
     viewModel { (kakaoLogin: KakaoLogin) ->
-        LoginViewModel(kakaoLogin)
+        LoginViewModel(kakaoLogin, get())
     }
 }

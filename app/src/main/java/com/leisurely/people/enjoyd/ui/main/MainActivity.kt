@@ -1,5 +1,7 @@
 package com.leisurely.people.enjoyd.ui.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.ActivityMainBinding
@@ -12,5 +14,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    companion object {
+        fun startActivity(context: Context) {
+            context.startActivity(Intent(context, MainActivity::class.java))
+        }
     }
 }

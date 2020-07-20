@@ -1,5 +1,7 @@
 package com.leisurely.people.enjoyd.data.remote.interceptor
 
+import com.leisurely.people.enjoyd.data.local.prefs.TokenManager
+import com.leisurely.people.enjoyd.ui.base.EnjoyDApplication
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -15,7 +17,13 @@ class AuthInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request().newBuilder()
 
-        // TODO 토큰값 헤더에 넣는 작업 추가
+        val accessToken =
+            TokenManager.getUserAccessToken(EnjoyDApplication.instance)
+
+        accessToken?.let {
+            /** API 헤더 토큰 추가 */
+            request.addHeader("Authorization", "Bearer $it")
+        }
         request.addHeader("Content-Type", "application/json")
 
         return chain.proceed(request.build())
