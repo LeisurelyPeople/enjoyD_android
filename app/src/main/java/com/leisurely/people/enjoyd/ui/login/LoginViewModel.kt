@@ -1,5 +1,6 @@
 package com.leisurely.people.enjoyd.ui.login
 
+import com.leisurely.people.enjoyd.data.remote.data.request.SignUpRequest
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.ui.login.sociallogin.KakaoLogin
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,7 +17,6 @@ import java.util.concurrent.TimeUnit
 class LoginViewModel(kakaoLogin: KakaoLogin) : BaseViewModel() {
 
     private val _kakaoLoginClick: PublishSubject<Unit> = PublishSubject.create()
-
     val kakaoLoginClick: Subject<Unit> = _kakaoLoginClick
 
     init {
@@ -26,5 +26,9 @@ class LoginViewModel(kakaoLogin: KakaoLogin) : BaseViewModel() {
                 kakaoLogin.login()
             }
             .addDisposable()
+    }
+
+    fun requestLogin(signUpRequest: SignUpRequest) {
+        // TODO 로그인 시도 해보고 실패하면 회원가입 플로우 타고 아니면 메인화면 플로우 타기
     }
 }

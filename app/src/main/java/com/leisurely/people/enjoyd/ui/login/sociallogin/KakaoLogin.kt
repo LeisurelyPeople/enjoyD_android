@@ -12,6 +12,7 @@ import com.kakao.usermgmt.callback.MeV2ResponseCallback
 import com.kakao.usermgmt.response.MeV2Response
 import com.kakao.usermgmt.response.model.UserAccount
 import com.kakao.util.exception.KakaoException
+import com.leisurely.people.enjoyd.data.remote.data.request.SignUpRequest
 import com.leisurely.people.enjoyd.ui.base.BaseSocialLogin
 import com.leisurely.people.enjoyd.ui.base.OnLoginFail
 import com.leisurely.people.enjoyd.ui.base.OnLoginSuccess
@@ -25,9 +26,9 @@ import com.leisurely.people.enjoyd.ui.base.OnLoginSuccess
 
 class KakaoLogin(
     activity: AppCompatActivity,
-    onLoginSuccess: OnLoginSuccess<UserAccount>? = null,
+    onLoginSuccess: OnLoginSuccess<SignUpRequest>? = null,
     onLoginFail: OnLoginFail? = null
-) : BaseSocialLogin<UserAccount>(activity, onLoginSuccess, onLoginFail) {
+) : BaseSocialLogin<SignUpRequest>(activity, onLoginSuccess, onLoginFail) {
 
     private var sessionCallback: SessionCallback? = null
 
@@ -92,9 +93,16 @@ class KakaoLogin(
             override fun onSuccess(result: MeV2Response) {
                 val userAccount: UserAccount? = result.kakaoAccount
                 userAccount?.let {
-                    callbackAsSuccess(userAccount)
+                    val gender = when {
+                        it.gender?.name == "female" -> 1
+                        it.gender?.name == "male" -> 0
+                        else -> null
+                    }
+                    callbackAsSuccess(SignUpRequest(result.id, it.profile.nickname, gender))
+                    return
+                } ?: kotlin.run {
+                    callbackAsFail(Exception())
                 }
-                /** TODO 서버 API 나온 후 UserAccount 값이 null 일 경우 처리 로직 추가 */
             }
 
             /** 프로필 정보 요청 실패 시 호출 되는 메소드 */

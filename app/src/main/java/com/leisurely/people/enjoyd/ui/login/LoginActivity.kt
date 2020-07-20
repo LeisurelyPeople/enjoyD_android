@@ -20,7 +20,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
 
     private val kakaoLogin by lazy {
         KakaoLogin(this, onLoginSuccess = {
-            successLogin()
+            viewModel.requestLogin(it)
         }, onLoginFail = {
             viewModel.showToast(getString(R.string.connection_failed))
             reStartActivity()
@@ -43,11 +43,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
     override fun onDestroy() {
         kakaoLogin.onDestroy() // 로그인 화면을 벗어나면 카카오 세션을 끝내기 위한 구문
         super.onDestroy()
-    }
-
-    /** 소셜 로그인 고유 값을 통해 신규 유저인지 기존 유저인지 체크 후 회원가입 혹은 메인화면으로 전환 작업 */
-    private fun successLogin() {
-
     }
 
     /** 소셜 로그인 실패 시 해당 화면을 재시작 하기 위한 메소드 */
