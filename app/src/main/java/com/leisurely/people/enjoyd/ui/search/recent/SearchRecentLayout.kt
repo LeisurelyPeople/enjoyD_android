@@ -22,6 +22,5 @@ class SearchRecentLayout(activity: SearchActivity, layout: View, vm: SearchViewM
     init {
         val adapter = RecentListAdapter()
         layout.rv_recents.adapter = adapter
-        vm.initRecents()
     }
 }

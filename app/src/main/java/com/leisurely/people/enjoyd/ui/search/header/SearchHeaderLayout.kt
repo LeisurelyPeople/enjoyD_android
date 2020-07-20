@@ -31,9 +31,6 @@ class SearchHeaderLayout(activity: SearchActivity, layout: View, vm: SearchViewM
             // 빈 화면일 때, 한번이라도 클릭했을 때 & 안 클릭했을 때 보여주는 화면이 다르므로 vm 의 값 변경
             vm.initClick.set(true)
 
-            activity.searchBasicLayout?.hideTimelineDataLayout()
-            activity.initSearchRecentLayout()
-
             // 만약 한번이라도 실행되면 바로 없애준다.
             layout.et_query.onFocusChangeListener = null
         }

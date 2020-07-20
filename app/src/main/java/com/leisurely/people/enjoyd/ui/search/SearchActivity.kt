@@ -20,33 +20,17 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SearchActivity :
     BaseActivity<ActivitySearchBinding, SearchViewModel>(R.layout.activity_search) {
     public override val viewModel: SearchViewModel by viewModel()
-    var searchHeaderLayout: SearchHeaderLayout? = null
-    var searchBasicLayout: SearchBasicLayout? = null
-    var searchRecentLayout: SearchRecentLayout? = null
-    var searchAutoResultLayout: SearchAutoResultLayout? = null
+    lateinit var searchHeaderLayout: SearchHeaderLayout
+    lateinit var searchBasicLayout: SearchBasicLayout
+    lateinit var searchRecentLayout: SearchRecentLayout
+    lateinit var searchAutoResultLayout: SearchAutoResultLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        searchHeaderLayout =
-            SearchHeaderLayout(
-                this,
-                layout_header,
-                viewModel
-            )
+        searchHeaderLayout = SearchHeaderLayout(this, layout_header, viewModel)
         searchBasicLayout = SearchBasicLayout(this, layout_basic, viewModel)
-    }
-
-    /** 최근 검색 레이아웃을 세팅한다. */
-    fun initSearchRecentLayout() {
-        if (searchRecentLayout == null)
-            searchRecentLayout = SearchRecentLayout(this, layout_recent.inflate(), viewModel)
-    }
-
-    /** 자동 검색완성 레이아웃을 세팅한다. */
-    fun initAutoResultLayout() {
-        if (searchAutoResultLayout == null)
-            searchAutoResultLayout =
-                SearchAutoResultLayout(this, layout_auto_result.inflate(), viewModel)
+        searchRecentLayout = SearchRecentLayout(this, layout_recent, viewModel)
+        searchAutoResultLayout = SearchAutoResultLayout(this, layout_auto_result, viewModel)
     }
 }

@@ -23,18 +23,15 @@ class SearchViewModel : BaseViewModel() {
 
     /** 처음 들어갈 시 보여주는 추천 리스트 */
     private val _basics = MutableLiveData(listOf<String>())
-    val basics: LiveData<List<String>>
-        get() = _basics
+    val basics: LiveData<List<String>> = _basics
 
     /** 최근 검색어 리스트 */
     private val _recents = MutableLiveData(listOf<RecentSearch>())
-    val recents: LiveData<List<RecentSearch>>
-        get() = _recents
+    val recents: LiveData<List<RecentSearch>> = _recents
 
     /** 카테고리별 이름 리스트 (프로그램 / 배우) */
     private val _autoResults = MutableLiveData(listOf<AutoResult>())
-    val autoResults: LiveData<List<AutoResult>>
-        get() = _autoResults
+    val autoResults: LiveData<List<AutoResult>> = _autoResults
 
     /** 검색 쿼리 텍스트 */
     val query = ObservableField<String>()
@@ -91,23 +88,18 @@ class SearchViewModel : BaseViewModel() {
             "리뷰 TOP 화제 드라마"
         )
 
-        _recents.value = listOf()
+        _recents.value = listOf(
+            RecentSearch(0, "방금 검색바 클릭했을 때 세계"),
+            RecentSearch(1, "방금 검색바 클릭했을 때 세계"),
+            RecentSearch(2, "방금 검색바 클릭했을 때 세계"),
+            RecentSearch(3, "방금 검색바 클릭했을 때 세계"),
+            RecentSearch(4, "방금 검색바 클릭했을 때 세계"),
+            RecentSearch(5, "방금 검색바 클릭했을 때 세계"),
+            RecentSearch(6, "방금 검색바 클릭했을 때 세계"),
+            RecentSearch(7, "방금 검색바 클릭했을 때 세계"),
+            RecentSearch(8, "방금 검색바 클릭했을 때 세계")
+        )
 
         _autoResults.value = listOf()
-    }
-
-    /** 검색 버튼 클릭 시 최근 검색어 리스트를 초기 세팅해준다. */
-    fun initRecents() {
-        _recents.value = listOf(
-            RecentSearch(0, "소녀의 세계"),
-            RecentSearch(1, "소녀의 세계"),
-            RecentSearch(2, "소녀의 세계"),
-            RecentSearch(3, "소녀의 세계"),
-            RecentSearch(4, "소녀의 세계"),
-            RecentSearch(5, "소녀의 세계"),
-            RecentSearch(6, "소녀의 세계"),
-            RecentSearch(7, "소녀의 세계"),
-            RecentSearch(8, "소녀의 세계")
-        )
     }
 }

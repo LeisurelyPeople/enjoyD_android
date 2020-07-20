@@ -23,9 +23,4 @@ class SearchBasicLayout(activity: SearchActivity, layout: View, vm: SearchViewMo
         val adapter = BasicListAdapter()
         layout.rv_basics.adapter = adapter
     }
-
-    /** 추천 리스트 레이아웃을 감춘다. */
-    fun hideTimelineDataLayout() {
-        layout.visibility = View.GONE
-    }
 }
