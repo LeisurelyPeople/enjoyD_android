@@ -5,6 +5,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:includeFontPadding">false</item>
         <item name="homeAsUpIndicator">@drawable/btn_back</item>
+        <item name="colorControlHighlight">@color/ripple_effect_background</item>
         <item name="android:statusBarColor">@color/color_black</item>
         <item name="android:windowBackground">@color/color_app_background</item>
         <item name="android:navigationBarColor">@color/color_black</item>
