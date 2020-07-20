@@ -28,9 +28,11 @@ class LoginViewModel(
     private val _kakaoLoginClick: PublishSubject<Unit> = PublishSubject.create()
     val kakaoLoginClick: Subject<Unit> = _kakaoLoginClick
 
+    /** main activity 이동하기 위한 LiveData */
     private val _startMain = LiveEvent<UserTokenResponse>()
     val startMain = _startMain
 
+    /** LoginActivity 재실행 하기 위한 LiveData */
     private val _reStartLogin = LiveEvent<Unit>()
     val reStartLogin = _reStartLogin
 
