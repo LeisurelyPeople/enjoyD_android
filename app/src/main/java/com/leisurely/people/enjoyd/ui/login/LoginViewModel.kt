@@ -31,6 +31,9 @@ class LoginViewModel(
     private val _startMain = LiveEvent<UserTokenResponse>()
     val startMain = _startMain
 
+    private val _reStartLogin = LiveEvent<Unit>()
+    val reStartLogin = _reStartLogin
+
     init {
         _kakaoLoginClick
             .throttleFirst(4000L, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
@@ -50,7 +53,7 @@ class LoginViewModel(
                 if ((it as? HttpException)?.code() == 400) {
                     // TODO 회원가입 화면 전환
                 } else {
-                    showToast("잠시 후 다시 시도해주세요.")
+                    reStartLogin.value = null
                 }
             }).addDisposable()
     }

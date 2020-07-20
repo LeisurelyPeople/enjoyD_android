@@ -26,7 +26,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         KakaoLogin(this, onLoginSuccess = {
             viewModel.requestLogin(it)
         }, onLoginFail = {
-            viewModel.showToast(getString(R.string.connection_failed))
             reStartActivity()
         })
     }
@@ -44,6 +43,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
             MainActivity.startActivity(this@LoginActivity)
             finish()
         })
+
+        viewModel.reStartLogin.observe(this, Observer {
+            /**
+             *  로그인 실패 시 로그인 액티비티 재 생성 되도록 설정
+             *  재실행 하지 않는 경우 카카오 로그인 클래스 내의 onSessionOpened() 콜백 메소드가 계속되기 때문에 onDestroy() 메소드를 타게 해서
+             *  콜백을 한번씩 제거 해줘야함.
+             */
+            reStartActivity()
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -58,6 +66,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
 
     /** 소셜 로그인 실패 시 해당 화면을 재시작 하기 위한 메소드 */
     private fun reStartActivity() {
+        viewModel.showToast(getString(R.string.connection_failed))
         val intent = intent.apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         }
