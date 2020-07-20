@@ -48,29 +48,20 @@ class SearchViewModel : BaseViewModel() {
      */
     val queryWatcher: TextWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-            Log.i(tag, "s : $s, start : $start, count : $count, after : $after")
+            Log.i(tag, "beforeTextChanged : s : $s, start : $start, count : $count, after : $after")
         }
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            Log.i(tag, "s : $s, start : $start, count : $count")
+            Log.i(tag, "onTextChanged : s : $s, start : $start, count : $count")
         }
 
         override fun afterTextChanged(s: Editable) {
-            Log.i(tag, "s : $s")
+            Log.i(tag, "afterTextChanged : s : $s")
 
             // TODO 현재 LiveData인 _recents / _autoResults 가 정상적으로 적용되지 않음. 아키텍처에 대해 확인 필요
+            // 검색 내용값이 비어있다면 최신순 리스트를 보여주고, 아니라면 자동완성 리스트를 보여준다.
             if (s.isEmpty()) {
-                _recents.value = listOf(
-                    RecentSearch(0, "소녀의 세계"),
-                    RecentSearch(1, "소녀의 세계"),
-                    RecentSearch(2, "소녀의 세계"),
-                    RecentSearch(3, "소녀의 세계"),
-                    RecentSearch(4, "소녀의 세계"),
-                    RecentSearch(5, "소녀의 세계"),
-                    RecentSearch(6, "소녀의 세계"),
-                    RecentSearch(7, "소녀의 세계"),
-                    RecentSearch(8, "소녀의 세계")
-                )
+                _recents.value = listOf()
             } else
                 _autoResults.value = listOf(
                     AutoResult(true, "프로그램"),
@@ -103,5 +94,20 @@ class SearchViewModel : BaseViewModel() {
         _recents.value = listOf()
 
         _autoResults.value = listOf()
+    }
+
+    /** 검색 버튼 클릭 시 최근 검색어 리스트를 초기 세팅해준다. */
+    fun initRecents() {
+        _recents.value = listOf(
+            RecentSearch(0, "소녀의 세계"),
+            RecentSearch(1, "소녀의 세계"),
+            RecentSearch(2, "소녀의 세계"),
+            RecentSearch(3, "소녀의 세계"),
+            RecentSearch(4, "소녀의 세계"),
+            RecentSearch(5, "소녀의 세계"),
+            RecentSearch(6, "소녀의 세계"),
+            RecentSearch(7, "소녀의 세계"),
+            RecentSearch(8, "소녀의 세계")
+        )
     }
 }
