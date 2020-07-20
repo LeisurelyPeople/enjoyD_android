@@ -32,6 +32,10 @@ class LoginViewModel(
     private val _startMain = LiveEvent<UserTokenResponse>()
     val startMain = _startMain
 
+    /** 회원가입 화면으로 이동하기 위한 LiveData */
+    private val _startOnBoarding = LiveEvent<SignUpRequest>()
+    val startOnBoarding = _startOnBoarding
+
     /** LoginActivity 재실행 하기 위한 LiveData */
     private val _reStartLogin = LiveEvent<Unit>()
     val reStartLogin = _reStartLogin
@@ -53,7 +57,7 @@ class LoginViewModel(
             }, {
                 /** 400 에러 인조이디 회원유저가 아닌 경우*/
                 if ((it as? HttpException)?.code() == 400) {
-                    // TODO 회원가입 화면 전환
+                    startOnBoarding.value = signUpRequest
                 } else {
                     reStartLogin.value = null
                 }

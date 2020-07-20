@@ -10,6 +10,7 @@ import com.leisurely.people.enjoyd.databinding.ActivityLoginBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
 import com.leisurely.people.enjoyd.ui.login.sociallogin.KakaoLogin
 import com.leisurely.people.enjoyd.ui.main.MainActivity
+import com.leisurely.people.enjoyd.ui.onboarding.UserInfoInputActivity
 import com.leisurely.people.enjoyd.util.applyClickShrink
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -44,6 +45,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
             TokenManager.setUserToken(this, userTokenResponse)
             MainActivity.startActivity(this@LoginActivity)
             finish()
+        })
+
+        viewModel.startOnBoarding.observe(this, Observer { signUpRequest ->
+            UserInfoInputActivity.startActivity(this@LoginActivity, signUpRequest)
         })
 
         viewModel.reStartLogin.observe(this, Observer {
