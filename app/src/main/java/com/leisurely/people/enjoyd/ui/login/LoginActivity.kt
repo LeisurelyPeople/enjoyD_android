@@ -10,6 +10,7 @@ import com.leisurely.people.enjoyd.databinding.ActivityLoginBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
 import com.leisurely.people.enjoyd.ui.login.sociallogin.KakaoLogin
 import com.leisurely.people.enjoyd.ui.main.MainActivity
+import com.leisurely.people.enjoyd.util.applyClickShrink
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -36,6 +37,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setLoginBtnAnimation()
 
         viewModel.startMain.observe(this, Observer { userTokenResponse ->
             /** 사용자 토큰 SharedPreference 저장 후 메인화면으로 전환 */
@@ -62,6 +64,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
     override fun onDestroy() {
         kakaoLogin.onDestroy() // 로그인 화면을 벗어나면 카카오 세션을 끝내기 위한 구문
         super.onDestroy()
+    }
+
+    private fun setLoginBtnAnimation() {
+        binding.clKakaoLoginLayout.applyClickShrink()
     }
 
     /** 소셜 로그인 실패 시 해당 화면을 재시작 하기 위한 메소드 */
