@@ -3,6 +3,9 @@ package com.leisurely.people.enjoyd.util.ext
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.isGone
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import io.reactivex.subjects.Subject
 
@@ -12,6 +15,21 @@ import io.reactivex.subjects.Subject
  * @author Wayne
  * @since v1.0.0 / 2020.06.15
  */
+
+@BindingAdapter("android:visibleIf")
+fun View.setVisibleIf(value: Boolean) {
+    isVisible = value
+}
+
+@BindingAdapter("android:invisibleIf")
+fun View.setInvisibleIf(value: Boolean) {
+    isInvisible = value
+}
+
+@BindingAdapter("android:goneIf")
+fun View.setGoneIf(value: Boolean) {
+    isGone = value
+}
 
 /** 키보드 숨기기 */
 fun View.hideKeyboard() {
