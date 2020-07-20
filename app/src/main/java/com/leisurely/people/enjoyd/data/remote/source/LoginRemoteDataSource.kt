@@ -10,9 +10,9 @@ import io.reactivex.Single
  * @author Wayne
  * @since v1.0.0 / 2020.07.20
  */
-class SignInRemoteDataSource(private val apiService: APIService) {
+class LoginRemoteDataSource(private val apiService: APIService) {
 
     fun requestLogin(socialId: String): Single<UserTokenResponse> {
-        return apiService.requestSignIn(hashMapOf("social_id" to socialId))
+        return apiService.requestLogin(hashMapOf("social_id" to socialId))
     }
 }

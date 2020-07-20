@@ -15,5 +15,5 @@ import retrofit2.http.POST
 interface APIService {
 
     @POST("accounts/sign-in/")
-    fun requestSignIn(@Body data: HashMap<String, String>): Single<UserTokenResponse>
+    fun requestLogin(@Body data: HashMap<String, String>): Single<UserTokenResponse>
 }

@@ -2,7 +2,7 @@ package com.leisurely.people.enjoyd.ui.login
 
 import com.leisurely.people.enjoyd.data.remote.data.request.SignUpRequest
 import com.leisurely.people.enjoyd.data.remote.data.response.UserTokenResponse
-import com.leisurely.people.enjoyd.data.repository.SignInRepository
+import com.leisurely.people.enjoyd.data.repository.LoginRepository
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.ui.login.sociallogin.KakaoLogin
 import com.leisurely.people.enjoyd.util.ext.applySingleSchedulers
@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit
  */
 class LoginViewModel(
     private val kakaoLogin: KakaoLogin,
-    private val signInRepository: SignInRepository
+    private val loginRepository: LoginRepository
 ) : BaseViewModel() {
 
     /** 로그인 클릭 Subject */
@@ -41,7 +41,7 @@ class LoginViewModel(
     }
 
     fun requestLogin(signUpRequest: SignUpRequest) {
-        signInRepository.reqeustSignIn(signUpRequest.socialId.toString())
+        loginRepository.requestLogin(signUpRequest.socialId.toString())
             .applySingleSchedulers()
             .subscribe({ userTokenResponse ->
                 _startMain.value = userTokenResponse

@@ -1,6 +1,6 @@
 package com.leisurely.people.enjoyd.di
 
-import com.leisurely.people.enjoyd.data.repository.SignInRepository
+import com.leisurely.people.enjoyd.data.repository.LoginRepository
 import org.koin.dsl.module
 
 /**
@@ -12,6 +12,6 @@ import org.koin.dsl.module
 
 val repositoryModule = module {
     single {
-        SignInRepository(get())
+        LoginRepository(get())
     }
 }
