@@ -50,6 +50,9 @@ class LoginViewModel(
     }
 
     fun requestLogin(signUpRequest: SignUpRequest) {
+        /** 카카오 SessionCallback 제거 */
+        kakaoLogin.onDestroy()
+
         loginRepository.requestLogin(signUpRequest.socialId.toString())
             .applySingleSchedulers()
             .subscribe({ userTokenResponse ->

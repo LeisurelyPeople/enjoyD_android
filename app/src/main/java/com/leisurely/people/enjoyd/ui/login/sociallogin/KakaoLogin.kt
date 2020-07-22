@@ -30,7 +30,7 @@ class KakaoLogin(
     onLoginFail: OnLoginFail? = null
 ) : BaseSocialLogin<SignUpRequest>(activity, onLoginSuccess, onLoginFail) {
 
-    private var sessionCallback: SessionCallback? = null
+    private var sessionCallback: SessionCallback = SessionCallback()
 
     private val session by lazy {
         Session.getCurrentSession()
@@ -43,7 +43,6 @@ class KakaoLogin(
 
     /** 카카오 로그인을 처리하기 위한 메소드  */
     override fun login() {
-        sessionCallback = SessionCallback()
         session.addCallback(sessionCallback)
         session.open(AuthType.KAKAO_TALK, activity)
     }
@@ -57,11 +56,12 @@ class KakaoLogin(
         })
     }
 
-    /** 액티비티에 종속 되어있기때문에 액티비티 종료 시 세션을 닫아 주기 위한 메소드 */
+    /**
+     * sessionCallback 이 중첩으로 들어가는 걸 막기 위한 메소드
+     * 중첩으로 들어가게 되면 SessionCallback 이 여러번 호출되는 이슈가 있음
+     *  */
     fun onDestroy() {
-        sessionCallback?.let {
-            Session.getCurrentSession().removeCallback(sessionCallback)
-        }
+        Session.getCurrentSession().removeCallback(sessionCallback)
     }
 
     /** 로그인 세션을 성공, 실패 여부를 받기 위한 클래스 */
