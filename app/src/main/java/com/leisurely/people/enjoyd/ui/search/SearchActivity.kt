@@ -23,7 +23,7 @@ class SearchActivity :
     lateinit var searchHeaderLayout: SearchHeaderLayout
     lateinit var searchBasicLayout: SearchBasicLayout
     lateinit var searchRecentLayout: SearchRecentLayout
-    lateinit var searchAutoResultLayout: SearchAutoResultLayout
+    // lateinit var searchAutoResultLayout: SearchAutoResultLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +31,6 @@ class SearchActivity :
         searchHeaderLayout = SearchHeaderLayout(this, layout_header, viewModel)
         searchBasicLayout = SearchBasicLayout(this, layout_basic, viewModel)
         searchRecentLayout = SearchRecentLayout(this, layout_recent, viewModel)
-        searchAutoResultLayout = SearchAutoResultLayout(this, layout_auto_result, viewModel)
+        // searchAutoResultLayout = SearchAutoResultLayout(this, layout_auto_result, viewModel)
     }
 }

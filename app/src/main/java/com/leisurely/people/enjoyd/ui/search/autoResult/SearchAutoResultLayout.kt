@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.layout_search_auto_result.view.*
  * @author ricky
  * @since v1.0.0 / 2020.07.07
  */
+@Deprecated("기획적으로 확정이 난 내용이 아니어서 이 화면은 사용하지 않음")
 class SearchAutoResultLayout(activity: SearchActivity, layout: View, vm: SearchViewModel) {
     val tag = this.javaClass.canonicalName
 

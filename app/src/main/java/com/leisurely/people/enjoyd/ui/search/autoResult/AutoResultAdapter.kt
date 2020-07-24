@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.item_auto_result.view.*
  * @author ricky
  * @since v1.0.0 / 2020.07.01
  */
+@Deprecated("기획적으로 확정이 난 내용이 아니어서 이 화면은 사용하지 않음")
 class AutoResultAdapter :
     BaseListAdapter<AutoResult>(object : DiffUtil.ItemCallback<AutoResult>() {
         override fun areItemsTheSame(oldItem: AutoResult, newItem: AutoResult): Boolean {
