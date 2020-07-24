@@ -45,11 +45,16 @@ class SearchHeaderLayout(activity: SearchActivity, layout: View, vm: SearchViewM
             }
 
             btn_search.setOnClickListener {
+                // 만약 한 글자도 입력하지 않았을 경우 겁색하지 않는다.
                 if (vm.query.get().isNullOrEmpty()) {
                     Toast.makeText(this.context, "검색하기 위해 한 글자라도 입력해야 합니다.", Toast.LENGTH_SHORT)
                         .show()
-                } else
+                }
+                // 어떤 글자라도 입력했다면 검색을 시작한다.
+                else {
                     layout.hideKeyboard()
+
+                }
             }
         }
     }

@@ -102,4 +102,8 @@ class SearchViewModel : BaseViewModel() {
 
         _autoResults.value = listOf()
     }
+
+    fun searchBtnClick() {
+
+    }
 }
