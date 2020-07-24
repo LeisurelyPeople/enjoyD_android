@@ -104,6 +104,6 @@ class SearchViewModel : BaseViewModel() {
     }
 
     fun searchBtnClick() {
-
+        Log.i(tag, "searchBtnClick")
     }
 }

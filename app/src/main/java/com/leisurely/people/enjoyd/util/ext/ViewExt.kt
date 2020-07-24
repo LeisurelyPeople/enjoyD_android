@@ -7,6 +7,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
+import com.leisurely.people.enjoyd.util.OnSingleClickListener
 import io.reactivex.subjects.Subject
 
 /**
@@ -42,4 +43,16 @@ fun View.bindClick(onClick: Subject<Unit>) {
     this.setOnClickListener {
         onClick.onNext(Unit)
     }
+}
+
+/** RxJava 를 사용하지 않는 클릭리스너를 등록한다. */
+@BindingAdapter("onClick")
+fun View.setOnSingleClickListener(onClickAction: (() -> Unit)?) {
+    onClickAction?.also {
+        setOnClickListener(
+            OnSingleClickListener(
+                it
+            )
+        )
+    } ?: setOnClickListener(null)
 }
