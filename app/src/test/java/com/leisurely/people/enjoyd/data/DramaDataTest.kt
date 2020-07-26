@@ -1,9 +1,9 @@
 package com.leisurely.people.enjoyd.data
 
 import com.leisurely.people.enjoyd.AndroidBaseTest
-import com.leisurely.people.enjoyd.data.remote.Drama.DramaInfoPkResponse
-import com.leisurely.people.enjoyd.data.remote.Drama.DramaInfoResponse
-import com.leisurely.people.enjoyd.data.remote.Drama.SearchDrama
+import com.leisurely.people.enjoyd.data.remote.drama.DramaInfoPkResponse
+import com.leisurely.people.enjoyd.data.remote.drama.DramaInfoResponse
+import com.leisurely.people.enjoyd.data.remote.drama.SearchDrama
 import com.leisurely.people.enjoyd.util.Serializer.asJson
 import com.leisurely.people.enjoyd.util.Serializer.asJsonArray
 import com.leisurely.people.enjoyd.util.Serializer.parse

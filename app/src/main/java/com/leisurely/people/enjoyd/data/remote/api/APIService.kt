@@ -1,8 +1,8 @@
 package com.leisurely.people.enjoyd.data.remote.api
 
-import com.leisurely.people.enjoyd.data.remote.Drama.DramaInfoPkResponse
-import com.leisurely.people.enjoyd.data.remote.Drama.DramaInfoResponse
-import com.leisurely.people.enjoyd.data.remote.Drama.SearchDrama
+import com.leisurely.people.enjoyd.data.remote.drama.DramaInfoPkResponse
+import com.leisurely.people.enjoyd.data.remote.drama.DramaInfoResponse
+import com.leisurely.people.enjoyd.data.remote.drama.SearchDrama
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

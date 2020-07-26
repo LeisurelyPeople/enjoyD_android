@@ -1,4 +1,4 @@
-package com.leisurely.people.enjoyd.data.remote.Drama
+package com.leisurely.people.enjoyd.data.remote.drama
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

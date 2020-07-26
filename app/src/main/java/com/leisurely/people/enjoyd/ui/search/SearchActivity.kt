@@ -5,9 +5,10 @@ import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.ActivitySearchBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
 import com.leisurely.people.enjoyd.ui.search.basic.SearchBasicLayout
-import com.leisurely.people.enjoyd.ui.search.autoResult.SearchAutoResultLayout
 import com.leisurely.people.enjoyd.ui.search.header.SearchHeaderLayout
 import com.leisurely.people.enjoyd.ui.search.recent.SearchRecentLayout
+import com.leisurely.people.enjoyd.ui.search.searchResult.SearchResultAdapter
+import com.leisurely.people.enjoyd.ui.search.searchResult.SearchResultLayout
 import kotlinx.android.synthetic.main.activity_search.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -24,6 +25,7 @@ class SearchActivity :
     lateinit var searchBasicLayout: SearchBasicLayout
     lateinit var searchRecentLayout: SearchRecentLayout
     // lateinit var searchAutoResultLayout: SearchAutoResultLayout
+    lateinit var searchResultLayout: SearchResultLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,5 +34,6 @@ class SearchActivity :
         searchBasicLayout = SearchBasicLayout(this, layout_basic, viewModel)
         searchRecentLayout = SearchRecentLayout(this, layout_recent, viewModel)
         // searchAutoResultLayout = SearchAutoResultLayout(this, layout_auto_result, viewModel)
+        searchResultLayout = SearchResultLayout(this, layout_result, viewModel)
     }
 }

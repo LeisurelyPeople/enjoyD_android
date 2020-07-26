@@ -24,6 +24,19 @@
             layout="@layout/layout_search_header"
             app:vm="@{vm}" />
 
+        <!-- 검색 결과 데이터를 보여주는 레이아웃 -->
+        <include
+            android:id="@+id/layout_result"
+            layout="@layout/layout_search_result"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_header"
+            app:vm="@{vm}" />
+
+
         <!-- 검색 자동완성 리스트 레이아웃 (프로그램 / 배우) -->
         <include
             android:id="@+id/layout_auto_result"
