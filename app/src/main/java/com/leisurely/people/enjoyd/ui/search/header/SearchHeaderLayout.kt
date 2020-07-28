@@ -30,6 +30,7 @@ class SearchHeaderLayout(activity: SearchActivity, layout: View, vm: SearchViewM
         if (hasFocus) {
             // 빈 화면일 때, 한번이라도 클릭했을 때 & 안 클릭했을 때 보여주는 화면이 다르므로 vm 의 값 변경
             vm.initClick.set(true)
+            vm.isTyping.set(true)
 
             // 만약 한번이라도 실행되면 바로 없애준다.
             layout.et_query.onFocusChangeListener = null
@@ -53,7 +54,6 @@ class SearchHeaderLayout(activity: SearchActivity, layout: View, vm: SearchViewM
                 // 어떤 글자라도 입력했다면 검색을 시작한다.
                 else {
                     layout.hideKeyboard()
-
                 }
             }
         }

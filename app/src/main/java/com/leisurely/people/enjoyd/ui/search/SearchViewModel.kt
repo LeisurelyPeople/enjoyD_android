@@ -15,7 +15,6 @@ import com.leisurely.people.enjoyd.util.coroutine.CoroutineKey.SEARCH_CLICK_SEAR
 import com.leisurely.people.enjoyd.util.coroutine.SafeScope
 import com.leisurely.people.enjoyd.util.ext.applySingleSchedulers
 import com.leisurely.people.enjoyd.util.time.TimePoint
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.launch
 
 
@@ -50,6 +49,9 @@ class SearchViewModel : BaseViewModel() {
     /** 검색을 위한 액션을 취했는지 안했는지를 감별하는 flag 값 (editText 버튼을 눌렀을 시 false) */
     val initClick = ObservableField<Boolean>().apply { set(false) }
 
+    /** 현재 검색어를 입력중인지 아닌지를 확인할 수 있는 flag 값 (검색버튼을 눌렀을 시 false) */
+    val isTyping = ObservableField<Boolean>().apply { set(false) }
+
     /**
      * 검색 쿼리 textWatcher
      * 참고 : https://steemit.com/kr/@jeonghamin/andoird-5-mvvm-edittext
@@ -66,22 +68,20 @@ class SearchViewModel : BaseViewModel() {
         override fun afterTextChanged(s: Editable) {
             Log.i(tag, "afterTextChanged : s : $s")
 
-            // TODO 현재 LiveData인 _recents / _autoResults 가 정상적으로 적용되지 않음. 아키텍처에 대해 확인 필요
-            // 검색 내용값이 비어있다면 최신순 리스트를 보여주고, 아니라면 자동완성 리스트를 보여준다.
-            if (s.isEmpty()) {
-                _recents.value = listOf()
-            } else
-                _autoResults.value = listOf(
-                    AutoResult(true, "프로그램"),
-                    AutoResult(false, "소녀의 세계"),
-                    AutoResult(false, "소녀의 세계"),
-                    AutoResult(false, "소녀의 세계"),
-                    AutoResult(false, "소녀의 세계"),
-                    AutoResult(true, "배우"),
-                    AutoResult(false, "아이린"),
-                    AutoResult(false, "태연"),
-                    AutoResult(false, "혜리")
-                )
+//            // TODO 현재 _autoResults 를 사용하지 않으므로 주석처리함
+//            if (s.isNotEmpty()) {
+//                _autoResults.value = listOf(
+//                    AutoResult(true, "프로그램"),
+//                    AutoResult(false, "소녀의 세계"),
+//                    AutoResult(false, "소녀의 세계"),
+//                    AutoResult(false, "소녀의 세계"),
+//                    AutoResult(false, "소녀의 세계"),
+//                    AutoResult(true, "배우"),
+//                    AutoResult(false, "아이린"),
+//                    AutoResult(false, "태연"),
+//                    AutoResult(false, "혜리")
+//                )
+//            }
 
             // api 호출
             // recyclerview 에 반영
@@ -100,15 +100,15 @@ class SearchViewModel : BaseViewModel() {
         )
 
         _recents.value = listOf(
-            RecentSearch(0, "방금 검색바 클릭했을 때 세계"),
-            RecentSearch(1, "방금 검색바 클릭했을 때 세계"),
-            RecentSearch(2, "방금 검색바 클릭했을 때 세계"),
-            RecentSearch(3, "방금 검색바 클릭했을 때 세계"),
-            RecentSearch(4, "방금 검색바 클릭했을 때 세계"),
-            RecentSearch(5, "방금 검색바 클릭했을 때 세계"),
-            RecentSearch(6, "방금 검색바 클릭했을 때 세계"),
-            RecentSearch(7, "방금 검색바 클릭했을 때 세계"),
-            RecentSearch(8, "방금 검색바 클릭했을 때 세계")
+            RecentSearch(0, "방금 검색바 클릭했을 때 세계0"),
+            RecentSearch(1, "방금 검색바 클릭했을 때 세계1"),
+            RecentSearch(2, "방금 검색바 클릭했을 때 세계2"),
+            RecentSearch(3, "방금 검색바 클릭했을 때 세계3"),
+            RecentSearch(4, "방금 검색바 클릭했을 때 세계4"),
+            RecentSearch(5, "방금 검색바 클릭했을 때 세계5"),
+            RecentSearch(6, "방금 검색바 클릭했을 때 세계6"),
+            RecentSearch(7, "방금 검색바 클릭했을 때 세계7"),
+            RecentSearch(8, "방금 검색바 클릭했을 때 세계8")
         )
 
         _autoResults.value = listOf()
@@ -116,16 +116,22 @@ class SearchViewModel : BaseViewModel() {
         _searchResults.value = listOf()
     }
 
+    /** 검색 에딧 텍스트를 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
+    fun searchEditTextClick() {
+        isTyping.set(true)
+    }
+
     /** 검색 버튼을 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
     fun searchBtnClick() {
         SafeScope(logicName = SEARCH_CLICK_SEARCH_BTN).launch {
             Log.i(tag, "searchBtnClick")
 
-            // 서버로부터 데이터를 받아온다.
+            // 서버로부터 데이터를 받아온 후 키보드를 닫음 처리한다.
             DramaApi.dramaInfoSearch(
                 query.get(), "avg_rating"
             ).applySingleSchedulers(
             ).subscribe({ searchDramas ->
+                isTyping.set(false)
                 _searchResults.value = searchDramas
             }, { throwable: Throwable? ->
                 throwable?.printStackTrace()
@@ -134,6 +140,26 @@ class SearchViewModel : BaseViewModel() {
     }
 
     /** 최근 검색어를 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
-    fun searchRecentItemClick() {
+    fun searchRecentItemClick(recentText: String) {
+        query.set(recentText)
+        SafeScope(logicName = SEARCH_CLICK_SEARCH_BTN).launch {
+            Log.i(tag, "searchBtnClick")
+
+            // 서버로부터 데이터를 받아온 후 키보드를 닫음 처리한다.
+            DramaApi.dramaInfoSearch(
+                recentText, "avg_rating"
+            ).applySingleSchedulers(
+            ).subscribe({ searchDramas ->
+                isTyping.set(false)
+                _searchResults.value = searchDramas
+            }, { throwable: Throwable? ->
+                throwable?.printStackTrace()
+            })
+        }
+    }
+
+    /** 최근 검색어 아이템 삭제를 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
+    fun searchRecentItemRemoveClick(recent: RecentSearch) {
+        _recents.value = _recents.value?.filter { it != recent }
     }
 }

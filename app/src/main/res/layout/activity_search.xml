@@ -30,14 +30,15 @@
             layout="@layout/layout_search_result"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:visibility="@{!vm.isTyping ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_header"
             app:vm="@{vm}" />
 
-
-        <!-- 검색 자동완성 리스트 레이아웃 (프로그램 / 배우) -->
+        <!-- 현재 자동완성 리스트를 사용하지 않으므로 주석 처리 함
+        &lt;!&ndash; 검색 자동완성 리스트 레이아웃 (프로그램 / 배우) &ndash;&gt;
         <include
             android:id="@+id/layout_auto_result"
             layout="@layout/layout_search_auto_result"
@@ -49,6 +50,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_header"
             app:vm="@{vm}" />
+            -->
 
         <!-- 최근 검색어 리스트 레이아웃 -->
         <include
@@ -56,7 +58,7 @@
             layout="@layout/layout_search_recent"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="@{vm.initClick &amp;&amp; vm.query.length() == 0 ? View.VISIBLE : View.GONE}"
+            android:visibility="@{vm.initClick &amp;&amp; vm.isTyping ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

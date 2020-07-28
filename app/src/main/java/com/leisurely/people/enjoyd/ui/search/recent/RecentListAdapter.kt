@@ -2,7 +2,6 @@ package com.leisurely.people.enjoyd.ui.search.recent
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.DiffUtil
@@ -10,8 +9,8 @@ import com.leisurely.people.enjoyd.data.local.RecentSearch
 import com.leisurely.people.enjoyd.databinding.ItemRecentBinding
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseItemVH
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseListAdapter
-import com.leisurely.people.enjoyd.ui.base.adapter.OnRecyclerViewItemClick
 import com.leisurely.people.enjoyd.ui.search.SearchViewModel
+import com.leisurely.people.enjoyd.util.ext.setOnSingleClickListener
 import kotlinx.android.synthetic.main.item_recent.view.*
 
 /**
@@ -20,7 +19,7 @@ import kotlinx.android.synthetic.main.item_recent.view.*
  * @author ricky
  * @since v1.0.0 / 2020.07.01
  */
-class RecentListAdapter :
+class RecentListAdapter(val vm: SearchViewModel) :
     BaseListAdapter<RecentSearch>(object : DiffUtil.ItemCallback<RecentSearch>() {
         override fun areItemsTheSame(oldItem: RecentSearch, newItem: RecentSearch): Boolean {
             return oldItem == newItem // check uniqueness
@@ -37,9 +36,12 @@ class RecentListAdapter :
     override fun onCreateBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         return ItemRecentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             .apply {
-                root.recent_delete.setOnClickListener {
-                    val message = "${recent?.title} 삭제"
-                    Toast.makeText(parent.context, message, Toast.LENGTH_SHORT).show()
+                root.setOnSingleClickListener {
+                    recent?.title?.let { title -> vm.searchRecentItemClick(title) }
+                }
+
+                root.recent_delete.setOnSingleClickListener {
+                    recent?.let { vm.searchRecentItemRemoveClick(it) }
                 }
             }
     }

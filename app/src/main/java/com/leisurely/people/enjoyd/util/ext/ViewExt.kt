@@ -1,8 +1,10 @@
 package com.leisurely.people.enjoyd.util.ext
 
+import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -32,10 +34,20 @@ fun View.setGoneIf(value: Boolean) {
     isGone = value
 }
 
-/** 키보드 숨기기 */
+/** 일반 뷰에서 키보드 숨기기 */
 fun View.hideKeyboard() {
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
     imm?.hideSoftInputFromWindow(windowToken, 0)
+}
+
+/** 액티비티에서 키보드 숨기기 */
+fun AppCompatActivity.hideKeyboard() {
+    hideKeyboard(currentFocus ?: View(this))
+}
+
+/** Context 에서 키보드 숨기기 */
+fun Context.hideKeyboard(view: View) {
+    view.hideKeyboard()
 }
 
 @BindingAdapter("onClick")

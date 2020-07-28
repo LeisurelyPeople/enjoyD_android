@@ -20,7 +20,7 @@ class SearchRecentLayout(activity: SearchActivity, layout: View, vm: SearchViewM
 
     /** 최근 검색어 리스트 레이아웃을 초기화 한다. */
     init {
-        val adapter = RecentListAdapter()
+        val adapter = RecentListAdapter(vm)
         layout.rv_recents.adapter = adapter
     }
 }
