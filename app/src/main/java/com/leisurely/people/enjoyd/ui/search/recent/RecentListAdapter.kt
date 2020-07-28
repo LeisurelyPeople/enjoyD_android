@@ -10,6 +10,8 @@ import com.leisurely.people.enjoyd.data.local.RecentSearch
 import com.leisurely.people.enjoyd.databinding.ItemRecentBinding
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseItemVH
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseListAdapter
+import com.leisurely.people.enjoyd.ui.base.adapter.OnRecyclerViewItemClick
+import com.leisurely.people.enjoyd.ui.search.SearchViewModel
 import kotlinx.android.synthetic.main.item_recent.view.*
 
 /**
@@ -36,12 +38,7 @@ class RecentListAdapter :
         return ItemRecentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             .apply {
                 root.recent_delete.setOnClickListener {
-                    val message = "${root.recent_title.text} 삭제"
-                    Toast.makeText(parent.context, message, Toast.LENGTH_SHORT).show()
-                }
-
-                root.recent_title.setOnClickListener {
-                    val message = root.recent_title.text
+                    val message = "${recent.title} 삭제"
                     Toast.makeText(parent.context, message, Toast.LENGTH_SHORT).show()
                 }
             }

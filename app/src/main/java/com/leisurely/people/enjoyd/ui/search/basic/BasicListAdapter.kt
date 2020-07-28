@@ -34,7 +34,7 @@ class BasicListAdapter : BaseListAdapter<String>(object : DiffUtil.ItemCallback<
         return ItemBasicBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             .apply {
                 root.basic_title.setOnClickListener {
-                    Toast.makeText(it.context, root.basic_title.text, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(it.context, basic, Toast.LENGTH_SHORT).show()
                 }
             }
     }
