@@ -6,6 +6,7 @@ import com.leisurely.people.enjoyd.data.remote.drama.SearchDrama
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * EnjoyD Api 들을 관리하는 인터페이스
@@ -24,5 +25,8 @@ interface APIService {
 
     /** 드라마 정보 검색 API (/dramas/info/search) */
     @GET("/dramas/info/search/")
-    fun dramasInfoSearch(): Single<List<SearchDrama>>
+    fun dramasInfoSearch(
+        @Query("search") search: String?,
+        @Query("order") order: String = "avg_rating"
+    ): Single<List<SearchDrama>>
 }

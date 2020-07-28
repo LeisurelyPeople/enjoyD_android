@@ -45,10 +45,10 @@ class DramaApiTest : AndroidBaseTest() {
     }
 
     /** 드라마 정보 검색 API 를 테스트한다. */
-    @Ignore("서버 API 호출 최소화")
+    // @Ignore("서버 API 호출 최소화")
     @Test
     fun dramasInfoSearchTest() {
-        val dramaInfoSearchResponse = testApi.dramasInfoSearch()
+        val dramaInfoSearchResponse = testApi.dramasInfoSearch("abcd")
         dramaInfoSearchResponse.doOnSuccess {
             println("doOnSuccess : $it")
         }.test()

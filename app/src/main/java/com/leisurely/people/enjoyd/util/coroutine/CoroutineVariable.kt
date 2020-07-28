@@ -2,6 +2,10 @@ package com.leisurely.people.enjoyd.util.coroutine
 
 import android.content.Context
 import com.leisurely.people.enjoyd.BuildConfig
+import com.leisurely.people.enjoyd.data.remote.api.APIService
+import com.leisurely.people.enjoyd.di.provideApi
+import com.leisurely.people.enjoyd.di.provideOkHttpClient
+import com.leisurely.people.enjoyd.di.provideRetrofit
 
 /**
  * coroutine 패키지 내의 파일이나, 코루틴 로직에서 사용하는 변수 모음
@@ -13,6 +17,10 @@ import com.leisurely.people.enjoyd.BuildConfig
 
 // 전역 context
 lateinit var appContext: Context
+
+val apiService: APIService by lazy {
+    provideApi(provideRetrofit(provideOkHttpClient()))
+}
 
 // 앱 버전 정보
 val appVersion: String by lazy { BuildConfig.VERSION_NAME }

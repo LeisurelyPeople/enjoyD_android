@@ -9,8 +9,14 @@ import androidx.lifecycle.MutableLiveData
 import com.leisurely.people.enjoyd.data.local.RecentSearch
 import com.leisurely.people.enjoyd.data.remote.drama.SearchDrama
 import com.leisurely.people.enjoyd.data.remote.search.AutoResult
+import com.leisurely.people.enjoyd.model.api.DramaApi
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
+import com.leisurely.people.enjoyd.util.coroutine.CoroutineKey.SEARCH_CLICK_SEARCH_BTN
+import com.leisurely.people.enjoyd.util.coroutine.SafeScope
+import com.leisurely.people.enjoyd.util.ext.applySingleSchedulers
 import com.leisurely.people.enjoyd.util.time.TimePoint
+import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.launch
 
 
 /**
@@ -112,20 +118,22 @@ class SearchViewModel : BaseViewModel() {
 
     /** 검색 버튼을 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
     fun searchBtnClick() {
-        Log.i(tag, "searchBtnClick")
+        SafeScope(logicName = SEARCH_CLICK_SEARCH_BTN).launch {
+            Log.i(tag, "searchBtnClick")
 
-        _searchResults.value = listOf(
-            SearchDrama(0, "소녀의 세계1"),
-            SearchDrama(1, "소녀의 세계2"),
-            SearchDrama(2, "소녀의 세계3"),
-            SearchDrama(3, "소녀의 세계4"),
-            SearchDrama(4, "소녀의 세계5"),
-            SearchDrama(5, "소녀의 세계6"),
-            SearchDrama(6, "소녀의 세계7"),
-            SearchDrama(7, "소녀의 세계8"),
-            SearchDrama(8, "소녀의 세계9"),
-            SearchDrama(9, "소녀의 세계10"),
-            SearchDrama(10, "소녀의 세계11")
-        )
+            // 서버로부터 데이터를 받아온다.
+            DramaApi.dramaInfoSearch(
+                query.get(), "avg_rating"
+            ).applySingleSchedulers(
+            ).subscribe({ searchDramas ->
+                _searchResults.value = searchDramas
+            }, { throwable: Throwable? ->
+                throwable?.printStackTrace()
+            })
+        }
+    }
+
+    /** 최근 검색어를 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
+    fun searchRecentItemClick() {
     }
 }
