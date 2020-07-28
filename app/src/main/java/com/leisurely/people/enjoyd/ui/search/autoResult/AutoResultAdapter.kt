@@ -57,7 +57,7 @@ class AutoResultAdapter :
                 LayoutInflater.from(parent.context), parent, false
             ).apply {
                 root.setOnClickListener {
-                    Toast.makeText(parent.context, autoResult.title, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(parent.context, autoResult?.title, Toast.LENGTH_SHORT).show()
                 }
             }
     }

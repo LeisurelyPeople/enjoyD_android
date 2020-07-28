@@ -37,7 +37,7 @@ class SearchResultAdapter : BaseListAdapter<SearchDrama>(
         return ItemSearchResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             .apply {
                 root.setOnClickListener {
-                    Toast.makeText(it.context, searchResult.title, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(it.context, searchResult?.title, Toast.LENGTH_SHORT).show()
                 }
             }
     }

@@ -38,7 +38,7 @@ class RecentListAdapter :
         return ItemRecentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             .apply {
                 root.recent_delete.setOnClickListener {
-                    val message = "${recent.title} 삭제"
+                    val message = "${recent?.title} 삭제"
                     Toast.makeText(parent.context, message, Toast.LENGTH_SHORT).show()
                 }
             }
