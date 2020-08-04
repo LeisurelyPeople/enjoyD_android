@@ -3,6 +3,7 @@ package com.leisurely.people.enjoyd.ui.search
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -116,6 +117,20 @@ class SearchViewModel : BaseViewModel() {
         _searchResults.value = listOf()
     }
 
+    /**
+     * 검색 EditText 에 한 번이라도 포커스가 들어올 시 실행되는 리스너
+     * 추천 레이아웃을 가린 후, 최근 검색어 레이아웃을 보여준다.
+     */
+    val queryOneFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+        Log.i(tag, "$hasFocus")
+        // 만약 포커스 된 적 있던 경우 실행하지 않는다.
+        if (initClick.get() == false && hasFocus) {
+            // 한번이라도 클릭했을 때 & 안 클릭했을 때 보여주는 화면이 다르므로 관련 flag 값 변경
+            initClick.set(true)
+            isTyping.set(true)
+        }
+    }
+
     /** 검색 에딧 텍스트를 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
     fun searchEditTextClick() {
         isTyping.set(true)
@@ -123,6 +138,11 @@ class SearchViewModel : BaseViewModel() {
 
     /** 검색 버튼을 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
     fun searchBtnClick() {
+        if (query.get().isNullOrEmpty()) {
+            liveToastMessage.value = "최소 한 글자 이상 입력해주세요."
+            return
+        }
+
         SafeScope(logicName = SEARCH_CLICK_SEARCH_BTN).launch {
             Log.i(tag, "searchBtnClick")
 

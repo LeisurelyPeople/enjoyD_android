@@ -39,12 +39,13 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/layout_search_header_et_normal">
 
-            <com.leisurely.people.enjoyd.ui.search.header.SearchHeaderEditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_query"
                 style="@style/SearchEditTextStyle"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
+                app:onFocusChangeListener="@{vm.queryOneFocusChangeListener}"
                 android:addTextChangedListener="@{vm.queryWatcher}"
                 android:background="@null"
                 android:gravity="center_vertical"
