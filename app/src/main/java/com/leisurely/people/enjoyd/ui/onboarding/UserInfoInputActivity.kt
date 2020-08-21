@@ -3,7 +3,12 @@ package com.leisurely.people.enjoyd.ui.onboarding
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.SpannedString
+import android.text.style.ForegroundColorSpan
 import androidx.core.os.bundleOf
+import androidx.core.text.buildSpannedString
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.ActivityUserInfoInputBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
@@ -28,6 +33,29 @@ class UserInfoInputActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.tvScreenTitle.text = getScreenTitleStringBuilder()
+    }
+
+    private fun getScreenTitleStringBuilder(): SpannedString {
+        // TODO 폰트 추가 후 폰트 적용하기
+        return buildSpannedString {
+            append(SpannableString("모든 웹드라마").apply {
+                setSpan(
+                    ForegroundColorSpan(resources.getColor(R.color.color_main_100, theme)),
+                    0,
+                    this.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            })
+            append(SpannableString("를 한곳에서\n간편하게 즐기는 방법").apply {
+                setSpan(
+                    ForegroundColorSpan(resources.getColor(R.color.color_grey_0, theme)),
+                    0,
+                    this.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            })
+        }
     }
 
     companion object {

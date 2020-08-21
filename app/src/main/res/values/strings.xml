@@ -6,4 +6,25 @@
     <string name="kakao_login_title">Kakaotalk 계정으로 로그인하기</string>
 
     <string name="connection_failed">연결에 실패했습니다.\n잠시 후 다시 시도해주세요.</string>
+
+    <!-- 회원가입 (Sign up) -->
+    <string name="user_name_input_hint">이름 (닉네임)</string>
+    <string name="user_name_warning_text">이름을 입력해주세요.</string>
+    <string name="user_birthday_input_hint">생년월일</string>
+    <string name="user_birthday_warning_text">생년월일을 형식에 맞게 입력해주세요.</string>
+    <string name="user_gender_warning_text">성별을 선택해주세요.</string>
+    <string name="user_job_input_hint">직업</string>
+    <string name="user_job_warning_text">직업을 선택해주세요.</string>
+    <string name="sign_up">회원가입</string>
+
+
+    <!-- 공통 (common) -->
+    <string name="man">남자</string>
+    <string name="woman">여자</string>
+    <string name="not_selected">선택안함</string>
+    <string name="student">학생</string>
+    <string name="office_workers">학생</string>
+    <string name="etc">기타</string>
+
+    
 </resources>

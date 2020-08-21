@@ -18,6 +18,9 @@
     <color name="color_main_100">#6E47FF</color>
     <color name="color_main_200">#d21762</color>
 
+    <color name="color_edit_text_hint">#6a6a6a</color>
+    <color name="color_warning_text">#bfbfbf</color>
+
     <color name="ripple_effect_background">#FFFFFF</color>
 
     <color name="color_app_background">#212121</color>
