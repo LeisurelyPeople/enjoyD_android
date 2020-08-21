@@ -47,8 +47,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
             finish()
         })
 
-        viewModel.startOnBoarding.observe(this, Observer { signUpRequest ->
-            UserInfoInputActivity.startActivity(this@LoginActivity, signUpRequest)
+        viewModel.startOnBoarding.observe(this, Observer { socialLogin ->
+            UserInfoInputActivity.startActivity(this@LoginActivity, socialLogin)
         })
 
         viewModel.reStartLogin.observe(this, Observer {

@@ -19,12 +19,4 @@ data class SignUpRequest(
     val job: String,
     val birthday: String,
     val gender: Int
-) : Parcelable {
-    constructor(socialId: Long, name: String?, gender: Int?) : this(
-        socialId,
-        name ?: "",
-        "",
-        "",
-        gender ?: 0
-    )
-}
+) : Parcelable

@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import com.leisurely.people.enjoyd.R
-import com.leisurely.people.enjoyd.data.remote.data.request.SignUpRequest
 import com.leisurely.people.enjoyd.databinding.ActivityUserInfoInputBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
+import com.leisurely.people.enjoyd.ui.login.model.SocialLogin
 import com.leisurely.people.enjoyd.util.Constant
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -23,7 +23,7 @@ class UserInfoInputActivity :
     BaseActivity<ActivityUserInfoInputBinding, UserInfoInputViewModel>(R.layout.activity_user_info_input) {
 
     override val viewModel: UserInfoInputViewModel by viewModel {
-        parametersOf(intent.getParcelableExtra(Constant.EXTRA_SIGN_UP_REQUEST))
+        parametersOf(intent.getParcelableExtra(Constant.EXTRA_SOCIAL_LOGIN_INFO))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,9 +31,9 @@ class UserInfoInputActivity :
     }
 
     companion object {
-        fun startActivity(context: Context, signUpRequest: SignUpRequest) {
+        fun startActivity(context: Context, socialLogin: SocialLogin) {
             context.startActivity(Intent(context, UserInfoInputActivity::class.java).apply {
-                putExtras(bundleOf(Constant.EXTRA_SIGN_UP_REQUEST to signUpRequest))
+                putExtras(bundleOf(Constant.EXTRA_SOCIAL_LOGIN_INFO to socialLogin))
             })
         }
     }

@@ -16,6 +16,7 @@ import com.leisurely.people.enjoyd.data.remote.data.request.SignUpRequest
 import com.leisurely.people.enjoyd.ui.base.BaseSocialLogin
 import com.leisurely.people.enjoyd.ui.base.OnLoginFail
 import com.leisurely.people.enjoyd.ui.base.OnLoginSuccess
+import com.leisurely.people.enjoyd.ui.login.model.SocialLogin
 
 /**
  * 카카오 로그인 관리 클래스
@@ -26,9 +27,9 @@ import com.leisurely.people.enjoyd.ui.base.OnLoginSuccess
 
 class KakaoLogin(
     activity: AppCompatActivity,
-    onLoginSuccess: OnLoginSuccess<SignUpRequest>? = null,
+    onLoginSuccess: OnLoginSuccess<SocialLogin>? = null,
     onLoginFail: OnLoginFail? = null
-) : BaseSocialLogin<SignUpRequest>(activity, onLoginSuccess, onLoginFail) {
+) : BaseSocialLogin<SocialLogin>(activity, onLoginSuccess, onLoginFail) {
 
     private var sessionCallback: SessionCallback = SessionCallback()
 
@@ -93,12 +94,12 @@ class KakaoLogin(
             override fun onSuccess(result: MeV2Response) {
                 val userAccount: UserAccount? = result.kakaoAccount
                 userAccount?.let {
-                    val gender = when {
-                        it.gender?.name == "female" -> 1
-                        it.gender?.name == "male" -> 0
+                    val gender = when (it.gender?.name) {
+                        "female" -> 1
+                        "male" -> 0
                         else -> null
                     }
-                    callbackAsSuccess(SignUpRequest(result.id, it.profile.nickname, gender))
+                    callbackAsSuccess(SocialLogin(result.id, it.profile?.nickname, gender))
                     return
                 } ?: kotlin.run {
                     callbackAsFail(Exception())
