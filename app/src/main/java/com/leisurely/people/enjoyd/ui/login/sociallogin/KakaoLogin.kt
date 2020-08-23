@@ -12,7 +12,7 @@ import com.kakao.usermgmt.callback.MeV2ResponseCallback
 import com.kakao.usermgmt.response.MeV2Response
 import com.kakao.usermgmt.response.model.UserAccount
 import com.kakao.util.exception.KakaoException
-import com.leisurely.people.enjoyd.data.remote.data.request.SignUpRequest
+import com.leisurely.people.enjoyd.model.enums.Gender
 import com.leisurely.people.enjoyd.ui.base.BaseSocialLogin
 import com.leisurely.people.enjoyd.ui.base.OnLoginFail
 import com.leisurely.people.enjoyd.ui.base.OnLoginSuccess
@@ -95,8 +95,8 @@ class KakaoLogin(
                 val userAccount: UserAccount? = result.kakaoAccount
                 userAccount?.let {
                     val gender = when (it.gender?.name) {
-                        "female" -> 1
-                        "male" -> 0
+                        com.kakao.usermgmt.response.model.Gender.MALE.name -> Gender.MAN.value
+                        com.kakao.usermgmt.response.model.Gender.FEMALE.name -> Gender.WOMAN.value
                         else -> null
                     }
                     callbackAsSuccess(SocialLogin(result.id, it.profile?.nickname, gender))
