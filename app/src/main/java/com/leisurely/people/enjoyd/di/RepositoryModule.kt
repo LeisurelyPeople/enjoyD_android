@@ -1,6 +1,7 @@
 package com.leisurely.people.enjoyd.di
 
-import com.leisurely.people.enjoyd.data.repository.LoginRepository
+import com.leisurely.people.enjoyd.data.repository.AccountRepository
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 /**
@@ -12,6 +13,6 @@ import org.koin.dsl.module
 
 val repositoryModule = module {
     single {
-        LoginRepository(get())
+        AccountRepository(get(), get())
     }
 }

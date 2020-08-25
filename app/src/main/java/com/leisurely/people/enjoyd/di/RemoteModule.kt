@@ -1,6 +1,6 @@
 package com.leisurely.people.enjoyd.di
 
-import com.leisurely.people.enjoyd.data.remote.source.LoginRemoteDataSource
+import com.leisurely.people.enjoyd.data.remote.source.AccountRemoteDataSource
 import org.koin.dsl.module
 
 /**
@@ -12,6 +12,6 @@ import org.koin.dsl.module
 
 val remoteModule = module {
     single {
-        LoginRemoteDataSource(get())
+        AccountRemoteDataSource(get())
     }
 }
