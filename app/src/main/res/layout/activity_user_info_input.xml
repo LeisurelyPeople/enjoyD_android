@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="com.leisurely.people.enjoyd.model.enums.Gender" />
+
+        <variable
+            name="vm"
+            type="com.leisurely.people.enjoyd.ui.onboarding.UserInfoInputViewModel" />
 
     </data>
 
@@ -35,6 +42,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="?android:selectableItemBackgroundBorderless"
+                        android:onClick="@{() -> vm.onClickBackScreen()}"
                         android:src="@drawable/btn_back" />
 
                 </androidx.appcompat.widget.Toolbar>
@@ -68,7 +76,7 @@
                 tools:text="모든 웹드라마를 한곳에서\n간편하게 즐기는 방법"
                 tools:textColor="@color/color_grey_0" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/edit_user_name"
                 style="@style/UserInfoInputEditTextStyle"
                 android:layout_width="0dp"
@@ -76,9 +84,11 @@
                 android:layout_marginTop="32dp"
                 android:background="@drawable/bg_user_info_input"
                 android:hint="@string/user_name_input_hint"
+                android:text="@={vm.username}"
                 app:layout_constraintEnd_toEndOf="@id/guide_right"
                 app:layout_constraintStart_toStartOf="@id/guide_left"
-                app:layout_constraintTop_toBottomOf="@+id/tv_screen_title" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_screen_title"
+                bind:onTextChanged="@{(c, _, __, ___) -> vm.onUsernameChanged(c)}" />
 
             <LinearLayout
                 android:id="@+id/ll_user_name_warning_layout"
@@ -86,6 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
+                android:invisibleIf="@{!vm.showsUsernameWarningMsg}"
                 app:layout_constraintEnd_toEndOf="@id/guide_right"
                 app:layout_constraintStart_toStartOf="@id/guide_left"
                 app:layout_constraintTop_toBottomOf="@+id/edit_user_name">
@@ -118,6 +129,8 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="@string/user_birthday_input_hint"
+                android:onClick="@{() -> vm.onClickUserBirthDay()}"
+                android:text="@{vm.userBirthDay}"
                 app:layout_constraintEnd_toEndOf="@id/guide_right"
                 app:layout_constraintStart_toStartOf="@id/guide_left"
                 app:layout_constraintTop_toBottomOf="@+id/ll_user_name_warning_layout" />
@@ -128,6 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
+                android:invisibleIf="@{!vm.showsUserBirthDayWarningMsg}"
                 app:layout_constraintEnd_toEndOf="@id/guide_right"
                 app:layout_constraintStart_toStartOf="@id/guide_left"
                 app:layout_constraintTop_toBottomOf="@+id/edit_user_birthday">
@@ -165,6 +179,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:checked="@{vm.userGender == Gender.MAN.value}"
+                    android:onClick="@{() -> vm.onUserGenderChanged(Gender.MAN)}"
                     android:text="@string/man" />
 
                 <RadioButton
@@ -175,6 +191,8 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
+                    android:checked="@{vm.userGender == Gender.WOMAN.value}"
+                    android:onClick="@{() -> vm.onUserGenderChanged(Gender.WOMAN)}"
                     android:text="@string/woman" />
 
                 <RadioButton
@@ -183,6 +201,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:checked="@{vm.userGender == Gender.NOT_SELECTED.value}"
+                    android:onClick="@{() -> vm.onUserGenderChanged(Gender.NOT_SELECTED)}"
                     android:text="@string/not_selected" />
 
             </RadioGroup>
@@ -193,6 +213,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
+                android:invisibleIf="@{!vm.showsUserGenderWarningMsg}"
                 app:layout_constraintEnd_toEndOf="@id/guide_right"
                 app:layout_constraintStart_toStartOf="@id/guide_left"
                 app:layout_constraintTop_toBottomOf="@+id/rg_user_gender">
@@ -230,6 +251,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{() -> vm.onUserJobChanged(@string/student, false)}"
                     android:text="@string/student" />
 
                 <RadioButton
@@ -240,6 +262,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
+                    android:onClick="@{() -> vm.onUserJobChanged(@string/office_workers, false)}"
                     android:text="@string/office_workers" />
 
                 <RadioButton
@@ -248,6 +271,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="@{() -> vm.onUserJobChanged(@string/etc, true)}"
                     android:text="@string/etc" />
             </RadioGroup>
 
@@ -259,9 +283,12 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_user_info_input"
                 android:hint="@string/user_job_input_hint"
+                android:text="@={vm.userDetailJob}"
+                android:visibleIf="@{vm.userJob.equals(@string/etc)}"
                 app:layout_constraintEnd_toEndOf="@id/guide_right"
                 app:layout_constraintStart_toStartOf="@id/guide_left"
-                app:layout_constraintTop_toBottomOf="@+id/rb_user_job" />
+                app:layout_constraintTop_toBottomOf="@+id/rb_user_job"
+                bind:onTextChanged="@{(c, _, __, ___) -> vm.onUserDetailJobChanged(c)}" />
 
             <LinearLayout
                 android:id="@+id/ll_user_job_warning_layout"
@@ -269,6 +296,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
+                android:invisibleIf="@{!vm.showsUserJobWarningMsg &amp;&amp; !vm.showsUserDetailJobWarningMsg}"
                 app:layout_constraintEnd_toEndOf="@id/guide_right"
                 app:layout_constraintStart_toStartOf="@id/guide_left"
                 app:layout_constraintTop_toBottomOf="@+id/edit_user_job">
@@ -284,7 +312,7 @@
                     android:layout_marginStart="4dp"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="@string/user_job_warning_text"
+                    android:text="@{vm.userJob.equals(@string/etc) ? @string/user_detail_job_warning_text : @string/user_job_warning_text}"
                     android:textColor="@color/color_warning_text"
                     app:layout_constraintStart_toStartOf="@id/guide_left"
                     tools:text="@string/user_job_warning_text" />
@@ -295,6 +323,8 @@
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginBottom="48dp"
+                android:enabled="@{!vm.showsUsernameWarningMsg &amp;&amp; !vm.showsUserBirthDayWarningMsg &amp;&amp; !vm.showsUserGenderWarningMsg &amp;&amp; !vm.showsUserJobWarningMsg &amp;&amp; !vm.showsUserDetailJobWarningMsg}"
+                android:onClick="@{() -> vm.onClickSignUp()}"
                 android:text="@string/sign_up"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guide_right"
