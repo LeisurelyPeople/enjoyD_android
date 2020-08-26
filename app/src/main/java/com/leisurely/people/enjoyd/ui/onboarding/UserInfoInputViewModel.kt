@@ -51,13 +51,14 @@ class UserInfoInputViewModel(
 
     /** 유저 성별 LiveData */
     private val _userGender: MutableLiveData<Int> = MutableLiveData<Int>().apply {
-        value = socialLogin.gender
+        /** Int 값인 경우 null 이닌 -1 타입을 디폴트로 작성 */
+        value = socialLogin.gender ?: -1
     }
     val userGender: LiveData<Int> = _userGender
 
     /** 유저 성별 경고 문구 LiveData */
     private val _showsUserGenderWarningMsg: MutableLiveData<Boolean> =
-        MutableLiveData(_userGender.value == null)
+        MutableLiveData(_userGender.value == -1)
     val showsUserGenderWarningMsg: MutableLiveData<Boolean> = _showsUserGenderWarningMsg
 
     /** 유저 직업 LiveData */
@@ -167,10 +168,18 @@ class UserInfoInputViewModel(
             showToast("생일을 입력해주세요.")
             return
         }
-        val userGender = _userGender.value ?: kotlin.run {
+
+        val userGender = _userGender.value?.let {
+            if (it == -1) {
+                showToast("성별을 선택해주세요.")
+                return
+            }
+            it
+        } ?: kotlin.run {
             showToast("성별을 선택해주세요.")
             return
         }
+
         val signUpRequest = SignUpRequest(userSocialId, username, userJob, userBirthday, userGender)
 
         accountRepository.requestSignUp(signUpRequest)
