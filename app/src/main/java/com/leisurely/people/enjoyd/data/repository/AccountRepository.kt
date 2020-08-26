@@ -40,4 +40,8 @@ class AccountRepository(
             accountLocalDataSource.deleteUserToken()
         }.ignoreElement()
     }
+
+    fun getUserToken(): UserTokenResponse? {
+        return accountLocalDataSource.getUserTokenToSharedPrefs()
+    }
 }
