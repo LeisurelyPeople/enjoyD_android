@@ -86,8 +86,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
     }
 
     companion object {
-        fun startActivity(context: Context) {
-            context.startActivity(Intent(context, LoginActivity::class.java))
+        fun getIntent(context: Context): Intent {
+            return Intent(context, LoginActivity::class.java)
         }
     }
 }

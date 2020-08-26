@@ -27,5 +27,9 @@
     <string name="office_workers">직장인</string>
     <string name="etc">기타</string>
 
-    
+
+    <!-- 에러 관련 -->
+    <string name="network_disconnected_notice">네트워크 상태를 확인해주세요.</string>
+
+
 </resources>
