@@ -24,6 +24,6 @@ val viewModelModule = module {
         LoginViewModel(kakaoLogin, get())
     }
     viewModel { (socialLogin: SocialLogin) ->
-        UserInfoInputViewModel(socialLogin)
+        UserInfoInputViewModel(socialLogin, get())
     }
 }

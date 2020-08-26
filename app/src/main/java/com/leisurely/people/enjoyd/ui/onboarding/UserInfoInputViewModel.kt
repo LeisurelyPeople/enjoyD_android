@@ -3,11 +3,14 @@ package com.leisurely.people.enjoyd.ui.onboarding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.leisurely.people.enjoyd.data.remote.data.request.SignUpRequest
+import com.leisurely.people.enjoyd.data.repository.AccountRepository
 import com.leisurely.people.enjoyd.model.enums.Gender
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.ui.login.model.SocialLogin
+import com.leisurely.people.enjoyd.util.ext.applySchedulers
 import com.leisurely.people.enjoyd.util.ext.convertToServerDate
 import com.leisurely.people.enjoyd.util.lifecycle.LiveEvent
+import com.leisurely.people.enjoyd.util.observer.DisposableCompletableObserver
 
 /**
  * UserInfoInputActivity ViewModel
@@ -16,7 +19,10 @@ import com.leisurely.people.enjoyd.util.lifecycle.LiveEvent
  * @since v1.0.0 / 2020.07.20
  */
 
-class UserInfoInputViewModel(socialLogin: SocialLogin) : BaseViewModel() {
+class UserInfoInputViewModel(
+    socialLogin: SocialLogin,
+    private val accountRepository: AccountRepository
+) : BaseViewModel() {
 
     /** 유저 소셜로그인 고유값 LiveData */
     private val _userSocialId: MutableLiveData<Long> = MutableLiveData(socialLogin.socialId ?: -1)
@@ -74,6 +80,10 @@ class UserInfoInputViewModel(socialLogin: SocialLogin) : BaseViewModel() {
     private val _startBackScreen: LiveEvent<Unit> = LiveEvent()
     val startBackScreen: LiveEvent<Unit> = _startBackScreen
 
+    /** 메인 화면으로 이동 시키기 위한 LiveData */
+    private val _startMain: LiveEvent<Unit> = LiveEvent()
+    val startMain: LiveEvent<Unit> = _startMain
+
 
     /** 유저 이름 텍스트 변화 감지 메소드 */
     fun onUsernameChanged(charSequence: CharSequence) {
@@ -123,16 +133,24 @@ class UserInfoInputViewModel(socialLogin: SocialLogin) : BaseViewModel() {
 
     /** 회원가입 작업 메소드 */
     fun onClickSignUp() {
-        val userSocialId = _userSocialId.value ?: kotlin.run {
-            /** 소셜아이디가 없는 경우 로그인 화면으로 다시 전환하기 */
+        /** social id 값이 null or -1 인 경우 로그인 화면으로 전환 */
+        val userSocialId = _userSocialId.value?.let {
+            if (it == -1L) {
+                showToast("잠시 후 다시 시도해주세요.")
+                _startBackScreen.value = null
+                return
+            } else {
+                it
+            }
+        } ?: kotlin.run {
+            showToast("잠시 후 다시 시도해주세요.")
             _startBackScreen.value = null
             return
         }
-        val username = _username.value ?: kotlin.run {
-            showToast("이름을 입력해주세요.")
-            return
-        }
+        val username = _username.value!!
+
         val userJob = _userJob.value?.let {
+            /** 기타 직업 군이면 상세 직업 정보를 입력 */
             if (it == "기타") {
                 _userDetailJob.value ?: kotlin.run {
                     showToast("상세 직업을 입력해주세요.")
@@ -153,9 +171,20 @@ class UserInfoInputViewModel(socialLogin: SocialLogin) : BaseViewModel() {
             showToast("성별을 선택해주세요.")
             return
         }
-        val test = SignUpRequest(userSocialId, username,userJob,userBirthday, userGender)
+        val signUpRequest = SignUpRequest(userSocialId, username, userJob, userBirthday, userGender)
 
-        // TODO 회원가입 api 연결작업
+        accountRepository.requestSignUp(signUpRequest)
+            .applySchedulers()
+            .subscribeWith(object : DisposableCompletableObserver() {
+                override fun onComplete() {
+                    _startMain.value = null
+                }
+
+                override fun onError(e: Throwable) {
+                    super.onError(e)
+                    showToast("잠시 후 다시 시도해주세요.")
+                }
+            }).addDisposable()
     }
 
 }

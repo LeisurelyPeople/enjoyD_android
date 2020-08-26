@@ -43,8 +43,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         viewModel.startMain.observe(this, Observer { userTokenResponse ->
             /** 사용자 토큰 SharedPreference 저장 후 메인화면으로 전환 */
             TokenManager.setUserToken(this, userTokenResponse)
-            MainActivity.startActivity(this@LoginActivity)
-            finish()
+            startActivity(MainActivity.getIntent(this))
         })
 
         viewModel.startOnBoarding.observe(this, Observer { socialLogin ->

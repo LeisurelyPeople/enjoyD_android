@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import com.leisurely.people.enjoyd.databinding.ActivityUserInfoInputBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
 import com.leisurely.people.enjoyd.ui.login.model.SocialLogin
+import com.leisurely.people.enjoyd.ui.main.MainActivity
 import com.leisurely.people.enjoyd.util.Constant
 import com.leisurely.people.enjoyd.util.ext.add
 import com.leisurely.people.enjoyd.util.ext.formatToViewDate
@@ -46,6 +47,10 @@ class UserInfoInputActivity :
 
         viewModel.startBackScreen.observe(this, Observer {
             finish()
+        })
+
+        viewModel.startMain.observe(this, Observer {
+            startActivity(MainActivity.getIntent(this))
         })
     }
 
@@ -86,8 +91,8 @@ class UserInfoInputActivity :
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH)
         ).apply {
-            datePicker.minDate = calendar.time.add(Calendar.YEAR, -3).time
-            datePicker.maxDate = calendar.time.add(Calendar.DAY_OF_MONTH, 280).time
+            datePicker.minDate = calendar.time.add(Calendar.YEAR, -100).time
+            datePicker.maxDate = calendar.time.time
         }.show()
     }
 
