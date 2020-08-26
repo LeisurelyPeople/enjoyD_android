@@ -20,4 +20,7 @@ interface APIService {
 
     @POST("accounts/sign-in/")
     fun requestLogin(@Body data: HashMap<String, String>): Single<UserTokenResponse>
+
+    @POST("accounts/refresh/")
+    fun requestRefreshToken(@Body data: HashMap<String, String>): Single<UserTokenResponse>
 }

@@ -22,4 +22,8 @@ class AccountRemoteDataSource(private val apiService: APIService) {
     fun requestSignUp(signUpRequest: SignUpRequest): Single<UserTokenResponse> {
         return apiService.requestSignUp(signUpRequest)
     }
+
+    fun requestRefreshToken(refreshToken: String): Single<UserTokenResponse> {
+        return apiService.requestRefreshToken(hashMapOf("refresh_token" to refreshToken))
+    }
 }

@@ -32,4 +32,12 @@ class AccountRepository(
             accountLocalDataSource.saveUserTokenToSharedPrefs(it)
         }.ignoreElement()
     }
+
+    fun requestRefreshToken(refreshToken: String): Completable {
+        return accountRemoteDataSource.requestRefreshToken(refreshToken).doOnSuccess {
+            accountLocalDataSource.saveUserTokenToSharedPrefs(it)
+        }.doOnError {
+            accountLocalDataSource.deleteUserToken()
+        }.ignoreElement()
+    }
 }
