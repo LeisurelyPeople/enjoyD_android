@@ -35,8 +35,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    // kotlin Parcelize 기능을 사용하기 위한 구문
+    // 참고 : https://simsi6.tistory.com/69
+    androidExtensions {
+        experimental = true
     }
 
     dataBinding {

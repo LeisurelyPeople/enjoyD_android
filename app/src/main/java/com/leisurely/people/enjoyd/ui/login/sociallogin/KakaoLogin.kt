@@ -12,9 +12,11 @@ import com.kakao.usermgmt.callback.MeV2ResponseCallback
 import com.kakao.usermgmt.response.MeV2Response
 import com.kakao.usermgmt.response.model.UserAccount
 import com.kakao.util.exception.KakaoException
+import com.leisurely.people.enjoyd.model.enums.Gender
 import com.leisurely.people.enjoyd.ui.base.BaseSocialLogin
 import com.leisurely.people.enjoyd.ui.base.OnLoginFail
 import com.leisurely.people.enjoyd.ui.base.OnLoginSuccess
+import com.leisurely.people.enjoyd.ui.login.model.SocialLogin
 
 /**
  * 카카오 로그인 관리 클래스
@@ -25,11 +27,11 @@ import com.leisurely.people.enjoyd.ui.base.OnLoginSuccess
 
 class KakaoLogin(
     activity: AppCompatActivity,
-    onLoginSuccess: OnLoginSuccess<UserAccount>? = null,
+    onLoginSuccess: OnLoginSuccess<SocialLogin>? = null,
     onLoginFail: OnLoginFail? = null
-) : BaseSocialLogin<UserAccount>(activity, onLoginSuccess, onLoginFail) {
+) : BaseSocialLogin<SocialLogin>(activity, onLoginSuccess, onLoginFail) {
 
-    private var sessionCallback: SessionCallback? = null
+    private var sessionCallback: SessionCallback = SessionCallback()
 
     private val session by lazy {
         Session.getCurrentSession()
@@ -42,7 +44,6 @@ class KakaoLogin(
 
     /** 카카오 로그인을 처리하기 위한 메소드  */
     override fun login() {
-        sessionCallback = SessionCallback()
         session.addCallback(sessionCallback)
         session.open(AuthType.KAKAO_TALK, activity)
     }
@@ -56,11 +57,12 @@ class KakaoLogin(
         })
     }
 
-    /** 액티비티에 종속 되어있기때문에 액티비티 종료 시 세션을 닫아 주기 위한 메소드 */
+    /**
+     * sessionCallback 이 중첩으로 들어가는 걸 막기 위한 메소드
+     * 중첩으로 들어가게 되면 SessionCallback 이 여러번 호출되는 이슈가 있음
+     *  */
     fun onDestroy() {
-        sessionCallback?.let {
-            Session.getCurrentSession().removeCallback(sessionCallback)
-        }
+        Session.getCurrentSession().removeCallback(sessionCallback)
     }
 
     /** 로그인 세션을 성공, 실패 여부를 받기 위한 클래스 */
@@ -92,9 +94,16 @@ class KakaoLogin(
             override fun onSuccess(result: MeV2Response) {
                 val userAccount: UserAccount? = result.kakaoAccount
                 userAccount?.let {
-                    callbackAsSuccess(userAccount)
+                    val gender = when (it.gender?.name) {
+                        com.kakao.usermgmt.response.model.Gender.MALE.name -> Gender.MAN.value
+                        com.kakao.usermgmt.response.model.Gender.FEMALE.name -> Gender.WOMAN.value
+                        else -> null
+                    }
+                    callbackAsSuccess(SocialLogin(result.id, it.profile?.nickname, gender))
+                    return
+                } ?: kotlin.run {
+                    callbackAsFail(Exception())
                 }
-                /** TODO 서버 API 나온 후 UserAccount 값이 null 일 경우 처리 로직 추가 */
             }
 
             /** 프로필 정보 요청 실패 시 호출 되는 메소드 */
