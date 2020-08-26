@@ -2,6 +2,8 @@ package com.leisurely.people.enjoyd.util.ext
 
 import android.app.Activity
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import androidx.core.content.edit
 import com.leisurely.people.enjoyd.util.Constant
 
@@ -11,6 +13,18 @@ import com.leisurely.people.enjoyd.util.Constant
  * @author Wayne
  * @since v1.0.0 / 2020.07.20
  */
+
+
+fun Context.isNetworkConnected(): Boolean {
+    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val nw = connectivityManager.activeNetwork ?: return false
+    val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
+    return when {
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+        actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+        else -> false
+    }
+}
 
 fun Context.putSharedPreference(key: String, data: Any) {
     getSharedPreferences(Constant.PREF_NAME, Activity.MODE_PRIVATE).run {
