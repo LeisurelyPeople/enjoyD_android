@@ -21,8 +21,10 @@ class AccountRepository(
     private val accountLocalDataSource: AccountLocalDataSource
 ) {
 
-    fun requestLogin(socialId: String): Single<UserTokenResponse> {
-        return accountRemoteDataSource.requestLogin(socialId)
+    fun requestLogin(socialId: String): Completable {
+        return accountRemoteDataSource.requestLogin(socialId).doOnSuccess {
+            accountLocalDataSource.saveUserTokenToSharedPrefs(it)
+        }.ignoreElement()
     }
 
     fun requestSignUp(signUpRequest: SignUpRequest): Completable {

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.leisurely.people.enjoyd.R
-import com.leisurely.people.enjoyd.data.local.prefs.TokenManager
 import com.leisurely.people.enjoyd.databinding.ActivityLoginBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
 import com.leisurely.people.enjoyd.ui.login.sociallogin.KakaoLogin
@@ -40,9 +39,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         super.onCreate(savedInstanceState)
         setLoginBtnAnimation()
 
-        viewModel.startMain.observe(this, Observer { userTokenResponse ->
-            /** 사용자 토큰 SharedPreference 저장 후 메인화면으로 전환 */
-            TokenManager.setUserToken(this, userTokenResponse)
+        viewModel.startMain.observe(this, Observer {
             startActivity(MainActivity.getIntent(this))
         })
 

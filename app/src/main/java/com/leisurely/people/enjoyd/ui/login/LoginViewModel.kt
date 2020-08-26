@@ -5,8 +5,10 @@ import com.leisurely.people.enjoyd.data.repository.AccountRepository
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.ui.login.model.SocialLogin
 import com.leisurely.people.enjoyd.ui.login.sociallogin.KakaoLogin
+import com.leisurely.people.enjoyd.util.ext.applySchedulers
 import com.leisurely.people.enjoyd.util.ext.applySingleSchedulers
 import com.leisurely.people.enjoyd.util.lifecycle.LiveEvent
+import com.leisurely.people.enjoyd.util.observer.DisposableCompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -29,16 +31,16 @@ class LoginViewModel(
     val kakaoLoginClick: Subject<Unit> = _kakaoLoginClick
 
     /** main activity 이동하기 위한 LiveData */
-    private val _startMain = LiveEvent<UserTokenResponse>()
-    val startMain = _startMain
+    private val _startMain = LiveEvent<Unit>()
+    val startMain: LiveEvent<Unit> = _startMain
 
     /** 회원가입 화면으로 이동하기 위한 LiveData */
     private val _startOnBoarding = LiveEvent<SocialLogin>()
-    val startOnBoarding = _startOnBoarding
+    val startOnBoarding: LiveEvent<SocialLogin> = _startOnBoarding
 
     /** LoginActivity 재실행 하기 위한 LiveData */
     private val _reStartLogin = LiveEvent<Unit>()
-    val reStartLogin = _reStartLogin
+    val reStartLogin: LiveEvent<Unit> = _reStartLogin
 
     init {
         _kakaoLoginClick
@@ -53,15 +55,19 @@ class LoginViewModel(
         if (socialLogin.socialId == null) return
 
         accountRepository.requestLogin(socialLogin.socialId.toString())
-            .applySingleSchedulers()
-            .subscribe({ userTokenResponse ->
-                _startMain.value = userTokenResponse
-            }, {
-                /** 400 에러 인조이디 회원유저가 아닌 경우*/
-                if ((it as? HttpException)?.code() == 400) {
-                    startOnBoarding.value = socialLogin
-                } else {
-                    reStartLogin.value = null
+            .applySchedulers()
+            .subscribeWith(object : DisposableCompletableObserver() {
+                override fun onComplete() {
+                    _startMain.value = null
+                }
+
+                override fun onError(e: Throwable) {
+                    super.onError(e)
+                    if ((e as? HttpException)?.code() == 400) {
+                        _startOnBoarding.value = socialLogin
+                    } else {
+                        _reStartLogin.value = null
+                    }
                 }
             }).addDisposable()
     }
