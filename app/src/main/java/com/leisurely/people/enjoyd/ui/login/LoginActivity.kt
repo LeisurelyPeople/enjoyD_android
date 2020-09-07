@@ -24,7 +24,7 @@ import org.koin.core.parameter.parametersOf
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layout.activity_login) {
 
     private val kakaoLogin by lazy {
-        KakaoLogin(this, onLoginSuccess = {
+        KakaoLogin(this, onLoginModelSuccess = {
             viewModel.requestLogin(it)
         }, onLoginFail = {
             reStartActivity()

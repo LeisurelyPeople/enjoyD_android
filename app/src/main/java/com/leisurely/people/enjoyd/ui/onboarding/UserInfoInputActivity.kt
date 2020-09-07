@@ -14,7 +14,7 @@ import com.leisurely.people.enjoyd.R
 import androidx.lifecycle.Observer
 import com.leisurely.people.enjoyd.databinding.ActivityUserInfoInputBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
-import com.leisurely.people.enjoyd.ui.login.model.SocialLogin
+import com.leisurely.people.enjoyd.model.login.SocialLoginModel
 import com.leisurely.people.enjoyd.ui.main.MainActivity
 import com.leisurely.people.enjoyd.util.Constant
 import com.leisurely.people.enjoyd.util.ext.add
@@ -97,9 +97,9 @@ class UserInfoInputActivity :
     }
 
     companion object {
-        fun startActivity(context: Context, socialLogin: SocialLogin) {
+        fun startActivity(context: Context, socialLoginModel: SocialLoginModel) {
             context.startActivity(Intent(context, UserInfoInputActivity::class.java).apply {
-                putExtras(bundleOf(Constant.EXTRA_SOCIAL_LOGIN_INFO to socialLogin))
+                putExtras(bundleOf(Constant.EXTRA_SOCIAL_LOGIN_INFO to socialLoginModel))
             })
         }
     }

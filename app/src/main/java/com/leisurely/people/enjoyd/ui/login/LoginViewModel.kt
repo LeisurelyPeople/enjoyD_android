@@ -1,12 +1,10 @@
 package com.leisurely.people.enjoyd.ui.login
 
-import com.leisurely.people.enjoyd.data.remote.data.response.UserTokenResponse
 import com.leisurely.people.enjoyd.data.repository.AccountRepository
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
-import com.leisurely.people.enjoyd.ui.login.model.SocialLogin
+import com.leisurely.people.enjoyd.model.login.SocialLoginModel
 import com.leisurely.people.enjoyd.ui.login.sociallogin.KakaoLogin
 import com.leisurely.people.enjoyd.util.ext.applySchedulers
-import com.leisurely.people.enjoyd.util.ext.applySingleSchedulers
 import com.leisurely.people.enjoyd.util.lifecycle.LiveEvent
 import com.leisurely.people.enjoyd.util.observer.DisposableCompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -35,8 +33,8 @@ class LoginViewModel(
     val startMain: LiveEvent<Unit> = _startMain
 
     /** 회원가입 화면으로 이동하기 위한 LiveData */
-    private val _startOnBoarding = LiveEvent<SocialLogin>()
-    val startOnBoarding: LiveEvent<SocialLogin> = _startOnBoarding
+    private val _startOnBoarding = LiveEvent<SocialLoginModel>()
+    val startOnBoarding: LiveEvent<SocialLoginModel> = _startOnBoarding
 
     /** LoginActivity 재실행 하기 위한 LiveData */
     private val _reStartLogin = LiveEvent<Unit>()
@@ -51,10 +49,10 @@ class LoginViewModel(
             .addDisposable()
     }
 
-    fun requestLogin(socialLogin: SocialLogin) {
-        if (socialLogin.socialId == null) return
+    fun requestLogin(socialLoginModel: SocialLoginModel) {
+        if (socialLoginModel.socialId == null) return
 
-        accountRepository.requestLogin(socialLogin.socialId.toString())
+        accountRepository.requestLogin(socialLoginModel.socialId.toString())
             .applySchedulers()
             .subscribeWith(object : DisposableCompletableObserver() {
                 override fun onComplete() {
@@ -64,7 +62,7 @@ class LoginViewModel(
                 override fun onError(e: Throwable) {
                     super.onError(e)
                     if ((e as? HttpException)?.code() == 400) {
-                        _startOnBoarding.value = socialLogin
+                        _startOnBoarding.value = socialLoginModel
                     } else {
                         _reStartLogin.value = null
                     }

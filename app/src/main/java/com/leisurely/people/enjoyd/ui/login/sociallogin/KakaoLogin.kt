@@ -16,7 +16,7 @@ import com.leisurely.people.enjoyd.model.enums.Gender
 import com.leisurely.people.enjoyd.ui.base.BaseSocialLogin
 import com.leisurely.people.enjoyd.ui.base.OnLoginFail
 import com.leisurely.people.enjoyd.ui.base.OnLoginSuccess
-import com.leisurely.people.enjoyd.ui.login.model.SocialLogin
+import com.leisurely.people.enjoyd.model.login.SocialLoginModel
 
 /**
  * 카카오 로그인 관리 클래스
@@ -27,9 +27,9 @@ import com.leisurely.people.enjoyd.ui.login.model.SocialLogin
 
 class KakaoLogin(
     activity: AppCompatActivity,
-    onLoginSuccess: OnLoginSuccess<SocialLogin>? = null,
+    onLoginModelSuccess: OnLoginSuccess<SocialLoginModel>? = null,
     onLoginFail: OnLoginFail? = null
-) : BaseSocialLogin<SocialLogin>(activity, onLoginSuccess, onLoginFail) {
+) : BaseSocialLogin<SocialLoginModel>(activity, onLoginModelSuccess, onLoginFail) {
 
     private var sessionCallback: SessionCallback = SessionCallback()
 
@@ -99,7 +99,13 @@ class KakaoLogin(
                         com.kakao.usermgmt.response.model.Gender.FEMALE.name -> Gender.WOMAN.value
                         else -> null
                     }
-                    callbackAsSuccess(SocialLogin(result.id, it.profile?.nickname, gender))
+                    callbackAsSuccess(
+                        SocialLoginModel(
+                            result.id,
+                            it.profile?.nickname,
+                            gender
+                        )
+                    )
                     return
                 } ?: kotlin.run {
                     callbackAsFail(Exception())

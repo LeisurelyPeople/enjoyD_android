@@ -1,4 +1,4 @@
-package com.leisurely.people.enjoyd.ui.login.model
+package com.leisurely.people.enjoyd.model.login
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
  * @since v1.0.0 / 2020.08.21
  */
 @Parcelize
-data class SocialLogin(
+data class SocialLoginModel(
     val socialId: Long?,
     val name: String?,
     val gender: Int?
