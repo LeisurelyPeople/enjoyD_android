@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.leisurely.people.enjoyd.data.remote.data.request.SignUpRequest
 import com.leisurely.people.enjoyd.data.repository.AccountRepository
 import com.leisurely.people.enjoyd.model.enums.Gender
+import com.leisurely.people.enjoyd.model.login.SocialLoginModel
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.ext.applySchedulers
 import com.leisurely.people.enjoyd.util.ext.convertToServerDate
@@ -52,7 +53,7 @@ class UserInfoInputViewModel(
     /** 유저 성별 LiveData */
     private val _userGender: MutableLiveData<Int> = MutableLiveData<Int>().apply {
         /** Int 값인 경우 null 이닌 -1 타입을 디폴트로 작성 */
-        value = socialLogin.gender ?: -1
+        value = socialLoginModel.gender ?: -1
     }
     val userGender: LiveData<Int> = _userGender
 

@@ -1,4 +1,4 @@
-package com.leisurely.people.enjoyd.data.remote.drama
+package com.leisurely.people.enjoyd.data.remote.data.response
 
 import kotlinx.serialization.Serializable
 
@@ -16,5 +16,5 @@ data class DramaInfoResponse(
 
     val previous: String?,
 
-    val results: List<Drama>?
+    val results: List<DramaInfoResponseItem>?
 )

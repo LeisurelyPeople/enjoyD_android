@@ -13,6 +13,7 @@ import androidx.core.text.buildSpannedString
 import com.leisurely.people.enjoyd.R
 import androidx.lifecycle.Observer
 import com.leisurely.people.enjoyd.databinding.ActivityUserInfoInputBinding
+import com.leisurely.people.enjoyd.model.login.SocialLoginModel
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
 import com.leisurely.people.enjoyd.ui.main.MainActivity
 import com.leisurely.people.enjoyd.util.Constant

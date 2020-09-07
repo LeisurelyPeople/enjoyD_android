@@ -1,4 +1,4 @@
-package com.leisurely.people.enjoyd.data.remote.drama
+package com.leisurely.people.enjoyd.data.remote.data.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -28,5 +28,5 @@ data class DramaInfoPkResponse(
 
     val director: String?,
 
-    val dramas: List<DetailDrama>?
+    val dramas: List<DramaInfoPkResponseItem>?
 )

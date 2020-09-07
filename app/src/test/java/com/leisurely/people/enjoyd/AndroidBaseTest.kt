@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.leisurely.people.enjoyd.data.remote.api.APIService
+import com.leisurely.people.enjoyd.data.remote.interceptor.AuthInterceptor
 import com.leisurely.people.enjoyd.di.provideApi
 import com.leisurely.people.enjoyd.di.provideOkHttpClient
 import com.leisurely.people.enjoyd.di.provideRetrofit
@@ -33,6 +34,6 @@ abstract class AndroidBaseTest : BaseTest() {
     @Before
     fun setupContext() {
         appContext = ApplicationProvider.getApplicationContext()
-        testApi = provideApi(provideRetrofit(provideOkHttpClient()))
+        testApi = provideApi(provideRetrofit(provideOkHttpClient(AuthInterceptor())))
     }
 }

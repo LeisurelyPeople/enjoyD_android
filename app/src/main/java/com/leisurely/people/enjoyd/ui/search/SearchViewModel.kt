@@ -7,10 +7,10 @@ import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.leisurely.people.enjoyd.data.local.RecentSearch
-import com.leisurely.people.enjoyd.data.remote.drama.SearchDrama
-import com.leisurely.people.enjoyd.data.remote.search.AutoResult
-import com.leisurely.people.enjoyd.model.api.DramaApi
+import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoSearchResponseItem
+import com.leisurely.people.enjoyd.ui.search.model.RecentSearch
+import com.leisurely.people.enjoyd.ui.search.model.AutoResult
+import com.leisurely.people.enjoyd.data.repository.DramaRepository
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.coroutine.CoroutineKey.SEARCH_CLICK_SEARCH_BTN
 import com.leisurely.people.enjoyd.util.coroutine.SafeScope
@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
  * @author ricky
  * @since v1.0.0 / 2020.07.07
  */
-class SearchViewModel : BaseViewModel() {
+class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewModel() {
     val tag = this.javaClass.canonicalName
 
     /** 처음 들어갈 시 보여주는 추천 리스트 */
@@ -41,8 +41,8 @@ class SearchViewModel : BaseViewModel() {
     val autoResults: LiveData<List<AutoResult>> = _autoResults
 
     /** 검색 결과 리스트 */
-    private val _searchResults = MutableLiveData(listOf<SearchDrama>())
-    val searchResults: LiveData<List<SearchDrama>> = _searchResults
+    private val _searchResults = MutableLiveData(listOf<DramaInfoSearchResponseItem>())
+    val searchResults: LiveData<List<DramaInfoSearchResponseItem>> = _searchResults
 
     /** 검색 쿼리 텍스트 */
     val query = ObservableField<String>()
@@ -101,15 +101,42 @@ class SearchViewModel : BaseViewModel() {
         )
 
         _recents.value = listOf(
-            RecentSearch(0, "방금 검색바 클릭했을 때 세계0"),
-            RecentSearch(1, "방금 검색바 클릭했을 때 세계1"),
-            RecentSearch(2, "방금 검색바 클릭했을 때 세계2"),
-            RecentSearch(3, "방금 검색바 클릭했을 때 세계3"),
-            RecentSearch(4, "방금 검색바 클릭했을 때 세계4"),
-            RecentSearch(5, "방금 검색바 클릭했을 때 세계5"),
-            RecentSearch(6, "방금 검색바 클릭했을 때 세계6"),
-            RecentSearch(7, "방금 검색바 클릭했을 때 세계7"),
-            RecentSearch(8, "방금 검색바 클릭했을 때 세계8")
+            RecentSearch(
+                0,
+                "방금 검색바 클릭했을 때 세계0"
+            ),
+            RecentSearch(
+                1,
+                "방금 검색바 클릭했을 때 세계1"
+            ),
+            RecentSearch(
+                2,
+                "방금 검색바 클릭했을 때 세계2"
+            ),
+            RecentSearch(
+                3,
+                "방금 검색바 클릭했을 때 세계3"
+            ),
+            RecentSearch(
+                4,
+                "방금 검색바 클릭했을 때 세계4"
+            ),
+            RecentSearch(
+                5,
+                "방금 검색바 클릭했을 때 세계5"
+            ),
+            RecentSearch(
+                6,
+                "방금 검색바 클릭했을 때 세계6"
+            ),
+            RecentSearch(
+                7,
+                "방금 검색바 클릭했을 때 세계7"
+            ),
+            RecentSearch(
+                8,
+                "방금 검색바 클릭했을 때 세계8"
+            )
         )
 
         _autoResults.value = listOf()
@@ -147,7 +174,7 @@ class SearchViewModel : BaseViewModel() {
             Log.i(tag, "searchBtnClick")
 
             // 서버로부터 데이터를 받아온 후 키보드를 닫음 처리한다.
-            DramaApi.dramaInfoSearch(
+            dramaRepository.dramaInfoSearch(
                 query.get(), "avg_rating"
             ).applySingleSchedulers(
             ).subscribe({ searchDramas ->
@@ -166,7 +193,7 @@ class SearchViewModel : BaseViewModel() {
             Log.i(tag, "searchBtnClick")
 
             // 서버로부터 데이터를 받아온 후 키보드를 닫음 처리한다.
-            DramaApi.dramaInfoSearch(
+            dramaRepository.dramaInfoSearch(
                 recentText, "avg_rating"
             ).applySingleSchedulers(
             ).subscribe({ searchDramas ->

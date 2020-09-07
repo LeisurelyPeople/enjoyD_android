@@ -18,10 +18,6 @@ import com.leisurely.people.enjoyd.di.provideRetrofit
 // 전역 context
 lateinit var appContext: Context
 
-val apiService: APIService by lazy {
-    provideApi(provideRetrofit(provideOkHttpClient()))
-}
-
 // 앱 버전 정보
 val appVersion: String by lazy { BuildConfig.VERSION_NAME }
 

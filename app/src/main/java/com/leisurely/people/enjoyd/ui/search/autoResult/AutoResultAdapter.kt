@@ -6,12 +6,11 @@ import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.DiffUtil
-import com.leisurely.people.enjoyd.data.remote.search.AutoResult
+import com.leisurely.people.enjoyd.ui.search.model.AutoResult
 import com.leisurely.people.enjoyd.databinding.ItemAutoResultBinding
 import com.leisurely.people.enjoyd.databinding.ItemAutoResultCategoryBinding
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseItemVH
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseListAdapter
-import kotlinx.android.synthetic.main.item_auto_result.view.*
 
 /**
  * 자동 검색완성 레이아웃에서 사용되는 List 의 어뎁터

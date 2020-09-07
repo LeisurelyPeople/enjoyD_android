@@ -33,7 +33,14 @@ class EnjoyDApplication : Application() {
         startKoin {
             if (BuildConfig.DEBUG) androidLogger()
             androidContext(this@EnjoyDApplication)
-            modules(networkModule, viewModelModule, remoteModule, localModule, repositoryModule)
+            modules(
+                networkModule,
+                viewModelModule,
+                remoteModule,
+                localModule,
+                repositoryModule,
+                searchViewModule
+            )
         }
     }
 

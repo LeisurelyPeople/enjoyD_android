@@ -2,6 +2,7 @@ package com.leisurely.people.enjoyd.data.remote.interceptor
 
 import com.leisurely.people.enjoyd.data.local.prefs.TokenManager
 import com.leisurely.people.enjoyd.ui.base.EnjoyDApplication
+import com.leisurely.people.enjoyd.util.coroutine.isUnitTest
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -17,8 +18,11 @@ class AuthInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request().newBuilder()
 
-        val accessToken =
+        // TODO accessToken 이 필요없는 경우에 대해 조건문 임시방편으로 넣음
+        val accessToken = if (!isUnitTest)
             TokenManager.getUserAccessToken(EnjoyDApplication.instance)
+        else
+            ""
 
         accessToken?.let {
             /** API 헤더 토큰 추가 */
