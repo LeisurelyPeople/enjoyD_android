@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.leisurely.people.enjoyd.model.enums.Gender" />
+
+        <variable
+            name="vm"
+            type="com.leisurely.people.enjoyd.ui.onboarding.UserInfoInputViewModel" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:elevation="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    style="@style/ToolbarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/toolbar_height">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackgroundBorderless"
+                        android:onClick="@{() -> vm.onClickBackScreen()}"
+                        android:src="@drawable/btn_back" />
+
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_left"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_right"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="16dp" />
+
+            <TextView
+                android:id="@+id/tv_screen_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                android:lineSpacingExtra="8sp"
+                android:textSize="@dimen/text_size_20sp"
+                app:layout_constraintEnd_toEndOf="@id/guide_right"
+                app:layout_constraintStart_toStartOf="@id/guide_left"
+                app:layout_constraintTop_toBottomOf="@+id/app_bar"
+                tools:text="모든 웹드라마를 한곳에서\n간편하게 즐기는 방법"
+                tools:textColor="@color/color_grey_0" />
+
+            <EditText
+                android:id="@+id/edit_user_name"
+                style="@style/UserInfoInputEditTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/bg_user_info_input"
+                android:hint="@string/user_name_input_hint"
+                android:text="@={vm.username}"
+                app:layout_constraintEnd_toEndOf="@id/guide_right"
+                app:layout_constraintStart_toStartOf="@id/guide_left"
+                app:layout_constraintTop_toBottomOf="@+id/tv_screen_title"
+                bind:onTextChanged="@{(c, _, __, ___) -> vm.onUsernameChanged(c)}" />
+
+            <LinearLayout
+                android:id="@+id/ll_user_name_warning_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:invisibleIf="@{!vm.showsUsernameWarningMsg}"
+                app:layout_constraintEnd_toEndOf="@id/guide_right"
+                app:layout_constraintStart_toStartOf="@id/guide_left"
+                app:layout_constraintTop_toBottomOf="@+id/edit_user_name">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_warning" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/user_name_warning_text"
+                    android:textColor="@color/color_warning_text"
+                    app:layout_constraintStart_toStartOf="@id/guide_left"
+                    tools:text="@string/user_name_warning_text" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edit_user_birthday"
+                style="@style/UserInfoInputEditTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_user_info_input"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:hint="@string/user_birthday_input_hint"
+                android:onClick="@{() -> vm.onClickUserBirthDay()}"
+                android:text="@{vm.userBirthDay}"
+                app:layout_constraintEnd_toEndOf="@id/guide_right"
+                app:layout_constraintStart_toStartOf="@id/guide_left"
+                app:layout_constraintTop_toBottomOf="@+id/ll_user_name_warning_layout" />
+
+            <LinearLayout
+                android:id="@+id/ll_user_birthday_warning_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:invisibleIf="@{!vm.showsUserBirthDayWarningMsg}"
+                app:layout_constraintEnd_toEndOf="@id/guide_right"
+                app:layout_constraintStart_toStartOf="@id/guide_left"
+                app:layout_constraintTop_toBottomOf="@+id/edit_user_birthday">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_warning" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/user_birthday_warning_text"
+                    android:textColor="@color/color_warning_text"
+                    app:layout_constraintStart_toStartOf="@id/guide_left"
+                    tools:text="@string/user_birthday_warning_text" />
+            </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/rg_user_gender"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@id/guide_right"
+                app:layout_constraintStart_toStartOf="@id/guide_left"
+                app:layout_constraintTop_toBottomOf="@+id/ll_user_birthday_warning_layout">
+
+                <RadioButton
+                    android:id="@+id/rb_man"
+                    style="@style/UserInfoInputRadioBtnStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:checked="@{vm.userGender == Gender.MAN.value}"
+                    android:onClick="@{() -> vm.onUserGenderChanged(Gender.MAN)}"
+                    android:text="@string/man" />
+
+                <RadioButton
+                    android:id="@+id/rb_woman"
+                    style="@style/UserInfoInputRadioBtnStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:checked="@{vm.userGender == Gender.WOMAN.value}"
+                    android:onClick="@{() -> vm.onUserGenderChanged(Gender.WOMAN)}"
+                    android:text="@string/woman" />
+
+                <RadioButton
+                    android:id="@+id/rb_not_selected"
+                    style="@style/UserInfoInputRadioBtnStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:checked="@{vm.userGender == Gender.NOT_SELECTED.value}"
+                    android:onClick="@{() -> vm.onUserGenderChanged(Gender.NOT_SELECTED)}"
+                    android:text="@string/not_selected" />
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/ll_user_gender_warning_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:invisibleIf="@{!vm.showsUserGenderWarningMsg}"
+                app:layout_constraintEnd_toEndOf="@id/guide_right"
+                app:layout_constraintStart_toStartOf="@id/guide_left"
+                app:layout_constraintTop_toBottomOf="@+id/rg_user_gender">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_warning" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/user_gender_warning_text"
+                    android:textColor="@color/color_warning_text"
+                    app:layout_constraintStart_toStartOf="@id/guide_left"
+                    tools:text="@string/user_gender_warning_text" />
+            </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/rb_user_job"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@id/guide_right"
+                app:layout_constraintStart_toStartOf="@id/guide_left"
+                app:layout_constraintTop_toBottomOf="@+id/ll_user_gender_warning_layout">
+
+                <RadioButton
+                    android:id="@+id/rb_student"
+                    style="@style/UserInfoInputRadioBtnStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="@{() -> vm.onUserJobChanged(@string/student, false)}"
+                    android:text="@string/student" />
+
+                <RadioButton
+                    android:id="@+id/rb_office_workers"
+                    style="@style/UserInfoInputRadioBtnStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:onClick="@{() -> vm.onUserJobChanged(@string/office_workers, false)}"
+                    android:text="@string/office_workers" />
+
+                <RadioButton
+                    android:id="@+id/rb_etc"
+                    style="@style/UserInfoInputRadioBtnStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="@{() -> vm.onUserJobChanged(@string/etc, true)}"
+                    android:text="@string/etc" />
+            </RadioGroup>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edit_user_job"
+                style="@style/UserInfoInputEditTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_user_info_input"
+                android:hint="@string/user_job_input_hint"
+                android:text="@={vm.userDetailJob}"
+                android:visibleIf="@{vm.userJob.equals(@string/etc)}"
+                app:layout_constraintEnd_toEndOf="@id/guide_right"
+                app:layout_constraintStart_toStartOf="@id/guide_left"
+                app:layout_constraintTop_toBottomOf="@+id/rb_user_job"
+                bind:onTextChanged="@{(c, _, __, ___) -> vm.onUserDetailJobChanged(c)}" />
+
+            <LinearLayout
+                android:id="@+id/ll_user_job_warning_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:invisibleIf="@{!vm.showsUserJobWarningMsg &amp;&amp; !vm.showsUserDetailJobWarningMsg}"
+                app:layout_constraintEnd_toEndOf="@id/guide_right"
+                app:layout_constraintStart_toStartOf="@id/guide_left"
+                app:layout_constraintTop_toBottomOf="@+id/edit_user_job">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_warning" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@{vm.userJob.equals(@string/etc) ? @string/user_detail_job_warning_text : @string/user_job_warning_text}"
+                    android:textColor="@color/color_warning_text"
+                    app:layout_constraintStart_toStartOf="@id/guide_left"
+                    tools:text="@string/user_job_warning_text" />
+            </LinearLayout>
+
+            <Button
+                style="@style/SignUpButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="48dp"
+                android:enabled="@{!vm.showsUsernameWarningMsg &amp;&amp; !vm.showsUserBirthDayWarningMsg &amp;&amp; !vm.showsUserGenderWarningMsg &amp;&amp; !vm.showsUserJobWarningMsg &amp;&amp; !vm.showsUserDetailJobWarningMsg}"
+                android:onClick="@{() -> vm.onClickSignUp()}"
+                android:text="@string/sign_up"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guide_right"
+                app:layout_constraintStart_toStartOf="@id/guide_left"
+                tools:enabled="false" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
