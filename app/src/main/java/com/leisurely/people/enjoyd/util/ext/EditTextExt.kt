@@ -28,6 +28,5 @@ fun EditText.setTextWatcher(
             onTextChanged?.onTextChanged(charSequence, start, before, count)
         }, afterTextChanged = { text ->
             afterTextChanged?.afterTextChanged(text)
-        }
-    )
+        })
 }

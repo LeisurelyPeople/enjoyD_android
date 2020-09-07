@@ -14,14 +14,16 @@ import com.leisurely.people.enjoyd.R
 import androidx.lifecycle.Observer
 import com.leisurely.people.enjoyd.databinding.ActivityUserInfoInputBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
-import com.leisurely.people.enjoyd.ui.login.model.SocialLogin
 import com.leisurely.people.enjoyd.ui.main.MainActivity
 import com.leisurely.people.enjoyd.util.Constant
-import com.leisurely.people.enjoyd.util.ext.add
-import com.leisurely.people.enjoyd.util.ext.formatToViewDate
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import java.util.*
+import com.leisurely.people.enjoyd.util.ext.formatToViewDate
+import com.leisurely.people.enjoyd.util.time.TimePoint
+import com.leisurely.people.enjoyd.util.time.days
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 /**
  * 사용자 정보 입력 화면 (회원가입)
@@ -30,9 +32,10 @@ import java.util.*
  * @since v1.0.0 / 2020.07.20
  */
 
-class UserInfoInputActivity : BaseActivity<ActivityUserInfoInputBinding, UserInfoInputViewModel>(
-    R.layout.activity_user_info_input
-) {
+class UserInfoInputActivity :
+    BaseActivity<ActivityUserInfoInputBinding, UserInfoInputViewModel>(
+        R.layout.activity_user_info_input
+    ) {
 
     override val viewModel: UserInfoInputViewModel by viewModel {
         parametersOf(intent.getParcelableExtra(Constant.EXTRA_SOCIAL_LOGIN_INFO))
@@ -78,29 +81,27 @@ class UserInfoInputActivity : BaseActivity<ActivityUserInfoInputBinding, UserInf
     }
 
     private fun openDatePicker() {
-        val calendar = Calendar.getInstance()
+        val dateTimePoint = TimePoint.now
         DatePickerDialog(
             this,
             R.style.UserBirthDayDatePickerStyle,
             DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                val userBirthCalendar = Calendar.getInstance().apply {
-                    set(year, month, dayOfMonth)
-                }
-                viewModel.setUserBirthDayValue(userBirthCalendar.time.formatToViewDate())
+                val userBirthCalendar = TimePoint(year, month, dayOfMonth)
+                viewModel.setUserBirthDayValue(userBirthCalendar.formatToViewDate())
             },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
+            dateTimePoint.year,
+            dateTimePoint.month,
+            dateTimePoint.day
         ).apply {
-            datePicker.minDate = calendar.time.add(Calendar.YEAR, -100).time
-            datePicker.maxDate = calendar.time.time
+            datePicker.minDate = (dateTimePoint + 365.days).unixMillis
+            datePicker.maxDate = dateTimePoint.unixMillis
         }.show()
     }
 
     companion object {
-        fun startActivity(context: Context, socialLogin: SocialLogin) {
+        fun startActivity(context: Context, socialLoginModel: SocialLoginModel) {
             context.startActivity(Intent(context, UserInfoInputActivity::class.java).apply {
-                putExtras(bundleOf(Constant.EXTRA_SOCIAL_LOGIN_INFO to socialLogin))
+                putExtras(bundleOf(Constant.EXTRA_SOCIAL_LOGIN_INFO to socialLoginModel))
             })
         }
     }

@@ -1,5 +1,6 @@
 package com.leisurely.people.enjoyd.util.ext
 
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -23,4 +24,10 @@ private fun <T> Single<T>.applyScheduler(scheduler: Scheduler) =
 fun <T> Observable<T>.applyObservableSchedulers() = applyScheduler(Schedulers.io())
 
 private fun <T> Observable<T>.applyScheduler(scheduler: Scheduler) =
+    subscribeOn(scheduler).observeOn(AndroidSchedulers.mainThread())
+
+/** Completable Scheduler */
+fun Completable.applySchedulers() = applyScheduler(Schedulers.io())
+
+private fun Completable.applyScheduler(scheduler: Scheduler) =
     subscribeOn(scheduler).observeOn(AndroidSchedulers.mainThread())

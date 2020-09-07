@@ -6,7 +6,6 @@ import com.leisurely.people.enjoyd.data.remote.data.request.SignUpRequest
 import com.leisurely.people.enjoyd.data.repository.AccountRepository
 import com.leisurely.people.enjoyd.model.enums.Gender
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
-import com.leisurely.people.enjoyd.ui.login.model.SocialLogin
 import com.leisurely.people.enjoyd.util.ext.applySchedulers
 import com.leisurely.people.enjoyd.util.ext.convertToServerDate
 import com.leisurely.people.enjoyd.util.lifecycle.LiveEvent
@@ -20,16 +19,17 @@ import com.leisurely.people.enjoyd.util.observer.DisposableCompletableObserver
  */
 
 class UserInfoInputViewModel(
-    socialLogin: SocialLogin,
+    socialLoginModel: SocialLoginModel,
     private val accountRepository: AccountRepository
 ) : BaseViewModel() {
 
     /** 유저 소셜로그인 고유값 LiveData */
-    private val _userSocialId: MutableLiveData<Long> = MutableLiveData(socialLogin.socialId ?: -1)
+    private val _userSocialId: MutableLiveData<Long> =
+        MutableLiveData(socialLoginModel.socialId ?: -1)
     val userSocialId: LiveData<Long> = _userSocialId
 
     /** 유저 이름 LiveData */
-    private val _username: MutableLiveData<String> = MutableLiveData(socialLogin.name ?: "")
+    private val _username: MutableLiveData<String> = MutableLiveData(socialLoginModel.name ?: "")
     val username: MutableLiveData<String> = _username
 
     /** 유저 이름 경고 문구 LiveData */

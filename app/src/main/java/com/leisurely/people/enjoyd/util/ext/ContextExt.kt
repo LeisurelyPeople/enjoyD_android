@@ -15,6 +15,7 @@ import com.leisurely.people.enjoyd.util.Constant
  */
 
 
+/** 네트워크 연결 상태 확인 메소드 */
 fun Context.isNetworkConnected(): Boolean {
     val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val nw = connectivityManager.activeNetwork ?: return false
@@ -26,6 +27,7 @@ fun Context.isNetworkConnected(): Boolean {
     }
 }
 
+/** SharedPreference 저장된 값을 가져오는 메소드 */
 fun Context.putSharedPreference(key: String, data: Any) {
     getSharedPreferences(Constant.PREF_NAME, Activity.MODE_PRIVATE).run {
         edit(true) {
@@ -40,6 +42,7 @@ fun Context.putSharedPreference(key: String, data: Any) {
     }
 }
 
+/** SharedPreference 값 저장을 위한 메소드 */
 @Suppress("IMPLICIT_CAST_TO_ANY", "UNCHECKED_CAST")
 fun <T> Context.getSharedPreference(key: String, defaultData: T): T {
     val sharedPreferences = getSharedPreferences(Constant.PREF_NAME, Activity.MODE_PRIVATE)

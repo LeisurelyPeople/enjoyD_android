@@ -2,6 +2,7 @@ package com.leisurely.people.enjoyd.di
 
 import com.leisurely.people.enjoyd.BuildConfig
 import com.leisurely.people.enjoyd.data.remote.api.APIService
+import com.leisurely.people.enjoyd.data.remote.interceptor.AuthInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -18,7 +19,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 /** 네트워크 모듈(DI) 설정 */
 val networkModule = module {
-    factory { provideOkHttpClient() }
+    single { AuthInterceptor() }
+    factory { provideOkHttpClient(get()) }
     factory { provideApi(get()) }
     single { provideRetrofit(get()) }
 }
@@ -33,7 +35,7 @@ fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
 }
 
 /** OkHttp 설정 */
-fun provideOkHttpClient(): OkHttpClient {
+fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
     return OkHttpClient.Builder()
         .addInterceptor {
             val request = it.request()
@@ -41,6 +43,7 @@ fun provideOkHttpClient(): OkHttpClient {
                 .build()
             it.proceed(request)
         }
+        .addInterceptor(authInterceptor)
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor.Level.BODY
