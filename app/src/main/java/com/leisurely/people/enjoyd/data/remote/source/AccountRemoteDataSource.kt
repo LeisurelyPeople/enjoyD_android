@@ -1,10 +1,8 @@
 package com.leisurely.people.enjoyd.data.remote.source
 
-import com.leisurely.people.enjoyd.data.local.prefs.TokenManager
 import com.leisurely.people.enjoyd.data.remote.api.APIService
 import com.leisurely.people.enjoyd.data.remote.data.request.SignUpRequest
 import com.leisurely.people.enjoyd.data.remote.data.response.UserTokenResponse
-import io.reactivex.Completable
 import io.reactivex.Single
 
 /**
@@ -15,15 +13,15 @@ import io.reactivex.Single
  */
 class AccountRemoteDataSource(private val apiService: APIService) {
 
-    fun requestLogin(socialId: String): Single<UserTokenResponse> {
-        return apiService.requestLogin(hashMapOf("social_id" to socialId))
+    fun postAccountsSignIn(socialId: String): Single<UserTokenResponse> {
+        return apiService.postAccountsSignIn(hashMapOf("social_id" to socialId))
     }
 
-    fun requestSignUp(signUpRequest: SignUpRequest): Single<UserTokenResponse> {
-        return apiService.requestSignUp(signUpRequest)
+    fun postAccountsSignUp(signUpRequest: SignUpRequest): Single<UserTokenResponse> {
+        return apiService.postAccountsSignUp(signUpRequest)
     }
 
-    fun requestRefreshToken(refreshToken: String): Single<UserTokenResponse> {
-        return apiService.requestRefreshToken(hashMapOf("refresh_token" to refreshToken))
+    fun postAccountsRefreshToken(refreshToken: String): Single<UserTokenResponse> {
+        return apiService.postAccountsRefresh(hashMapOf("refresh_token" to refreshToken))
     }
 }
