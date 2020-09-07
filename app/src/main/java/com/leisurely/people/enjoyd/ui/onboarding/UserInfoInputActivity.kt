@@ -31,7 +31,9 @@ import org.koin.core.parameter.parametersOf
  */
 
 class UserInfoInputActivity :
-    BaseActivity<ActivityUserInfoInputBinding, UserInfoInputViewModel>(R.layout.activity_user_info_input) {
+    BaseActivity<ActivityUserInfoInputBinding, UserInfoInputViewModel>(
+        R.layout.activity_user_info_input
+    ) {
 
     override val viewModel: UserInfoInputViewModel by viewModel {
         parametersOf(intent.getParcelableExtra(Constant.EXTRA_SOCIAL_LOGIN_INFO))

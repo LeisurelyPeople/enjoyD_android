@@ -50,7 +50,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         viewModel.reStartLogin.observe(this, Observer {
             /**
              *  로그인 실패 시 로그인 액티비티 재 생성 되도록 설정
-             *  재실행 하지 않는 경우 카카오 로그인 클래스 내의 onSessionOpened() 콜백 메소드가 계속되기 때문에 onDestroy() 메소드를 타게 해서
+             *  재실행 하지 않는 경우 카카오 로그인 클래스 내의 onSessionOpened() 콜백 메소드가 계속되기 때문에
+             *  onDestroy() 메소드를 타게 해서
              *  콜백을 한번씩 제거 해줘야함.
              */
             reStartActivity()

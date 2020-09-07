@@ -21,11 +21,12 @@ fun EditText.setTextWatcher(
     onTextChanged: TextViewBindingAdapter.OnTextChanged?,
     afterTextChanged: TextViewBindingAdapter.AfterTextChanged?
 ) {
-    addTextChangedListener(beforeTextChanged = { charSequence: CharSequence?, start: Int, count: Int, after: Int ->
-        beforeTextChanged?.beforeTextChanged(charSequence, start, count, after)
-    }, onTextChanged = { charSequence: CharSequence?, start: Int, before: Int, count: Int ->
-        onTextChanged?.onTextChanged(charSequence, start, before, count)
-    }, afterTextChanged = { text ->
-        afterTextChanged?.afterTextChanged(text)
-    })
+    addTextChangedListener(
+        beforeTextChanged = { charSequence: CharSequence?, start: Int, count: Int, after: Int ->
+            beforeTextChanged?.beforeTextChanged(charSequence, start, count, after)
+        }, onTextChanged = { charSequence: CharSequence?, start: Int, before: Int, count: Int ->
+            onTextChanged?.onTextChanged(charSequence, start, before, count)
+        }, afterTextChanged = { text ->
+            afterTextChanged?.afterTextChanged(text)
+        })
 }

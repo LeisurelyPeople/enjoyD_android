@@ -25,7 +25,8 @@ class UserInfoInputViewModel(
 ) : BaseViewModel() {
 
     /** 유저 소셜로그인 고유값 LiveData */
-    private val _userSocialId: MutableLiveData<Long> = MutableLiveData(socialLoginModel.socialId ?: -1)
+    private val _userSocialId: MutableLiveData<Long> =
+        MutableLiveData(socialLoginModel.socialId ?: -1)
     val userSocialId: LiveData<Long> = _userSocialId
 
     /** 유저 이름 LiveData */
