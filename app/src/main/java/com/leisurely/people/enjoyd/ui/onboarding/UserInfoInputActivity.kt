@@ -17,11 +17,11 @@ import com.leisurely.people.enjoyd.ui.base.BaseActivity
 import com.leisurely.people.enjoyd.model.login.SocialLoginModel
 import com.leisurely.people.enjoyd.ui.main.MainActivity
 import com.leisurely.people.enjoyd.util.Constant
-import com.leisurely.people.enjoyd.util.ext.add
 import com.leisurely.people.enjoyd.util.ext.formatToViewDate
+import com.leisurely.people.enjoyd.util.time.TimePoint
+import com.leisurely.people.enjoyd.util.time.days
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import java.util.*
 
 /**
  * 사용자 정보 입력 화면 (회원가입)
@@ -77,22 +77,20 @@ class UserInfoInputActivity :
     }
 
     private fun openDatePicker() {
-        val calendar = Calendar.getInstance()
+        val dateTimePoint = TimePoint.now
         DatePickerDialog(
             this,
             R.style.UserBirthDayDatePickerStyle,
             DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                val userBirthCalendar = Calendar.getInstance().apply {
-                    set(year, month, dayOfMonth)
-                }
-                viewModel.setUserBirthDayValue(userBirthCalendar.time.formatToViewDate())
+                val userBirthCalendar = TimePoint(year, month, dayOfMonth)
+                viewModel.setUserBirthDayValue(userBirthCalendar.formatToViewDate())
             },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
+            dateTimePoint.year,
+            dateTimePoint.month,
+            dateTimePoint.day
         ).apply {
-            datePicker.minDate = calendar.time.add(Calendar.YEAR, -100).time
-            datePicker.maxDate = calendar.time.time
+            datePicker.minDate = (dateTimePoint + 365.days).unixMillis
+            datePicker.maxDate = dateTimePoint.unixMillis
         }.show()
     }
 
