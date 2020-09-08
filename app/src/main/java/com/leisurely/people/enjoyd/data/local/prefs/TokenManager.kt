@@ -53,9 +53,4 @@ object TokenManager {
         val userToken = getUserToken(context)
         return userToken?.expireDate
     }
-
-    fun getUserIdx(context: Context): Int? {
-        val userToken = getUserToken(context)
-        return userToken?.pk
-    }
 }
