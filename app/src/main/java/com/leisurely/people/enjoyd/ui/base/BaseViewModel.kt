@@ -1,8 +1,8 @@
 package com.leisurely.people.enjoyd.ui.base
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.leisurely.people.enjoyd.util.NotNullMutableLiveData
+import com.leisurely.people.enjoyd.util.lifecycle.LiveEvent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -16,7 +16,7 @@ import io.reactivex.disposables.Disposable
 abstract class BaseViewModel : ViewModel() {
 
     private var liveLoading: NotNullMutableLiveData<Boolean> = NotNullMutableLiveData(false)
-    var liveToastMessage: MutableLiveData<String> = MutableLiveData()
+    var liveToastMessage = LiveEvent<String>()
 
     private val compositeDisposable = CompositeDisposable()
 

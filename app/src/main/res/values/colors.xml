@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#6E47FF</color>
+    <color name="colorPrimaryDark">#171819</color>
+    <color name="colorAccent">#d21762</color>
+
+    <color name="color_grey_0">#FFFFFF</color>
+    <color name="color_grey_050">#A1A1A1</color>
+    <color name="color_grey_100">#565A5C</color>
+    <color name="color_grey_200">#3B3E40</color>
+    <color name="color_grey_300">#212224</color>
+
+    <color name="color_grey_350">#1B1C1D</color>
+    <color name="color_grey_400">#171819</color>
+    <color name="color_grey_500">#141516</color>
+    <color name="color_grey_600">#111111</color>
+
+    <color name="color_main_100">#6E47FF</color>
+    <color name="color_main_200">#d21762</color>
+
+    <color name="color_edit_text_hint">#6a6a6a</color>
+    <color name="color_warning_text">#bfbfbf</color>
+
+    <color name="ripple_effect_background">#FFFFFF</color>
 
     <color name="color_app_background">#212121</color>
 
