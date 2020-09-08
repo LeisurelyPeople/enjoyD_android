@@ -7,6 +7,7 @@ import com.leisurely.people.enjoyd.data.remote.interceptor.AuthInterceptor
 import com.leisurely.people.enjoyd.model.enums.RetrofitQualifiers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -21,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 /** 네트워크 모듈(DI) 설정 */
 val networkModule = module {
-    single { AuthInterceptor() }
+    single { AuthInterceptor(androidContext()) }
     single { provideEnjoyDService(get(qualifier = RetrofitQualifiers.ENJOYD)) }
     single { provideAuthService(get(qualifier = RetrofitQualifiers.AUTH)) }
     single(RetrofitQualifiers.ENJOYD) { provideOkHttpClient(get()) }
