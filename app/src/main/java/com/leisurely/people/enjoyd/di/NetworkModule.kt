@@ -1,8 +1,10 @@
 package com.leisurely.people.enjoyd.di
 
 import com.leisurely.people.enjoyd.BuildConfig
-import com.leisurely.people.enjoyd.data.remote.api.APIService
+import com.leisurely.people.enjoyd.data.remote.api.AuthService
+import com.leisurely.people.enjoyd.data.remote.api.EnjoyDService
 import com.leisurely.people.enjoyd.data.remote.interceptor.AuthInterceptor
+import com.leisurely.people.enjoyd.model.enums.RetrofitQualifiers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -20,30 +22,35 @@ import retrofit2.converter.gson.GsonConverterFactory
 /** 네트워크 모듈(DI) 설정 */
 val networkModule = module {
     single { AuthInterceptor() }
-    factory { provideOkHttpClient(get()) }
-    factory { provideApi(get()) }
-    single { provideRetrofit(get()) }
+    single { provideEnjoyDService(get(qualifier = RetrofitQualifiers.ENJOYD)) }
+    single { provideAuthService(get(qualifier = RetrofitQualifiers.AUTH)) }
+    single(RetrofitQualifiers.ENJOYD) { provideOkHttpClient(get()) }
+    single(RetrofitQualifiers.AUTH) { provideDefaultOkHttpClient() }
 }
 
-/** Retrofit 설정 */
-fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+/** Auth Api Service 생성 */
+fun provideAuthService(okHttpClient: OkHttpClient): AuthService {
     return Retrofit.Builder().baseUrl("http://3.35.87.123/")
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()
+        .create(AuthService::class.java)
 }
 
-/** OkHttp 설정 */
-fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
+/** EnjoyD Api Service 생성 */
+fun provideEnjoyDService(okHttpClient: OkHttpClient): EnjoyDService {
+    return Retrofit.Builder().baseUrl("http://3.35.87.123/")
+        .client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .build()
+        .create(EnjoyDService::class.java)
+}
+
+/** 기본 OkHttpClient 생성 */
+fun provideDefaultOkHttpClient(): OkHttpClient {
     return OkHttpClient.Builder()
-        .addInterceptor {
-            val request = it.request()
-                .newBuilder()
-                .build()
-            it.proceed(request)
-        }
-        .addInterceptor(authInterceptor)
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor.Level.BODY
@@ -54,7 +61,16 @@ fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
         .build()
 }
 
-/** Api 접근을 위한 메소드 */
-fun provideApi(retrofit: Retrofit): APIService {
-    return retrofit.create(APIService::class.java)
+/** 토큰 인증/갱신 인터셉터를 가지고 있는 OkHttpClient 설정 */
+fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
+    return OkHttpClient.Builder()
+        .addInterceptor(authInterceptor)
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            level = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
+        })
+        .build()
 }
