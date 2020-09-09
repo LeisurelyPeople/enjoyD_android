@@ -5,6 +5,7 @@ import com.leisurely.people.enjoyd.ui.login.LoginViewModel
 import com.leisurely.people.enjoyd.model.login.SocialLoginModel
 import com.leisurely.people.enjoyd.ui.login.sociallogin.KakaoLogin
 import com.leisurely.people.enjoyd.ui.main.MainViewModel
+import com.leisurely.people.enjoyd.ui.onboarding.SummaryEvaluationViewModel
 import com.leisurely.people.enjoyd.ui.onboarding.UserInfoInputViewModel
 import com.leisurely.people.enjoyd.ui.splash.SplashViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -28,4 +29,5 @@ val viewModelModule = module {
     viewModel { (socialLoginModel: SocialLoginModel) ->
         UserInfoInputViewModel(socialLoginModel, get())
     }
+    viewModel { SummaryEvaluationViewModel() }
 }
