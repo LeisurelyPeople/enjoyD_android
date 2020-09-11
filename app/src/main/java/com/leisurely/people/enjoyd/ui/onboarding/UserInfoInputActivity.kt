@@ -3,23 +3,24 @@ package com.leisurely.people.enjoyd.ui.onboarding
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannedString
 import android.text.style.ForegroundColorSpan
+import androidx.annotation.RequiresApi
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.core.text.buildSpannedString
 import com.leisurely.people.enjoyd.R
 import androidx.lifecycle.Observer
 import com.leisurely.people.enjoyd.databinding.ActivityUserInfoInputBinding
-import com.leisurely.people.enjoyd.model.login.SocialLoginModel
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
+import com.leisurely.people.enjoyd.model.login.SocialLoginModel
 import com.leisurely.people.enjoyd.ui.main.MainActivity
 import com.leisurely.people.enjoyd.util.Constant
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
-import java.util.*
+import com.leisurely.people.enjoyd.util.CustomTypefaceSpan
 import com.leisurely.people.enjoyd.util.ext.formatToViewDate
 import com.leisurely.people.enjoyd.util.time.TimePoint
 import com.leisurely.people.enjoyd.util.time.days
@@ -60,9 +61,19 @@ class UserInfoInputActivity :
     }
 
     private fun getScreenTitleStringBuilder(): SpannedString {
-        // TODO 폰트 추가 후 폰트 적용하기
+        val typefaceNotoSansBold =
+            ResourcesCompat.getFont(this, R.font.noto_sans_kr_bold)
+        val typefaceNotoSansDemiLight =
+            ResourcesCompat.getFont(this, R.font.noto_sans_kr_demi_light)
+
         return buildSpannedString {
             append(SpannableString("모든 웹드라마").apply {
+                setSpan(
+                    CustomTypefaceSpan(typefaceNotoSansBold),
+                    0,
+                    this.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
                 setSpan(
                     ForegroundColorSpan(resources.getColor(R.color.color_main_100, theme)),
                     0,
@@ -70,7 +81,41 @@ class UserInfoInputActivity :
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
             })
-            append(SpannableString("를 한곳에서\n간편하게 즐기는 방법").apply {
+            append(SpannableString("를 ").apply {
+                setSpan(
+                    CustomTypefaceSpan(typefaceNotoSansDemiLight),
+                    0,
+                    this.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                setSpan(
+                    ForegroundColorSpan(resources.getColor(R.color.color_grey_0, theme)),
+                    0,
+                    this.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            })
+            append(SpannableString("한곳에서\n간편하게").apply {
+                setSpan(
+                    CustomTypefaceSpan(typefaceNotoSansBold),
+                    0,
+                    this.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                setSpan(
+                    ForegroundColorSpan(resources.getColor(R.color.color_grey_0, theme)),
+                    0,
+                    this.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            })
+            append(SpannableString(" 즐기는 방법").apply {
+                setSpan(
+                    CustomTypefaceSpan(typefaceNotoSansDemiLight),
+                    0,
+                    this.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
                 setSpan(
                     ForegroundColorSpan(resources.getColor(R.color.color_grey_0, theme)),
                     0,

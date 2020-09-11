@@ -11,13 +11,14 @@ import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoSearchResp
 import retrofit2.http.*
 
 /**
- * EnjoyD Api 들을 관리하는 인터페이스
+ * Auth(인증) 관련된 API 들을 관리하는 인터페이스
+ * 해당 인터페이스에 담는 API 들을 헤더에 토큰을 담지 않는다.
  *
  * @author Wayne
  * @since v1.0.0 / 2020.06.15
  */
 
-interface APIService {
+interface AuthService {
 
     @POST("accounts/sign-up/")
     fun postAccountsSignUp(@Body data: SignUpRequest): Single<UserTokenResponse>

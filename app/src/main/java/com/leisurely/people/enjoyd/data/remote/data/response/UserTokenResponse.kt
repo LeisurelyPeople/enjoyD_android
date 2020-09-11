@@ -14,6 +14,5 @@ data class UserTokenResponse(
     @SerializedName("refresh_token")
     val refreshToken: String,
     @SerializedName("expire_date")
-    val expireDate: String,
-    val pk: Int
+    val expireDate: String
 )

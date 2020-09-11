@@ -27,7 +27,6 @@
                 android:id="@+id/app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:elevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -47,6 +46,15 @@
 
                 </androidx.appcompat.widget.Toolbar>
             </com.google.android.material.appbar.AppBarLayout>
+
+            <View
+                android:id="@+id/view_divider"
+                android:layout_width="0dp"
+                android:layout_height="4dp"
+                android:background="#3d000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guide_left"
@@ -85,6 +93,7 @@
                 android:background="@drawable/bg_user_info_input"
                 android:hint="@string/user_name_input_hint"
                 android:text="@={vm.username}"
+                app:layout_constraintBottom_toTopOf="@+id/ll_user_name_warning_layout"
                 app:layout_constraintEnd_toEndOf="@id/guide_right"
                 app:layout_constraintStart_toStartOf="@id/guide_left"
                 app:layout_constraintTop_toBottomOf="@+id/tv_screen_title"
@@ -110,10 +119,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
+                    android:fontFamily="@font/noto_sans_kr_regular"
                     android:gravity="center"
-                    android:includeFontPadding="false"
                     android:text="@string/user_name_warning_text"
-                    android:textColor="@color/color_warning_text"
+                    android:textColor="@color/color_grey_050"
+                    android:textSize="@dimen/text_size_12sp"
                     app:layout_constraintStart_toStartOf="@id/guide_left"
                     tools:text="@string/user_name_warning_text" />
             </LinearLayout>
@@ -155,10 +165,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
+                    android:fontFamily="@font/noto_sans_kr_regular"
                     android:gravity="center"
-                    android:includeFontPadding="false"
                     android:text="@string/user_birthday_warning_text"
-                    android:textColor="@color/color_warning_text"
+                    android:textColor="@color/color_grey_050"
+                    android:textSize="@dimen/text_size_12sp"
                     app:layout_constraintStart_toStartOf="@id/guide_left"
                     tools:text="@string/user_birthday_warning_text" />
             </LinearLayout>
@@ -227,10 +238,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
+                    android:fontFamily="@font/noto_sans_kr_regular"
                     android:gravity="center"
-                    android:includeFontPadding="false"
                     android:text="@string/user_gender_warning_text"
-                    android:textColor="@color/color_warning_text"
+                    android:textColor="@color/color_grey_050"
+                    android:textSize="@dimen/text_size_12sp"
                     app:layout_constraintStart_toStartOf="@id/guide_left"
                     tools:text="@string/user_gender_warning_text" />
             </LinearLayout>
@@ -310,10 +322,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
+                    android:fontFamily="@font/noto_sans_kr_regular"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="@{vm.userJob.equals(@string/etc) ? @string/user_detail_job_warning_text : @string/user_job_warning_text}"
-                    android:textColor="@color/color_warning_text"
+                    android:textColor="@color/color_grey_050"
+                    android:textSize="@dimen/text_size_12sp"
                     app:layout_constraintStart_toStartOf="@id/guide_left"
                     tools:text="@string/user_job_warning_text" />
             </LinearLayout>
@@ -321,8 +335,8 @@
             <Button
                 style="@style/SignUpButtonStyle"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginBottom="48dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="40dp"
                 android:enabled="@{!vm.showsUsernameWarningMsg &amp;&amp; !vm.showsUserBirthDayWarningMsg &amp;&amp; !vm.showsUserGenderWarningMsg &amp;&amp; !vm.showsUserJobWarningMsg &amp;&amp; !vm.showsUserDetailJobWarningMsg}"
                 android:onClick="@{() -> vm.onClickSignUp()}"
                 android:text="@string/sign_up"
