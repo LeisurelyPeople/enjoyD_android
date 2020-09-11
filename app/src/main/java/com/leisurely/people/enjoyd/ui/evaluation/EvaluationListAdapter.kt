@@ -31,5 +31,10 @@ class EvaluationListAdapter : BaseListAdapter<String>(object : DiffUtil.ItemCall
 
     override fun onCreateBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         return ItemEvaluationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            .apply {
+                rbsDramaGrade.setOnRatingBarChangeListener { _, rating, _ ->
+
+                }
+            }
     }
 }

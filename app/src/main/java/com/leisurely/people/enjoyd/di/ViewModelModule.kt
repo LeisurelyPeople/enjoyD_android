@@ -29,5 +29,5 @@ val viewModelModule = module {
     viewModel { (socialLoginModel: SocialLoginModel) ->
         UserInfoInputViewModel(socialLoginModel, get())
     }
-    viewModel { SummaryEvaluationViewModel() }
+    viewModel { SummaryEvaluationViewModel(get()) }
 }

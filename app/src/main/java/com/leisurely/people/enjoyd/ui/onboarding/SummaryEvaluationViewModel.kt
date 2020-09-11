@@ -1,5 +1,6 @@
 package com.leisurely.people.enjoyd.ui.onboarding
 
+import com.leisurely.people.enjoyd.data.repository.evaluation.DramaEvaluationRepository
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 
 /**
@@ -8,7 +9,7 @@ import com.leisurely.people.enjoyd.ui.base.BaseViewModel
  * @author Wayne
  * @since v1.0.0 / 2020.09.09
  */
-class SummaryEvaluationViewModel : BaseViewModel() {
-
+class SummaryEvaluationViewModel(private val dramaEvaluationRepository: DramaEvaluationRepository) :
+    BaseViewModel() {
     // TODO Server logic
 }
