@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/dummy_search_poster"
+                app:imgUrl="@{searchResult.poster}"
                 app:layout_constraintDimensionRatio="H, 5:3"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

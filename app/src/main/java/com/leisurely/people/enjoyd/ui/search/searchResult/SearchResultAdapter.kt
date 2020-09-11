@@ -39,7 +39,7 @@ class SearchResultAdapter : BaseListAdapter<DramaInfoSearchResponseItem>(
         viewHolder: BaseItemVH,
         item: DramaInfoSearchResponseItem
     ) {
-        binding.setVariable(BR.basic, item)
+        binding.setVariable(BR.searchResult, item)
     }
 
     override fun onCreateBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {

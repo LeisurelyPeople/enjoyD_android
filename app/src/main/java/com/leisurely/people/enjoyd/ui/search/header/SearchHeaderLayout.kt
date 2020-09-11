@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.layout_search_header.view.*
 class SearchHeaderLayout(activity: SearchActivity, layout: View, vm: SearchViewModel) {
     val tag = this.javaClass.canonicalName
 
+    /** 헤더 레이아웃을 초기화 한다. */
     init {
         layout.apply {
             btn_back.setOnSingleClickListener {
