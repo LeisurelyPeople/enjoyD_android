@@ -3,13 +3,11 @@ package com.leisurely.people.enjoyd.ui.onboarding
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannedString
 import android.text.style.ForegroundColorSpan
-import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.core.text.buildSpannedString
@@ -18,7 +16,6 @@ import androidx.lifecycle.Observer
 import com.leisurely.people.enjoyd.databinding.ActivityUserInfoInputBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
 import com.leisurely.people.enjoyd.model.login.SocialLoginModel
-import com.leisurely.people.enjoyd.ui.main.MainActivity
 import com.leisurely.people.enjoyd.util.Constant
 import com.leisurely.people.enjoyd.util.CustomTypefaceSpan
 import com.leisurely.people.enjoyd.util.ext.formatToViewDate
@@ -55,8 +52,8 @@ class UserInfoInputActivity :
             finish()
         })
 
-        viewModel.startMain.observe(this, Observer {
-            startActivity(MainActivity.getIntent(this))
+        viewModel.startSummaryEvaluation.observe(this, Observer {
+            startActivity(SummaryEvaluationActivity.getIntent(this))
         })
     }
 
