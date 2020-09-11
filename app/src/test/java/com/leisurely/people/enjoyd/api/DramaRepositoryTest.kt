@@ -1,7 +1,6 @@
 package com.leisurely.people.enjoyd.api
 
 import com.leisurely.people.enjoyd.AndroidBaseTest
-import org.junit.Ignore
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
@@ -16,7 +15,7 @@ class DramaRepositoryTest : AndroidBaseTest() {
 //    @Ignore("서버 API 호출 최소화")
     @Test
     fun dramasInfoTest() {
-        val dramaInfoResponse = testApi.getDramasInfo()
+        val dramaInfoResponse = noneAuthApi.getDramasInfo()
         dramaInfoResponse.doOnSuccess {
             println("doOnSuccess : $it")
         }.test()
@@ -32,7 +31,7 @@ class DramaRepositoryTest : AndroidBaseTest() {
 //    @Ignore("아직 구현되지 않은듯함 (404 뜸)")
     @Test
     fun dramasInfoPkTest() {
-        val dramaInfoPkResponse = testApi.getDramasInfoPk("ee")
+        val dramaInfoPkResponse = noneAuthApi.getDramasInfoPk("ee")
         dramaInfoPkResponse.doOnSuccess {
             println("doOnSuccess : $it")
         }.test()
@@ -48,7 +47,7 @@ class DramaRepositoryTest : AndroidBaseTest() {
     // @Ignore("서버 API 호출 최소화")
     @Test
     fun dramasInfoSearchTest() {
-        val dramaInfoSearchResponse = testApi.getDramasInfoSearch("abcd")
+        val dramaInfoSearchResponse = noneAuthApi.getDramasInfoSearch("abcd")
         dramaInfoSearchResponse.doOnSuccess {
             println("doOnSuccess : $it")
         }.test()

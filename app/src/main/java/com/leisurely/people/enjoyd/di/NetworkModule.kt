@@ -75,8 +75,3 @@ fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
         })
         .build()
 }
-
-/** Api 접근을 위한 메소드 */
-fun provideApi(retrofit: Retrofit): APIService {
-    return retrofit.create(APIService::class.java)
-}

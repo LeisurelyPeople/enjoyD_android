@@ -3,12 +3,12 @@ package com.leisurely.people.enjoyd
 import android.app.Application
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.leisurely.people.enjoyd.data.remote.api.APIService
-import com.leisurely.people.enjoyd.data.remote.interceptor.AuthInterceptor
-import com.leisurely.people.enjoyd.di.provideApi
-import com.leisurely.people.enjoyd.di.provideOkHttpClient
-import com.leisurely.people.enjoyd.di.provideRetrofit
+import com.leisurely.people.enjoyd.data.remote.api.AuthService
+import com.leisurely.people.enjoyd.data.remote.api.EnjoyDService
+import com.leisurely.people.enjoyd.di.provideAuthService
+import com.leisurely.people.enjoyd.di.provideEnjoyDService
 import com.leisurely.people.enjoyd.util.coroutine.appContext
+import okhttp3.OkHttpClient
 import org.junit.Before
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
@@ -29,11 +29,14 @@ import org.robolectric.annotation.Config
 @RunWith(AndroidJUnit4::class)
 @Config(application = Application::class)
 abstract class AndroidBaseTest : BaseTest() {
-    lateinit var testApi: APIService
+    protected lateinit var authApi: EnjoyDService
+    protected lateinit var noneAuthApi: AuthService
 
     @Before
     fun setupContext() {
         appContext = ApplicationProvider.getApplicationContext()
-        testApi = provideApi(provideRetrofit(provideOkHttpClient(AuthInterceptor())))
+
+        authApi = provideEnjoyDService(OkHttpClient())
+        noneAuthApi = provideAuthService(OkHttpClient())
     }
 }
