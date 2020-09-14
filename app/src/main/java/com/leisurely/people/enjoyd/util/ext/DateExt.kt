@@ -31,4 +31,4 @@ fun getViewDateFormat(): SimpleDateFormat = SimpleDateFormat("yyyy.MM.dd", Local
 fun getServerDateFormat(): SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
 fun getAccessTokenDateFormat(): SimpleDateFormat =
-    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault())
+    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss:SSS", Locale.getDefault())
