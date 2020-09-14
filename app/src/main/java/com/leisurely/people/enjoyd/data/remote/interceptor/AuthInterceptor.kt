@@ -4,6 +4,7 @@ import android.content.Context
 import com.google.gson.Gson
 import com.leisurely.people.enjoyd.data.local.prefs.TokenManager
 import com.leisurely.people.enjoyd.data.remote.data.response.UserTokenResponse
+import com.leisurely.people.enjoyd.util.ext.convertDateFormatToTimeStamp
 import okhttp3.Interceptor
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Request
@@ -31,7 +32,9 @@ class AuthInterceptor(private val context: Context) : Interceptor {
         val accessToken = userToken.accessToken
         val refreshToken = userToken.refreshToken
 
-        return if (accessTokenExpiredDate.toLong() > System.currentTimeMillis()) {
+        return if (accessTokenExpiredDate.convertDateFormatToTimeStamp() >
+            System.currentTimeMillis()
+        ) {
             chain.proceed(originRequest.newBuilder().addHeaders(accessToken).build())
         } else {
             val body = JSONObject().put("refresh_token", refreshToken).toString()

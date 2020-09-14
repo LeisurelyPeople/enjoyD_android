@@ -30,7 +30,13 @@ class SummaryEvaluationActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setSummaryEvaluationRV()
         binding.tvScreenTitle.text = getScreenTitleStringBuilder()
+        viewModel.getDramaEvaluationItems()
+    }
+
+    private fun setSummaryEvaluationRV() {
+        binding.rvEvaluationDrama.adapter = SummaryEvaluationRVAdapter()
     }
 
     private fun getScreenTitleStringBuilder(): SpannedString {

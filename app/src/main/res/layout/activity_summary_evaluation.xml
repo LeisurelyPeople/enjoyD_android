@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="vm"
+            type="com.leisurely.people.enjoyd.ui.onboarding.SummaryEvaluationViewModel" />
 
     </data>
 
@@ -87,8 +92,10 @@
                     app:layout_constraintBottom_toTopOf="@+id/btn_evaluation_complete"
                     app:layout_constraintEnd_toEndOf="@id/guide_right"
                     app:layout_constraintStart_toStartOf="@id/guide_left"
+                    android:overScrollMode="never"
                     app:layout_constraintTop_toBottomOf="@+id/tv_screen_title"
-                    app:layout_constraintVertical_chainStyle="spread_inside" />
+                    app:layout_constraintVertical_chainStyle="spread_inside"
+                    bind:replaceAll="@{vm.dramaEvaluationItems}" />
 
                 <Button
                     android:id="@+id/btn_evaluation_complete"

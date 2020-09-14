@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName
  */
 data class DramaEvaluationResponse(
     @SerializedName("avg_rating")
-    val avgRating: Int,
+    val avgRating: Float,
     @SerializedName("pk")
     val pk: Int,
     @SerializedName("poster")
