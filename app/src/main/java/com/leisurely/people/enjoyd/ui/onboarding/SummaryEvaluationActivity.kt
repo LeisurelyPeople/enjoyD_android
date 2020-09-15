@@ -2,6 +2,7 @@ package com.leisurely.people.enjoyd.ui.onboarding
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -10,10 +11,12 @@ import android.text.style.ForegroundColorSpan
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.buildSpannedString
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.ActivitySummaryEvaluationBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
 import com.leisurely.people.enjoyd.ui.main.MainActivity
+import com.leisurely.people.enjoyd.util.CustomItemDecoration
 import com.leisurely.people.enjoyd.util.CustomTypefaceSpan
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -46,7 +49,24 @@ class SummaryEvaluationActivity :
     }
 
     private fun setSummaryEvaluationRV() {
-        binding.rvEvaluationDrama.adapter = SummaryEvaluationRVAdapter()
+        binding.rvEvaluationDrama.run {
+            adapter = SummaryEvaluationRVAdapter()
+            addItemDecoration(object : CustomItemDecoration() {
+                override fun setSpacingForDirection(
+                    outRect: Rect,
+                    layoutManager: RecyclerView.LayoutManager?,
+                    position: Int,
+                    itemCount: Int
+                ) {
+                    outRect.bottom = if (position != itemCount - 1) {
+                        resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_24dp)
+                    } else {
+                        0
+                    }
+                }
+
+            })
+        }
     }
 
     private fun getScreenTitleStringBuilder(): SpannedString {
