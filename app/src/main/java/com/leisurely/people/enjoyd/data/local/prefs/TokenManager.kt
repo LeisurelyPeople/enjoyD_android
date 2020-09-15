@@ -49,7 +49,7 @@ object TokenManager {
         return userToken?.refreshToken
     }
 
-    fun getUserExpireDate(context: Context): String? {
+    fun getUserExpireDate(context: Context): Long? {
         val userToken = getUserToken(context)
         return userToken?.expireDate
     }
