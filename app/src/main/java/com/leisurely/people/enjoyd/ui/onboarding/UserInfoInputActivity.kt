@@ -54,6 +54,7 @@ class UserInfoInputActivity :
 
         viewModel.startSummaryEvaluation.observe(this, Observer {
             startActivity(SummaryEvaluationActivity.getIntent(this))
+            finish()
         })
     }
 

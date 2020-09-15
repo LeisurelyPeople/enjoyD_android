@@ -30,6 +30,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_height">
 
+                <TextView
+                    android:id="@+id/tv_skip_screen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:drawableEnd="@drawable/btn_next"
+                    android:fontFamily="@font/noto_sans_kr_regular"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="12sp"
+                    android:onClick="@{() -> vm.onSkipScreen()}"
+                    android:text="@string/skip"
+                    android:textColor="@color/color_grey_0"
+                    android:textSize="@dimen/text_size_16sp" />
+
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -88,11 +102,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="22dp"
+                    android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toTopOf="@+id/btn_evaluation_complete"
                     app:layout_constraintEnd_toEndOf="@id/guide_right"
                     app:layout_constraintStart_toStartOf="@id/guide_left"
-                    android:overScrollMode="never"
                     app:layout_constraintTop_toBottomOf="@+id/tv_screen_title"
                     app:layout_constraintVertical_chainStyle="spread_inside"
                     bind:replaceAll="@{vm.dramaEvaluationItems}" />

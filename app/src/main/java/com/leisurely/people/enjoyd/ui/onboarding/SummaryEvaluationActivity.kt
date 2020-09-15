@@ -9,9 +9,11 @@ import android.text.SpannedString
 import android.text.style.ForegroundColorSpan
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.buildSpannedString
+import androidx.lifecycle.Observer
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.ActivitySummaryEvaluationBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
+import com.leisurely.people.enjoyd.ui.main.MainActivity
 import com.leisurely.people.enjoyd.util.CustomTypefaceSpan
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -33,6 +35,14 @@ class SummaryEvaluationActivity :
         setSummaryEvaluationRV()
         binding.tvScreenTitle.text = getScreenTitleStringBuilder()
         viewModel.getDramaEvaluationItems()
+
+        viewModel.startMain.observe(this, Observer {
+            onStartEnjoyDService()
+        })
+    }
+
+    override fun onBackPressed() {
+        onStartEnjoyDService()
     }
 
     private fun setSummaryEvaluationRV() {
@@ -103,6 +113,13 @@ class SummaryEvaluationActivity :
                 )
             })
         }
+    }
+
+    private fun onStartEnjoyDService() {
+        val intent = MainActivity.getIntent(this).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        startActivity(intent)
     }
 
     companion object {

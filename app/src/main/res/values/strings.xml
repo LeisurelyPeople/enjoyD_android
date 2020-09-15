@@ -29,6 +29,7 @@
     <string name="student">학생</string>
     <string name="office_workers">직장인</string>
     <string name="etc">기타</string>
+    <string name="skip">SKIP</string>
 
 
     <!-- 에러 관련 -->

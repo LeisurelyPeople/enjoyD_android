@@ -44,4 +44,8 @@ class SummaryEvaluationViewModel(private val dramaEvaluationRepository: DramaEva
                 }
             }).addDisposable()
     }
+
+    fun onSkipScreen() {
+        _startMain.value = null
+    }
 }
