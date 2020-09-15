@@ -18,8 +18,9 @@
 
         <ImageView
             android:id="@+id/iv_evaluation_poster"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="0.632"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +52,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/noto_sans_kr_regular"
-            android:text="@{item.releaseYear}"
+            android:text="@{String.valueOf(item.releaseYear)}"
             android:textColor="@color/color_grey_0"
             android:textSize="@dimen/text_size_16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,9 +66,11 @@
             android:layout_height="34dp"
             android:layout_marginStart="22dp"
             android:layout_marginTop="24dp"
+            android:layout_marginBottom="40dp"
             android:numStars="5"
             android:progressDrawable="@drawable/selector_rating_bar_svg"
             android:rating="@{item.avgRating}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_evaluation_poster"
             app:layout_constraintTop_toBottomOf="@+id/tv_drama_year"
             tools:rating="3" />
