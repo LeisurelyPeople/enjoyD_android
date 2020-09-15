@@ -50,7 +50,9 @@ class SummaryEvaluationActivity :
 
     private fun setSummaryEvaluationRV() {
         binding.rvEvaluationDrama.run {
-            adapter = SummaryEvaluationRVAdapter()
+            adapter = SummaryEvaluationRVAdapter { rating: Float, idx: Int ->
+                viewModel.onDramaRatingChanged(rating, idx)
+            }
             addItemDecoration(object : CustomItemDecoration() {
                 override fun setSpacingForDirection(
                     outRect: Rect,

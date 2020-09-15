@@ -14,7 +14,8 @@ import com.leisurely.people.enjoyd.ui.base.adapter.BaseRVAdapter
  * @author Wayne
  * @since v1.0.0 / 2020.09.11
  */
-class SummaryEvaluationRVAdapter : BaseRVAdapter<DramaEvaluationResponse>() {
+class SummaryEvaluationRVAdapter(private val ratingBarChanged: (rating: Float, idx: Int) -> Unit) :
+    BaseRVAdapter<DramaEvaluationResponse>() {
 
     override fun onBindView(
         binding: ViewDataBinding,
@@ -30,6 +31,12 @@ class SummaryEvaluationRVAdapter : BaseRVAdapter<DramaEvaluationResponse>() {
             LayoutInflater.from(parent.context),
             parent,
             false
-        )
+        ).apply {
+            rbsDramaGrade.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+                item?.let {
+                    ratingBarChanged.invoke(rating, it.pk)
+                }
+            }
+        }
     }
 }
