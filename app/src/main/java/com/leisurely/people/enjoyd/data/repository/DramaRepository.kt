@@ -2,7 +2,7 @@ package com.leisurely.people.enjoyd.data.repository
 
 import com.leisurely.people.enjoyd.data.local.source.DramaLocalDataSource
 import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoSearchResponse
-import com.leisurely.people.enjoyd.data.remote.source.DramaRemoteDataSource
+import com.leisurely.people.enjoyd.data.remote.source.drama.DramaSearchRemoteDataSource
 import io.reactivex.Single
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -15,7 +15,7 @@ import kotlinx.coroutines.withContext
  * @since v1.0.0 / 2020.12.07
  */
 class DramaRepository(
-    private val dramaRemoteDataSource: DramaRemoteDataSource,
+    private val dramaSearchRemoteDataSource: DramaSearchRemoteDataSource,
     private val dramaLocalDataSource: DramaLocalDataSource
 ) {
     suspend fun dramaInfoSearch(
@@ -26,6 +26,6 @@ class DramaRepository(
         dramaLocalDataSource.dramaInfoSearch()
 
         // 리모트 영역에서 가져온 데이터 리턴
-        return@withContext dramaRemoteDataSource.dramaInfoSearch(search, ordering)
+        return@withContext dramaSearchRemoteDataSource.dramaInfoSearch(search, ordering)
     }
 }
