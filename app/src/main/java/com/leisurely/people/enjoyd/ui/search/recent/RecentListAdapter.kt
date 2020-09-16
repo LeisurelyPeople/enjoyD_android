@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.item_recent.view.*
 class RecentListAdapter(val vm: SearchViewModel) :
     BaseListAdapter<RecentSearch>(object : DiffUtil.ItemCallback<RecentSearch>() {
         override fun areItemsTheSame(oldItem: RecentSearch, newItem: RecentSearch): Boolean {
-            return oldItem == newItem // check uniqueness
+            return oldItem.id == newItem.id // check uniqueness
         }
 
         override fun areContentsTheSame(oldItem: RecentSearch, newItem: RecentSearch): Boolean {

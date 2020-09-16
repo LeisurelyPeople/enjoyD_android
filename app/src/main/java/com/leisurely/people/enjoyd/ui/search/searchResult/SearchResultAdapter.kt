@@ -23,7 +23,7 @@ class SearchResultAdapter : BaseListAdapter<DramaInfoSearchResponseItem>(
             oldItem: DramaInfoSearchResponseItem,
             newItem: DramaInfoSearchResponseItem
         ): Boolean {
-            return oldItem == newItem // check uniqueness
+            return oldItem.id == newItem.id // check uniqueness
         }
 
         override fun areContentsTheSame(
