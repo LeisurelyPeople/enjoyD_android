@@ -137,7 +137,7 @@ class UserInfoInputActivity :
             dateTimePoint.month,
             dateTimePoint.day
         ).apply {
-            datePicker.minDate = (dateTimePoint + 365.days).unixMillis
+            datePicker.minDate = TimePoint(1970, 1, 1).unixMillis
             datePicker.maxDate = dateTimePoint.unixMillis
         }.show()
     }
