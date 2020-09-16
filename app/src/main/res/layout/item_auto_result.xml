@@ -8,7 +8,7 @@
 
         <variable
             name="autoResult"
-            type="com.leisurely.people.enjoyd.ui.search.model.AutoResult" />
+            type="com.leisurely.people.enjoyd.model.search.AutoResult" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

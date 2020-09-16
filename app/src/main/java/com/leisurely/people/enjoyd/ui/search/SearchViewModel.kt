@@ -1,15 +1,14 @@
 package com.leisurely.people.enjoyd.ui.search
 
 import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoSearchResponseItem
-import com.leisurely.people.enjoyd.ui.search.model.RecentSearch
-import com.leisurely.people.enjoyd.ui.search.model.AutoResult
+import com.leisurely.people.enjoyd.model.search.RecentSearch
+import com.leisurely.people.enjoyd.model.search.AutoResult
 import com.leisurely.people.enjoyd.data.repository.DramaRepository
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.coroutine.CoroutineKey.SEARCH_CLICK_SEARCH_BTN

@@ -1,4 +1,4 @@
-package com.leisurely.people.enjoyd.ui.search.model
+package com.leisurely.people.enjoyd.model.search
 
 /**
  * 최근 검색한 내용에 대한 데이터 클래스

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.DiffUtil
-import com.leisurely.people.enjoyd.ui.search.model.RecentSearch
+import com.leisurely.people.enjoyd.model.search.RecentSearch
 import com.leisurely.people.enjoyd.databinding.ItemRecentBinding
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseItemVH
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseListAdapter

@@ -1,4 +1,4 @@
-package com.leisurely.people.enjoyd.ui.search.model
+package com.leisurely.people.enjoyd.model.search
 
 /**
  * 타이핑 중에 자동으로 나오는 검색 결과에 대한 데이터 클래스

@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.DiffUtil
-import com.leisurely.people.enjoyd.ui.search.model.AutoResult
+import com.leisurely.people.enjoyd.model.search.AutoResult
 import com.leisurely.people.enjoyd.databinding.ItemAutoResultBinding
 import com.leisurely.people.enjoyd.databinding.ItemAutoResultCategoryBinding
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseItemVH

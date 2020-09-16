@@ -8,7 +8,7 @@
 
         <variable
             name="recent"
-            type="com.leisurely.people.enjoyd.ui.search.model.RecentSearch" />
+            type="com.leisurely.people.enjoyd.model.search.RecentSearch" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
