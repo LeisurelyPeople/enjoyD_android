@@ -32,9 +32,7 @@
         <activity
             android:name=".ui.evaluation.EvaluationActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.search.SearchActivity"
-            android:theme="@style/NoActionBarAppTheme">
+        <activity android:name=".ui.search.SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
