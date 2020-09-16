@@ -7,8 +7,10 @@ import com.leisurely.people.enjoyd.data.remote.data.request.evaluation.DramaEval
 import com.leisurely.people.enjoyd.data.remote.data.response.evaluation.DramaEvaluationResponse
 import com.leisurely.people.enjoyd.data.repository.evaluation.DramaEvaluationRepository
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
+import com.leisurely.people.enjoyd.util.ext.applySchedulers
 import com.leisurely.people.enjoyd.util.ext.applySingleSchedulers
 import com.leisurely.people.enjoyd.util.lifecycle.LiveEvent
+import com.leisurely.people.enjoyd.util.observer.DisposableCompletableObserver
 import com.leisurely.people.enjoyd.util.observer.DisposableSingleObserver
 
 /**
@@ -86,6 +88,18 @@ class SummaryEvaluationViewModel(private val dramaEvaluationRepository: DramaEva
     }
 
     fun onEvaluationComplete() {
-        // TODO 평가한 드라마정보 서버로 전송하는 작업
+        val items = _dramaEvaluationRequest.value ?: return
+        dramaEvaluationRepository.postDramaEvaluationData(items)
+            .applySchedulers()
+            .subscribeWith(object : DisposableCompletableObserver() {
+                override fun onComplete() {
+                    _startMain.value = null
+                }
+
+                override fun onError(e: Throwable) {
+                    super.onError(e)
+                    showToast("잠시 후 다시 시도해주세요.")
+                }
+            }).addDisposable()
     }
 }

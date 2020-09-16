@@ -1,8 +1,10 @@
 package com.leisurely.people.enjoyd.data.repository.evaluation
 
 import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
+import com.leisurely.people.enjoyd.data.remote.data.request.evaluation.DramaEvaluationRequest
 import com.leisurely.people.enjoyd.data.remote.data.response.evaluation.DramaEvaluationResponse
 import com.leisurely.people.enjoyd.data.remote.source.evaluation.DramaEvaluationDataSource
+import io.reactivex.Completable
 import io.reactivex.Single
 
 /**
@@ -18,5 +20,9 @@ class DramaEvaluationRepository(private val dramaEvaluationDataSource: DramaEval
         pageSize: Int
     ): Single<PagingResponse<DramaEvaluationResponse>> {
         return dramaEvaluationDataSource.getDramasInfoRating(page, pageSize)
+    }
+
+    fun postDramaEvaluationData(data: List<DramaEvaluationRequest>): Completable {
+        return dramaEvaluationDataSource.postDramasInfoRating(data)
     }
 }

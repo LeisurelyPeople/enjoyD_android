@@ -1,9 +1,13 @@
 package com.leisurely.people.enjoyd.data.remote.api
 
 import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
+import com.leisurely.people.enjoyd.data.remote.data.request.evaluation.DramaEvaluationRequest
 import com.leisurely.people.enjoyd.data.remote.data.response.evaluation.DramaEvaluationResponse
+import io.reactivex.Completable
 import io.reactivex.Single
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 /**
@@ -21,5 +25,8 @@ interface EnjoyDService {
         @Query("page") page: Int,
         @Query("page_size") pageSize: Int
     ): Single<PagingResponse<DramaEvaluationResponse>>
+
+    @POST("dramas/info/rating/")
+    fun postDramasInfoRating(@Body data: HashMap<String, List<DramaEvaluationRequest>>): Completable
 
 }
