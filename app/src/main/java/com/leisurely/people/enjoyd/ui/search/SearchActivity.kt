@@ -22,7 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class SearchActivity :
     BaseActivity<ActivitySearchBinding, SearchViewModel>(R.layout.activity_search) {
-    public override val viewModel: SearchViewModel by viewModel()
+    override val viewModel: SearchViewModel by viewModel()
     lateinit var searchHeaderLayout: SearchHeaderLayout
     lateinit var searchBasicLayout: SearchBasicLayout
     lateinit var searchRecentLayout: SearchRecentLayout

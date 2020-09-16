@@ -48,10 +48,12 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
     val query = ObservableField<String>()
 
     /** 검색을 위한 액션을 취했는지 안했는지를 감별하는 flag 값 (editText 버튼을 눌렀을 시 false) */
-    val initClick = ObservableField<Boolean>().apply { set(false) }
+    private val _initClick = MutableLiveData<Boolean>(false)
+    val initClick: MutableLiveData<Boolean> = _initClick
 
     /** 현재 검색어를 입력중인지 아닌지를 확인할 수 있는 flag 값 (검색버튼을 눌렀을 시 false) */
-    val isTyping = ObservableField<Boolean>().apply { set(false) }
+    private val _isTyping = MutableLiveData<Boolean>(false)
+    val isTyping: MutableLiveData<Boolean> = _isTyping
 
     /**
      * 검색 쿼리 textWatcher
@@ -141,16 +143,16 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
     val queryOneFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
         Log.i(tag, "$hasFocus")
         // 만약 포커스 된 적 있던 경우 실행하지 않는다.
-        if (initClick.get() == false && hasFocus) {
+        if (_initClick.value == false && hasFocus) {
             // 한번이라도 클릭했을 때 & 안 클릭했을 때 보여주는 화면이 다르므로 관련 flag 값 변경
-            initClick.set(true)
-            isTyping.set(true)
+            _initClick.value = true
+            _isTyping.value = true
         }
     }
 
     /** 검색 에딧 텍스트를 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
     fun searchEditTextClick() {
-        isTyping.set(true)
+        _isTyping.value = true
     }
 
     /** 검색 버튼을 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
@@ -168,7 +170,7 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
                 query.get(), "avg_rating"
             ).applySingleSchedulers(
             ).subscribe({ searchDramas ->
-                isTyping.set(false)
+                _isTyping.value = false
                 _searchResults.value = searchDramas
             }, { throwable: Throwable? ->
                 throwable?.printStackTrace()
@@ -187,7 +189,7 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
                 recentText, "avg_rating"
             ).applySingleSchedulers(
             ).subscribe({ searchDramas ->
-                isTyping.set(false)
+                _isTyping.value = false
                 _searchResults.value = searchDramas
             }, { throwable: Throwable? ->
                 throwable?.printStackTrace()
