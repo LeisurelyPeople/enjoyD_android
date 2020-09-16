@@ -57,36 +57,26 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
      * 검색 쿼리 textWatcher
      * 참고 : https://steemit.com/kr/@jeonghamin/andoird-5-mvvm-edittext
      */
-    val queryWatcher: TextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-            Log.i(tag, "beforeTextChanged : s : $s, start : $start, count : $count, after : $after")
-        }
+    fun queryAfterTextChanged(s: Editable) {
+        Log.i(tag, "queryAfterTextChanged : s : $s")
 
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            Log.i(tag, "onTextChanged : s : $s, start : $start, count : $count")
-        }
+//        // TODO 현재 _autoResults 를 사용하지 않으므로 주석처리함
+//        if (s.isNotEmpty()) {
+//            _autoResults.value = listOf(
+//                AutoResult(true, "프로그램"),
+//                AutoResult(false, "소녀의 세계"),
+//                AutoResult(false, "소녀의 세계"),
+//                AutoResult(false, "소녀의 세계"),
+//                AutoResult(false, "소녀의 세계"),
+//                AutoResult(true, "배우"),
+//                AutoResult(false, "아이린"),
+//                AutoResult(false, "태연"),
+//                AutoResult(false, "혜리")
+//            )
+//        }
 
-        override fun afterTextChanged(s: Editable) {
-            Log.i(tag, "afterTextChanged : s : $s")
-
-//            // TODO 현재 _autoResults 를 사용하지 않으므로 주석처리함
-//            if (s.isNotEmpty()) {
-//                _autoResults.value = listOf(
-//                    AutoResult(true, "프로그램"),
-//                    AutoResult(false, "소녀의 세계"),
-//                    AutoResult(false, "소녀의 세계"),
-//                    AutoResult(false, "소녀의 세계"),
-//                    AutoResult(false, "소녀의 세계"),
-//                    AutoResult(true, "배우"),
-//                    AutoResult(false, "아이린"),
-//                    AutoResult(false, "태연"),
-//                    AutoResult(false, "혜리")
-//                )
-//            }
-
-            // api 호출
-            // recyclerview 에 반영
-        }
+//        // api 호출
+//        // recyclerview 에 반영
     }
 
     init {

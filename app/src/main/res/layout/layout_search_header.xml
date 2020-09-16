@@ -45,8 +45,6 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
-                app:onFocusChangeListener="@{vm.queryOneFocusChangeListener}"
-                android:addTextChangedListener="@{vm.queryWatcher}"
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="검색어를 입력해주세요."
@@ -57,6 +55,8 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/btn_search"
                 app:layout_constraintTop_toTopOf="parent"
+                app:onFocusChangeListener="@{vm.queryOneFocusChangeListener}"
+                app:onAfterTextChanged="@{vm.queryAfterTextChanged}"
                 bind:onClick="@{vm.searchEditTextClick}"
                 tools:text="검색어를 입력해주세요." />
 
