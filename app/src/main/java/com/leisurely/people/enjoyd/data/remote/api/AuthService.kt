@@ -28,19 +28,4 @@ interface AuthService {
 
     @POST("accounts/refresh/")
     fun postAccountsRefresh(@Body data: HashMap<String, String>): Single<UserTokenResponse>
-
-    /** 간략한 드라마 정보 리스트 API (/dramas/info) */
-    @GET("/dramas/info/")
-    fun getDramasInfo(): Single<DramaInfoResponse>
-
-    /** 자세한 드라마 정보 리스트 API (/dramas/info/{pk}) */
-    @GET("/dramas/info/{pk}/")
-    fun getDramasInfoPk(@Path("pk") pk: String): Single<DramaInfoPkResponse>
-
-    /** 드라마 정보 검색 API (/dramas/info/search) */
-    @GET("/dramas/info/search/")
-    fun getDramasInfoSearch(
-        @Query("search") search: String?,
-        @Query("order") order: String = "avg_rating"
-    ): Single<DramaInfoSearchResponse>
 }

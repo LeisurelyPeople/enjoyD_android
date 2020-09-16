@@ -13,10 +13,10 @@ import java.util.concurrent.TimeUnit
  */
 class DramaRepositoryTest : AndroidBaseTest() {
     /** 간략한 드라마 정보 리스트 API 를 테스트한다. */
-    @Ignore("서버 API 호출 최소화")
+//    @Ignore("서버 API 호출 최소화")
     @Test
     fun dramasInfoTest() {
-        val dramaInfoResponse = noneAuthApi.getDramasInfo()
+        val dramaInfoResponse = authApi.getDramasInfo()
         dramaInfoResponse.doOnSuccess {
             println("doOnSuccess : $it")
         }.test()
@@ -29,10 +29,10 @@ class DramaRepositoryTest : AndroidBaseTest() {
     }
 
     /** 자세한 드라마 정보 리스트 API 를 테스트한다. */
-    @Ignore("아직 구현되지 않은듯함 (404 뜸)")
+//    @Ignore("아직 구현되지 않은듯함 (404 뜸)")
     @Test
     fun dramasInfoPkTest() {
-        val dramaInfoPkResponse = noneAuthApi.getDramasInfoPk("ee")
+        val dramaInfoPkResponse = authApi.getDramasInfoPk("3")
         dramaInfoPkResponse.doOnSuccess {
             println("doOnSuccess : $it")
         }.test()
@@ -45,10 +45,10 @@ class DramaRepositoryTest : AndroidBaseTest() {
     }
 
     /** 드라마 정보 검색 API 를 테스트한다. */
-    @Ignore("서버 API 호출 최소화")
+//    @Ignore("서버 API 호출 최소화")
     @Test
     fun dramasInfoSearchTest() {
-        val dramaInfoSearchResponse = noneAuthApi.getDramasInfoSearch("abcd")
+        val dramaInfoSearchResponse = authApi.getDramasInfoSearch("abcd")
         dramaInfoSearchResponse.doOnSuccess {
             println("doOnSuccess : $it")
         }.test()
