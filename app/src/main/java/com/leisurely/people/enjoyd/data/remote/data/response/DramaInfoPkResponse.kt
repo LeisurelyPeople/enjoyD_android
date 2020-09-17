@@ -11,22 +11,22 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class DramaInfoPkResponse(
-    val pk: Int?,
+    val pk: Int,
 
-    val poster: String?,
+    val poster: String,
 
-    val title: String?,
+    val title: String,
 
     @SerialName("avg_rating")
-    val avgRating: Int?,
+    val avgRating: Int,
 
-    val summary: String?,
+    val summary: String,
 
-    val tag: List<String>?,
+    val tag: List<String>,
 
-    val cast: List<String>?,
+    val cast: List<String>,
 
-    val director: String?,
+    val director: String,
 
-    val dramas: List<DramaInfoPkResponseItem>?
+    val dramas: List<DramaInfoPkResponseItem>
 )

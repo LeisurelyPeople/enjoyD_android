@@ -12,19 +12,19 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class DramaInfoPkResponseItem(
-    val pk: String?,
+    val pk: String,
 
     @SerialName("video_id")
-    val videoId: String?,
+    val videoId: String,
 
-    val title: String?,
+    val title: String,
 
-    val episode: Int?,
+    val episode: Int,
 
-    val summary: String?,
+    val summary: String,
 
-    val duration: Int?,
+    val duration: Int,
 
     @SerialName("small_thumbnail")
-    val smallThumbnail: String?
+    val smallThumbnail: String
 )

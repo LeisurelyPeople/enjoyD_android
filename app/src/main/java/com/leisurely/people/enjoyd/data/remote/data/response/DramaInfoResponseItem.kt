@@ -11,9 +11,9 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class DramaInfoResponseItem(
-    val pk: Int?,
+    val pk: Int,
 
-    val poster: String?,
+    val poster: String,
 
-    val title: String?
+    val title: String
 )
