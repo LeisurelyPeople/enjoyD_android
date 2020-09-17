@@ -1,5 +1,12 @@
 package com.leisurely.people.enjoyd.di
 
+import android.view.View
+import com.leisurely.people.enjoyd.ui.search.SearchActivity
+import com.leisurely.people.enjoyd.ui.search.SearchViewModel
+import com.leisurely.people.enjoyd.ui.search.basic.SearchBasicLayout
+import com.leisurely.people.enjoyd.ui.search.header.SearchHeaderLayout
+import com.leisurely.people.enjoyd.ui.search.recent.SearchRecentLayout
+import com.leisurely.people.enjoyd.ui.search.searchResult.SearchResultLayout
 import org.koin.dsl.module
 
 /**
@@ -11,5 +18,16 @@ import org.koin.dsl.module
 
 /** 검색 뷰 모듈(DI) 설정 */
 val searchViewModule = module {
-    single {  }
+    factory { (activity: SearchActivity, layout: View, vm: SearchViewModel) ->
+        SearchHeaderLayout(activity, layout, vm)
+    }
+    factory { (activity: SearchActivity, layout: View, vm: SearchViewModel) ->
+        SearchBasicLayout(activity, layout, vm)
+    }
+    factory { (activity: SearchActivity, layout: View, vm: SearchViewModel) ->
+        SearchRecentLayout(activity, layout, vm)
+    }
+    factory { (activity: SearchActivity, layout: View, vm: SearchViewModel) ->
+        SearchResultLayout(activity, layout, vm)
+    }
 }
