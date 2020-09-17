@@ -6,6 +6,7 @@ import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoSearchResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoSearchResponseItem
 import com.leisurely.people.enjoyd.model.search.RecentSearch
 import com.leisurely.people.enjoyd.model.search.AutoResult
@@ -14,6 +15,7 @@ import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.coroutine.CoroutineKey.SEARCH_CLICK_SEARCH_BTN
 import com.leisurely.people.enjoyd.util.coroutine.SafeScope
 import com.leisurely.people.enjoyd.util.ext.applySingleSchedulers
+import com.leisurely.people.enjoyd.util.observer.DisposableSingleObserver
 import com.leisurely.people.enjoyd.util.time.TimePoint
 import kotlinx.coroutines.launch
 
@@ -168,11 +170,11 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
             dramaRepository.dramaInfoSearch(
                 query.get(), "avg_rating"
             ).applySingleSchedulers(
-            ).subscribe({ searchDramas ->
-                _isTyping.value = false
-                _searchResults.value = searchDramas
-            }, { throwable: Throwable? ->
-                throwable?.printStackTrace()
+            ).subscribeWith(object : DisposableSingleObserver<DramaInfoSearchResponse>() {
+                override fun onSuccess(searchDramas: DramaInfoSearchResponse) {
+                    _isTyping.value = false
+                    _searchResults.value = searchDramas
+                }
             })
         }
     }
@@ -187,11 +189,11 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
             dramaRepository.dramaInfoSearch(
                 recentText, "avg_rating"
             ).applySingleSchedulers(
-            ).subscribe({ searchDramas ->
-                _isTyping.value = false
-                _searchResults.value = searchDramas
-            }, { throwable: Throwable? ->
-                throwable?.printStackTrace()
+            ).subscribeWith(object : DisposableSingleObserver<DramaInfoSearchResponse>(){
+                override fun onSuccess(searchDramas: DramaInfoSearchResponse) {
+                    _isTyping.value = false
+                    _searchResults.value = searchDramas
+                }
             })
         }
     }
