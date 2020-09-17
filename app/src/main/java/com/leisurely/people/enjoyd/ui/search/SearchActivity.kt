@@ -5,7 +5,10 @@ import androidx.lifecycle.Observer
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.ActivitySearchBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
+import com.leisurely.people.enjoyd.ui.search.basic.SearchBasicLayout
 import com.leisurely.people.enjoyd.ui.search.header.SearchHeaderLayout
+import com.leisurely.people.enjoyd.ui.search.recent.SearchRecentLayout
+import com.leisurely.people.enjoyd.ui.search.searchResult.SearchResultLayout
 import com.leisurely.people.enjoyd.util.ext.hideKeyboard
 import kotlinx.android.synthetic.main.activity_search.*
 import org.koin.android.ext.android.get
@@ -22,11 +25,11 @@ class SearchActivity :
     BaseActivity<ActivitySearchBinding, SearchViewModel>(R.layout.activity_search) {
     override val viewModel: SearchViewModel by viewModel()
     private lateinit var searchHeaderLayout: SearchHeaderLayout
-    private lateinit var searchBasicLayout: SearchHeaderLayout
-    private lateinit var searchRecentLayout: SearchHeaderLayout
+    private lateinit var searchBasicLayout: SearchBasicLayout
+    private lateinit var searchRecentLayout: SearchRecentLayout
 
     //    private lateinit var searchAutoResultLayout: SearchHeaderLayout
-    private lateinit var searchResultLayout: SearchHeaderLayout
+    private lateinit var searchResultLayout: SearchResultLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

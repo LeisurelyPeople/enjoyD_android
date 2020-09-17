@@ -1,6 +1,8 @@
 package com.leisurely.people.enjoyd.ui.search.basic
 
 import android.view.View
+import android.widget.Toast
+import com.leisurely.people.enjoyd.ui.base.adapter.OnRecyclerViewItemClick
 import com.leisurely.people.enjoyd.ui.search.SearchActivity
 import com.leisurely.people.enjoyd.ui.search.SearchViewModel
 import kotlinx.android.synthetic.main.layout_search_basic.view.*
@@ -20,7 +22,11 @@ class SearchBasicLayout(activity: SearchActivity, layout: View, vm: SearchViewMo
 
     /** 추천 리스트 레이아웃을 초기화 한다. */
     init {
-        val adapter = BasicListAdapter()
+        val adapter = BasicListAdapter(object : OnRecyclerViewItemClick<String> {
+            override fun invoke(basic: String) {
+                Toast.makeText(activity, basic, Toast.LENGTH_SHORT).show()
+            }
+        })
         layout.rv_basics.adapter = adapter
     }
 }
