@@ -22,11 +22,9 @@ class SearchBasicLayout(activity: SearchActivity, layout: View, vm: SearchViewMo
 
     /** 추천 리스트 레이아웃을 초기화 한다. */
     init {
-        val adapter = BasicListAdapter(object : OnRecyclerViewItemClick<String> {
-            override fun invoke(basic: String) {
-                Toast.makeText(activity, basic, Toast.LENGTH_SHORT).show()
-            }
-        })
+        val adapter = BasicListAdapter { basic ->
+            Toast.makeText(activity, basic, Toast.LENGTH_SHORT).show()
+        }
         layout.rv_basics.adapter = adapter
     }
 }
