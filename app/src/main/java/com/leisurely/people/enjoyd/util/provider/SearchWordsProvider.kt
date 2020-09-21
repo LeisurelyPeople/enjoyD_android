@@ -15,6 +15,7 @@ object SearchWordsProvider {
 
     fun init(): List<RecentSearch> {
         return try {
+            recents = mutableListOf()
             val recentsJsonArray = appContext.getSharedPreference(
                 PREF_RECENT_SEARCH_WORD, "[]"
             ).asJsonArray

@@ -48,7 +48,8 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
     val searchResults: LiveData<List<DramasSearchResponseItem>> = _searchResults
 
     /** 검색 쿼리 텍스트 */
-    val query = ObservableField<String>()
+    private val _query = MutableLiveData("")
+    val query: LiveData<String> = _query
 
     /** 검색을 위한 액션을 취했는지 안했는지를 감별하는 flag 값 (editText 버튼을 눌렀을 시 false) */
     private val _initClick = MutableLiveData<Boolean>(false)
@@ -123,14 +124,14 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
 
     /** 검색 버튼을 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
     fun searchBtnClick() {
-        if (query.get().isNullOrEmpty()) {
+        if (_query.value.isNullOrEmpty()) {
             liveToastMessage.value = "최소 한 글자 이상 입력해주세요."
             return
         }
         _isTyping.value = false
 
         _recents.value = SearchWordsProvider.put(
-            RecentSearch(id = TimePoint.now.unixMillis, title = query.get()!!)
+            RecentSearch(id = TimePoint.now.unixMillis, title = _query.value ?: " ")
         )
 
         SafeScope(logicName = SEARCH_CLICK_SEARCH_BTN).launch {
@@ -138,7 +139,7 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
 
             // 서버로부터 데이터를 받아온 후 키보드를 닫음 처리한다.
             dramaRepository.dramaInfoSearch(
-                query.get(), "avg_rating"
+                _query.value, "avg_rating"
             ).applySingleSchedulers(
             ).subscribeWith(object : DisposableSingleObserver<DramasSearchResponse>() {
                 override fun onSuccess(searchDramas: DramasSearchResponse) {
@@ -155,7 +156,7 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
 
     /** 최근 검색어를 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
     fun searchRecentItemClick(recentText: String) {
-        query.set(recentText)
+        _query.value = recentText
 
         _isTyping.value = false
 
