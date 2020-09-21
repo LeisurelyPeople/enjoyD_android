@@ -15,14 +15,14 @@ import io.reactivex.Single
  */
 class DramaEvaluationDataSource(private val enjoyDService: EnjoyDService) {
 
-    fun getDramasInfoRating(
+    fun getDramasRatings(
         page: Int,
         pageSize: Int
     ): Single<PagingResponse<DramaEvaluationResponse>> {
-        return enjoyDService.getDramasInfoRating(page, pageSize)
+        return enjoyDService.getDramasRatings(page, pageSize)
     }
 
-    fun postDramasInfoRating(data: List<DramaEvaluationRequest>): Completable {
-        return enjoyDService.postDramasInfoRating(hashMapOf("drama_rating_infos" to data))
+    fun postDramasRatings(data: List<DramaEvaluationRequest>): Completable {
+        return enjoyDService.postDramasRatings(hashMapOf("drama_rating_infos" to data))
     }
 }

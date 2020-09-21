@@ -19,10 +19,10 @@ class DramaEvaluationRepository(private val dramaEvaluationDataSource: DramaEval
         page: Int,
         pageSize: Int
     ): Single<PagingResponse<DramaEvaluationResponse>> {
-        return dramaEvaluationDataSource.getDramasInfoRating(page, pageSize)
+        return dramaEvaluationDataSource.getDramasRatings(page, pageSize)
     }
 
     fun postDramaEvaluationData(data: List<DramaEvaluationRequest>): Completable {
-        return dramaEvaluationDataSource.postDramasInfoRating(data)
+        return dramaEvaluationDataSource.postDramasRatings(data)
     }
 }

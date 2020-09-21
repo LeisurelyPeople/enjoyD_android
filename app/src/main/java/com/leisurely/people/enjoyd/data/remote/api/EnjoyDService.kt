@@ -20,13 +20,13 @@ import retrofit2.http.Query
  */
 interface EnjoyDService {
 
-    @GET("dramas/info/rating/")
-    fun getDramasInfoRating(
+    @GET("accounts/dramas/ratings")
+    fun getDramasRatings(
         @Query("page") page: Int,
         @Query("page_size") pageSize: Int
     ): Single<PagingResponse<DramaEvaluationResponse>>
 
-    @POST("dramas/info/rating/")
-    fun postDramasInfoRating(@Body data: HashMap<String, List<DramaEvaluationRequest>>): Completable
+    @POST("accounts/dramas/ratings")
+    fun postDramasRatings(@Body data: HashMap<String, List<DramaEvaluationRequest>>): Completable
 
 }
