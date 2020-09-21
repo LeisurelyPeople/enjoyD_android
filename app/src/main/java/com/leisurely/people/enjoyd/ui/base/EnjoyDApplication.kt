@@ -10,6 +10,7 @@ import com.leisurely.people.enjoyd.data.local.prefs.TokenManager
 import com.leisurely.people.enjoyd.di.*
 import com.leisurely.people.enjoyd.ui.login.LoginActivity
 import com.leisurely.people.enjoyd.ui.login.sociallogin.KakaoSDKAdapter
+import com.leisurely.people.enjoyd.util.coroutine.appContext
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -30,6 +31,7 @@ class EnjoyDApplication : Application() {
 
         KakaoSDK.init(KakaoSDKAdapter(this))
 
+        appContext = this
         startKoin {
             if (BuildConfig.DEBUG) androidLogger()
             androidContext(this@EnjoyDApplication)

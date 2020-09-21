@@ -16,6 +16,7 @@ import com.leisurely.people.enjoyd.util.coroutine.CoroutineKey.SEARCH_CLICK_SEAR
 import com.leisurely.people.enjoyd.util.coroutine.SafeScope
 import com.leisurely.people.enjoyd.util.ext.applySingleSchedulers
 import com.leisurely.people.enjoyd.util.observer.DisposableSingleObserver
+import com.leisurely.people.enjoyd.util.provider.SearchWordsProvider
 import com.leisurely.people.enjoyd.util.time.TimePoint
 import kotlinx.coroutines.launch
 
@@ -93,44 +94,7 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
             "리뷰 TOP 화제 드라마"
         )
 
-        _recents.value = listOf(
-            RecentSearch(
-                0,
-                "방금 검색바 클릭했을 때 세계0"
-            ),
-            RecentSearch(
-                1,
-                "방금 검색바 클릭했을 때 세계1"
-            ),
-            RecentSearch(
-                2,
-                "방금 검색바 클릭했을 때 세계2"
-            ),
-            RecentSearch(
-                3,
-                "방금 검색바 클릭했을 때 세계3"
-            ),
-            RecentSearch(
-                4,
-                "방금 검색바 클릭했을 때 세계4"
-            ),
-            RecentSearch(
-                5,
-                "방금 검색바 클릭했을 때 세계5"
-            ),
-            RecentSearch(
-                6,
-                "방금 검색바 클릭했을 때 세계6"
-            ),
-            RecentSearch(
-                7,
-                "방금 검색바 클릭했을 때 세계7"
-            ),
-            RecentSearch(
-                8,
-                "방금 검색바 클릭했을 때 세계8"
-            )
-        )
+        _recents.value = SearchWordsProvider.init()
 
         _autoResults.value = listOf()
 
@@ -162,6 +126,11 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
             liveToastMessage.value = "최소 한 글자 이상 입력해주세요."
             return
         }
+        _isTyping.value = false
+
+        _recents.value = SearchWordsProvider.put(
+            RecentSearch(id = TimePoint.now.unixMillis, title = query.get()!!)
+        )
 
         SafeScope(logicName = SEARCH_CLICK_SEARCH_BTN).launch {
             Log.i(tag, "searchBtnClick")
@@ -172,8 +141,12 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
             ).applySingleSchedulers(
             ).subscribeWith(object : DisposableSingleObserver<DramaInfoSearchResponse>() {
                 override fun onSuccess(searchDramas: DramaInfoSearchResponse) {
-                    _isTyping.value = false
                     _searchResults.value = searchDramas
+                }
+
+                override fun onError(e: Throwable) {
+                    super.onError(e)
+                    _searchResults.value = listOf()
                 }
             })
         }
@@ -182,17 +155,27 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
     /** 최근 검색어를 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
     fun searchRecentItemClick(recentText: String) {
         query.set(recentText)
+        _isTyping.value = false
+
         SafeScope(logicName = SEARCH_CLICK_SEARCH_BTN).launch {
             Log.i(tag, "searchBtnClick")
+
+            _recents.value = SearchWordsProvider.put(
+                RecentSearch(id = TimePoint.now.unixMillis, title = recentText)
+            )
 
             // 서버로부터 데이터를 받아온 후 키보드를 닫음 처리한다.
             dramaRepository.dramaInfoSearch(
                 recentText, "avg_rating"
             ).applySingleSchedulers(
-            ).subscribeWith(object : DisposableSingleObserver<DramaInfoSearchResponse>(){
+            ).subscribeWith(object : DisposableSingleObserver<DramaInfoSearchResponse>() {
                 override fun onSuccess(searchDramas: DramaInfoSearchResponse) {
-                    _isTyping.value = false
                     _searchResults.value = searchDramas
+                }
+
+                override fun onError(e: Throwable) {
+                    super.onError(e)
+                    _searchResults.value = listOf()
                 }
             })
         }
@@ -200,6 +183,6 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
 
     /** 최근 검색어 아이템 삭제를 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
     fun searchRecentItemRemoveClick(recent: RecentSearch) {
-        _recents.value = _recents.value?.filter { it != recent }
+        _recents.value = SearchWordsProvider.delete(recent.title)
     }
 }

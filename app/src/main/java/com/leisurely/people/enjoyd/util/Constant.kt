@@ -25,6 +25,7 @@ interface Constant {
         // SharedPreferences
         const val PREF_NAME = "ENJOY_D_PREF"
         const val PREF_USER_TOKEN = "PREF_USER_TOKEN"
+        const val PREF_RECENT_SEARCH_WORD = "PREF_RECENT_SEARCH_WORD"
 
         // Result Code (onActivityResult)
         const val RESULT_OK = 1
