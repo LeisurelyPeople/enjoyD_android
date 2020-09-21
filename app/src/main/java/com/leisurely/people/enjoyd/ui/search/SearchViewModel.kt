@@ -18,6 +18,7 @@ import com.leisurely.people.enjoyd.util.ext.applySingleSchedulers
 import com.leisurely.people.enjoyd.util.observer.DisposableSingleObserver
 import com.leisurely.people.enjoyd.util.provider.SearchWordsProvider
 import com.leisurely.people.enjoyd.util.time.TimePoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
@@ -155,9 +156,12 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
     /** 최근 검색어를 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
     fun searchRecentItemClick(recentText: String) {
         query.set(recentText)
+
         _isTyping.value = false
 
-        SafeScope(logicName = SEARCH_CLICK_SEARCH_BTN).launch {
+        // REMEMBER 기억하기 위해 일부로 Dispatchers.Main 을 언급함
+        //          SafeScope 내에서 LiveData 를 사용하려면 Dispatchers 가 반드시 Main 이어야 함
+        SafeScope(logicName = SEARCH_CLICK_SEARCH_BTN).launch(Dispatchers.Main) {
             Log.i(tag, "searchBtnClick")
 
             _recents.value = SearchWordsProvider.put(
