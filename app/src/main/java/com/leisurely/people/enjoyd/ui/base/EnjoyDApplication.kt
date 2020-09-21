@@ -1,7 +1,9 @@
 package com.leisurely.people.enjoyd.ui.base
 
 import android.app.Application
+import android.content.Context
 import android.content.Intent
+import androidx.annotation.VisibleForTesting
 import com.kakao.auth.KakaoSDK
 import com.kakao.usermgmt.UserManagement
 import com.kakao.usermgmt.callback.LogoutResponseCallback
@@ -27,6 +29,7 @@ class EnjoyDApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        appContext = this
 
         KakaoSDK.init(KakaoSDKAdapter(this))
 
@@ -59,5 +62,18 @@ class EnjoyDApplication : Application() {
     companion object {
         lateinit var instance: EnjoyDApplication
             private set
+
+        // Unit Test 의 정확성과 원활함을 더하기 위해 사용하는 context 변수
+        lateinit var appContext: Context
+
+        /**
+         * Unit test 에서 사용할 application class 인스턴스 값과 context 를 설정한다.
+         * 반드시 Unit Test 에서만 사용한다.
+         */
+        @VisibleForTesting
+        fun injectUnitTestContext(instance: EnjoyDApplication, appContext: Context) {
+            this.instance = instance
+            this.appContext = appContext
+        }
     }
 }

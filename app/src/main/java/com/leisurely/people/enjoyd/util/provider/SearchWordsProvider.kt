@@ -1,7 +1,7 @@
 package com.leisurely.people.enjoyd.util.provider
 
 import com.leisurely.people.enjoyd.model.search.RecentSearch
-import com.leisurely.people.enjoyd.ui.base.EnjoyDApplication
+import com.leisurely.people.enjoyd.ui.base.EnjoyDApplication.Companion.appContext
 import com.leisurely.people.enjoyd.util.Constant.Companion.PREF_RECENT_SEARCH_WORD
 import com.leisurely.people.enjoyd.util.Serializer.asJsonArray
 import com.leisurely.people.enjoyd.util.Serializer.parseArray
@@ -15,7 +15,7 @@ object SearchWordsProvider {
 
     fun init(): List<RecentSearch> {
         return try {
-            val recentsJsonArray = EnjoyDApplication.instance.getSharedPreference(
+            val recentsJsonArray = appContext.getSharedPreference(
                 PREF_RECENT_SEARCH_WORD, "[]"
             ).asJsonArray
 
@@ -40,7 +40,7 @@ object SearchWordsProvider {
 
         // SharedPreference 내에 저장한다.
         val recentJsonArrayStr = Json.stringify(RecentSearch.serializer().list, newRecents)
-        EnjoyDApplication.instance.putSharedPreference(PREF_RECENT_SEARCH_WORD, recentJsonArrayStr)
+        appContext.putSharedPreference(PREF_RECENT_SEARCH_WORD, recentJsonArrayStr)
 
         return newRecents
     }
@@ -55,7 +55,7 @@ object SearchWordsProvider {
 
         // SharedPreference 내에 변동 내역을 저장한다.
         val recentJsonArrayStr = Json.stringify(RecentSearch.serializer().list, newRecents)
-        EnjoyDApplication.instance.putSharedPreference(PREF_RECENT_SEARCH_WORD, recentJsonArrayStr)
+        appContext.putSharedPreference(PREF_RECENT_SEARCH_WORD, recentJsonArrayStr)
 
         return newRecents
     }
@@ -67,7 +67,7 @@ object SearchWordsProvider {
 
         // SharedPreference 내에 변동 내역을 저장한다.
         val recentJsonArrayStr = Json.stringify(RecentSearch.serializer().list, recents)
-        EnjoyDApplication.instance.putSharedPreference(PREF_RECENT_SEARCH_WORD, recentJsonArrayStr)
+        appContext.putSharedPreference(PREF_RECENT_SEARCH_WORD, recentJsonArrayStr)
 
         return listOf()
     }

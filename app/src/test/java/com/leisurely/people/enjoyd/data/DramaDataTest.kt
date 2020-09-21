@@ -46,23 +46,6 @@ class DramaDataTest : AndroidBaseTest() {
         Assert.assertEquals(fullData.results?.get(0)?.pk, 1)
         Assert.assertEquals(fullData.results?.get(0)?.poster, "이미지 주소")
         Assert.assertEquals(fullData.results?.get(0)?.title, "이씨 모임")
-
-        // GIVEN2 : 문자열화된 json 데이터 (데이터가 없는 경우)
-        val emptyJsonData = """{
-            "count": 0,
-            "next": null,
-            "previous": null,
-            "results": []
-        }""".trimIndent().asJson
-
-        // WHEN2 : 데이터가 없는 경우의 문자열 json 데이터를 파싱한다.
-        val emptyData = DramasResponse.serializer().parse(emptyJsonData)
-
-        // THEN2 : 빈 경우에 대한 문자열 json 데이터와 객체 데이터가 정상적으로 매치되어야 한다.
-        Assert.assertEquals(emptyData.count, 0)
-        Assert.assertEquals(emptyData.next, null)
-        Assert.assertEquals(emptyData.previous, null)
-        Assert.assertEquals(emptyData.results?.size, 0)
     }
 
     /** 간략한 드라마 데이터 파싱이 정상적으로 이루어지는지 확인한다. */

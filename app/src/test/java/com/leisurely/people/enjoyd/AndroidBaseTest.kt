@@ -1,6 +1,6 @@
 package com.leisurely.people.enjoyd
 
-import android.app.Application
+import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.leisurely.people.enjoyd.data.remote.api.AuthService
@@ -11,6 +11,8 @@ import com.leisurely.people.enjoyd.di.provideDefaultOkHttpClient
 import com.leisurely.people.enjoyd.di.provideEnjoyDService
 import com.leisurely.people.enjoyd.di.provideOkHttpClient
 import com.leisurely.people.enjoyd.model.enums.RetrofitQualifiers
+import com.leisurely.people.enjoyd.ui.base.EnjoyDApplication
+import io.mockk.*
 import org.junit.After
 import org.junit.Before
 import org.junit.runner.RunWith
@@ -19,7 +21,6 @@ import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import org.robolectric.annotation.Config
 
 /**
  * Robolectric 을 사용하는 모든 테스트 클래스의 공통
@@ -35,7 +36,6 @@ import org.robolectric.annotation.Config
  * @since v1.0.0 / 2020.06.26
  */
 @RunWith(AndroidJUnit4::class)
-@Config(application = Application::class)
 abstract class AndroidBaseTest : BaseTest(), KoinTest {
     val authApi: EnjoyDService by inject()
     val noneAuthApi: AuthService by inject()
@@ -51,6 +51,12 @@ abstract class AndroidBaseTest : BaseTest(), KoinTest {
     @Before
     fun setupContext() {
         startKoin { modules(mockModule) }
+
+        // mockk 를 사용하여 mockking 된 Application 클래스와 context 값 넣음
+        EnjoyDApplication.injectUnitTestContext(
+            mockk(relaxed = true),
+            ApplicationProvider.getApplicationContext()
+        )
     }
 
     @After

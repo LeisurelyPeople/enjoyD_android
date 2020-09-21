@@ -1,7 +1,7 @@
 package com.leisurely.people.enjoyd.util.time
 
 import android.util.TypedValue
-import com.leisurely.people.enjoyd.ui.base.EnjoyDApplication
+import com.leisurely.people.enjoyd.ui.base.EnjoyDApplication.Companion.appContext
 
 /**
  * 길이·치수 관련 데이터를 관리 (dp sp px)
@@ -46,7 +46,7 @@ val Number.dp: Float
     get() = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
         this.toFloat(),
-        EnjoyDApplication.instance.resources.displayMetrics
+        appContext.resources.displayMetrics
     )
 
 /** 정수형 dp 길이를 생성한다. */
@@ -54,7 +54,7 @@ val Number.dpInt: Int
     get() = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
         this.toFloat(),
-        EnjoyDApplication.instance.resources.displayMetrics
+        appContext.resources.displayMetrics
     ).toInt()
 
 /** 실수형 px 길이를 생성한다. */
@@ -67,9 +67,9 @@ val Number.pxInt: Int
 
 /** 실수형 sp 길이를 생성한다. */
 val Number.sp: Float
-    get() = (this.toFloat() * EnjoyDApplication.instance.resources.displayMetrics.scaledDensity)
+    get() = (this.toFloat() * appContext.resources.displayMetrics.scaledDensity)
 
 /** 정수형 sp 길이를 생성한다. */
 val Number.spInt: Int
     get() = (this.toFloat() *
-            EnjoyDApplication.instance.resources.displayMetrics.scaledDensity).toInt()
+            appContext.resources.displayMetrics.scaledDensity).toInt()
