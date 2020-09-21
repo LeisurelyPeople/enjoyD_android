@@ -4,8 +4,8 @@ import android.content.Context
 import com.google.gson.Gson
 import com.leisurely.people.enjoyd.data.local.prefs.TokenManager
 import com.leisurely.people.enjoyd.data.remote.data.response.UserTokenResponse
-import com.leisurely.people.enjoyd.util.coroutine.dummyUserAccessToken
-import com.leisurely.people.enjoyd.util.coroutine.isUnitTest
+import com.leisurely.people.enjoyd.util.Constant.Companion.dummyUserAccessToken
+import com.leisurely.people.enjoyd.util.Constant.Companion.isUnitTest
 import okhttp3.Interceptor
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Request

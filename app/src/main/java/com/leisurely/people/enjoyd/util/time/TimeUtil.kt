@@ -1,7 +1,7 @@
 package com.leisurely.people.enjoyd.util.time
 
 import androidx.annotation.StringRes
-import com.leisurely.people.enjoyd.util.coroutine.appContext
+import com.leisurely.people.enjoyd.ui.base.EnjoyDApplication
 import kotlinx.serialization.Decoder
 import kotlinx.serialization.Encoder
 import kotlinx.serialization.KSerializer
@@ -96,7 +96,8 @@ class TimePoint private constructor(
      * @return 포맷에 맞추어진 값 리턴 (ex. 20200204)
      * @return
      */
-    fun format(@StringRes pattern: Int): String = format(appContext.getString(pattern))
+    fun format(@StringRes pattern: Int): String =
+        format(EnjoyDApplication.instance.getString(pattern))
 
     /** @see format */
     fun format(pattern: String): String =
@@ -122,7 +123,7 @@ class TimePoint private constructor(
          * @param pattern 포맷 문자열이 담긴 문자열 리소스 (ex. 20200204)
          */
         fun parse(source: String, @StringRes pattern: Int): TimePoint =
-            parse(source, appContext.getString(pattern))
+            parse(source, EnjoyDApplication.instance.getString(pattern))
 
         /** @see parse */
         fun parse(source: String, pattern: String): TimePoint {
@@ -216,7 +217,8 @@ class TimeAmount(val asMillis: Long) : Comparable<TimeAmount> {
      * @param pattern 포맷 문자열이 담긴 문자열 리소스 (ex. yyyyMMdd)
      * @return 포맷에 맞추어진 값 리턴 (ex. 20200204)
      */
-    fun format(@StringRes pattern: Int): String = format(appContext.getString(pattern))
+    fun format(@StringRes pattern: Int): String =
+        format(EnjoyDApplication.instance.getString(pattern))
 
     /** @see format */
     fun format(pattern: String): String {

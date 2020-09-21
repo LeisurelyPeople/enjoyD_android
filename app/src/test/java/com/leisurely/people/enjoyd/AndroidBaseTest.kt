@@ -11,7 +11,6 @@ import com.leisurely.people.enjoyd.di.provideDefaultOkHttpClient
 import com.leisurely.people.enjoyd.di.provideEnjoyDService
 import com.leisurely.people.enjoyd.di.provideOkHttpClient
 import com.leisurely.people.enjoyd.model.enums.RetrofitQualifiers
-import com.leisurely.people.enjoyd.util.coroutine.appContext
 import org.junit.After
 import org.junit.Before
 import org.junit.runner.RunWith
@@ -19,7 +18,6 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 import org.koin.test.KoinTest
-import org.koin.test.get
 import org.koin.test.inject
 import org.robolectric.annotation.Config
 
@@ -53,8 +51,6 @@ abstract class AndroidBaseTest : BaseTest(), KoinTest {
     @Before
     fun setupContext() {
         startKoin { modules(mockModule) }
-
-        appContext = ApplicationProvider.getApplicationContext()
     }
 
     @After
