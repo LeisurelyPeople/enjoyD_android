@@ -1,8 +1,8 @@
 package com.leisurely.people.enjoyd.data.remote.api
 
-import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoPkResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoSearchResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -17,18 +17,20 @@ import retrofit2.http.Query
  * @since v1.0.0 / 2020.09.08
  */
 interface EnjoyDService {
-    /** 간략한 드라마 정보 리스트 API (/dramas/info) */
-    @GET("/dramas/info/")
-    fun getDramasInfo(): Single<DramaInfoResponse>
+    /** 간략한 드라마 정보 리스트 API (/dramas) */
+    @GET("/dramas/")
+    fun getDramas(): Single<DramasResponse>
 
-    /** 자세한 드라마 정보 리스트 API (/dramas/info/{pk}) */
-    @GET("/dramas/info/{pk}/")
-    fun getDramasInfoPk(@Path("pk") pk: String): Single<DramaInfoPkResponse>
+    /** 자세한 드라마 정보 리스트 API (/dramas/{drama_info_slug}) */
+    @GET("/dramas/{drama_info_slug}/")
+    fun getDramasSlug(
+        @Path("drama_info_slug") dramaInfoSlug: String
+    ): Single<DramasSlugResponse>
 
-    /** 드라마 정보 검색 API (/dramas/info/search) */
-    @GET("/dramas/info/search/")
-    fun getDramasInfoSearch(
+    /** 드라마 정보 검색 API (/dramas/search) */
+    @GET("/dramas/search/")
+    fun getDramasSearch(
         @Query("search") search: String?,
         @Query("order") order: String = "avg_rating"
-    ): Single<DramaInfoSearchResponse>
+    ): Single<DramasSearchResponse>
 }

@@ -1,9 +1,9 @@
 package com.leisurely.people.enjoyd.data
 
 import com.leisurely.people.enjoyd.AndroidBaseTest
-import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoPkResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoSearchResponseItem
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponseItem
 import com.leisurely.people.enjoyd.util.Serializer.asJson
 import com.leisurely.people.enjoyd.util.Serializer.asJsonArray
 import com.leisurely.people.enjoyd.util.Serializer.parse
@@ -37,7 +37,7 @@ class DramaDataTest : AndroidBaseTest() {
         }""".trimIndent().asJson
 
         // WHEN1 : 문자열 json 데이터를 파싱한다.
-        val fullData = DramaInfoResponse.serializer().parse(fullJsonObject)
+        val fullData = DramasResponse.serializer().parse(fullJsonObject)
 
         // THEN1 : 문자열 json 데이터와 객체 데이터가 정상적으로 매치되어야 한다.
         Assert.assertEquals(fullData.count, 2)
@@ -56,7 +56,7 @@ class DramaDataTest : AndroidBaseTest() {
         }""".trimIndent().asJson
 
         // WHEN2 : 데이터가 없는 경우의 문자열 json 데이터를 파싱한다.
-        val emptyData = DramaInfoResponse.serializer().parse(emptyJsonData)
+        val emptyData = DramasResponse.serializer().parse(emptyJsonData)
 
         // THEN2 : 빈 경우에 대한 문자열 json 데이터와 객체 데이터가 정상적으로 매치되어야 한다.
         Assert.assertEquals(emptyData.count, 0)
@@ -100,7 +100,7 @@ class DramaDataTest : AndroidBaseTest() {
         }""".trimIndent().asJson
 
         // WHEN1 : 문자열 json 데이터를 파싱한다.
-        val fullData = DramaInfoPkResponse.serializer().parse(fullJsonObject)
+        val fullData = DramasSlugResponse.serializer().parse(fullJsonObject)
 
         // THEN1 : 문자열 json 데이터와 객체 데이터가 정상적으로 매치되어야 한다.
         Assert.assertEquals(fullData.pk, 1)
@@ -140,7 +140,7 @@ class DramaDataTest : AndroidBaseTest() {
         ]""".trimIndent().asJsonArray
 
         // WHEN1 : 문자열 json 데이터를 파싱한다.
-        val fullData = DramaInfoSearchResponseItem.serializer().list.parseArray(fullJsonArray)
+        val fullData = DramasSearchResponseItem.serializer().list.parseArray(fullJsonArray)
 
         // THEN1 : 문자열 json 데이터와 객체 데이터가 정상적으로 매치되어야 한다.
         Assert.assertEquals(fullData[0].id, 2)
@@ -152,7 +152,7 @@ class DramaDataTest : AndroidBaseTest() {
         ]""".trimIndent().asJsonArray
 
         // WHEN2 : 데이터가 없는 경우의 문자열 json 데이터를 파싱한다.
-        val emptyData = DramaInfoSearchResponseItem.serializer().list.parseArray(emptyJsonObject)
+        val emptyData = DramasSearchResponseItem.serializer().list.parseArray(emptyJsonObject)
 
         // THEN2 : 빈 경우에 대한 문자열 json 데이터와 객체 데이터가 정상적으로 매치되어야 한다.
         Assert.assertEquals(emptyData.size, 0)

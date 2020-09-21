@@ -1,7 +1,7 @@
 package com.leisurely.people.enjoyd.data.remote.source.drama
 
 import com.leisurely.people.enjoyd.data.remote.api.EnjoyDService
-import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoSearchResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
 import io.reactivex.Single
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,7 +16,7 @@ class DramaSearchRemoteDataSource(private val enjoyDService: EnjoyDService) {
     suspend fun dramaInfoSearch(
         search: String?,
         ordering: String
-    ): Single<DramaInfoSearchResponse> = withContext(Dispatchers.IO) {
-        return@withContext enjoyDService.getDramasInfoSearch(search, ordering)
+    ): Single<DramasSearchResponse> = withContext(Dispatchers.IO) {
+        return@withContext enjoyDService.getDramasSearch(search, ordering)
     }
 }

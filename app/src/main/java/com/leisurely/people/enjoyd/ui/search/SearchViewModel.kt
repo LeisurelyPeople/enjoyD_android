@@ -6,8 +6,8 @@ import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoSearchResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoSearchResponseItem
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponseItem
 import com.leisurely.people.enjoyd.model.search.RecentSearch
 import com.leisurely.people.enjoyd.model.search.AutoResult
 import com.leisurely.people.enjoyd.data.repository.DramaRepository
@@ -43,8 +43,8 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
     val autoResults: LiveData<List<AutoResult>> = _autoResults
 
     /** 검색 결과 리스트 */
-    private val _searchResults = MutableLiveData(listOf<DramaInfoSearchResponseItem>())
-    val searchResults: LiveData<List<DramaInfoSearchResponseItem>> = _searchResults
+    private val _searchResults = MutableLiveData(listOf<DramasSearchResponseItem>())
+    val searchResults: LiveData<List<DramasSearchResponseItem>> = _searchResults
 
     /** 검색 쿼리 텍스트 */
     val query = ObservableField<String>()
@@ -139,8 +139,8 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
             dramaRepository.dramaInfoSearch(
                 query.get(), "avg_rating"
             ).applySingleSchedulers(
-            ).subscribeWith(object : DisposableSingleObserver<DramaInfoSearchResponse>() {
-                override fun onSuccess(searchDramas: DramaInfoSearchResponse) {
+            ).subscribeWith(object : DisposableSingleObserver<DramasSearchResponse>() {
+                override fun onSuccess(searchDramas: DramasSearchResponse) {
                     _searchResults.value = searchDramas
                 }
 
@@ -168,8 +168,8 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
             dramaRepository.dramaInfoSearch(
                 recentText, "avg_rating"
             ).applySingleSchedulers(
-            ).subscribeWith(object : DisposableSingleObserver<DramaInfoSearchResponse>() {
-                override fun onSuccess(searchDramas: DramaInfoSearchResponse) {
+            ).subscribeWith(object : DisposableSingleObserver<DramasSearchResponse>() {
+                override fun onSuccess(searchDramas: DramasSearchResponse) {
                     _searchResults.value = searchDramas
                 }
 

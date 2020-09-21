@@ -4,14 +4,14 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * 자세한 드라마 정보 리스트 API (/dramas/info/{pk}) 내
- * [DramaInfoPkResponse.dramas] 내에서 사용되는 데이터 구조
+ * 자세한 드라마 정보 리스트 API (/dramas/{drama_info_slug}) 내
+ * [DramasSlugResponse.dramas] 내에서 사용되는 데이터 구조
  *
  * @author ricky
  * @since v1.0.0 / 2020.07.12
  */
 @Serializable
-data class DramaInfoPkResponseItem(
+data class DramasSlugResponseItem(
     val pk: String,
 
     @SerialName("video_id")

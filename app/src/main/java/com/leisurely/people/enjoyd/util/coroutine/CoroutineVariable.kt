@@ -19,3 +19,7 @@ val appVersion: String by lazy { BuildConfig.VERSION_NAME }
 
 // 지금 실행되는 코드가 Unit Test 인지 확인하는 flag
 var isUnitTest = false
+
+// 더미 유저의 accessToken
+val dummyUserAccessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoxLCJleHAiOjE2MD" +
+        "A3NDA3OTU2NjcsInVzZXJfbmFtZSI6InRlc3QifQ.MN9dAK-easXxnJrkKgK_sPq7Uln2IdOY7PivM5EI6uU"

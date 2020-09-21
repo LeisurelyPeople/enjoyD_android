@@ -5,10 +5,6 @@ import com.leisurely.people.enjoyd.data.remote.data.response.UserTokenResponse
 import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.POST
-import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoPkResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoSearchResponse
-import retrofit2.http.*
 
 /**
  * Auth(인증) 관련된 API 들을 관리하는 인터페이스

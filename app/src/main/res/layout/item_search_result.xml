@@ -7,7 +7,7 @@
 
         <variable
             name="searchResult"
-            type="com.leisurely.people.enjoyd.data.remote.data.response.DramaInfoSearchResponseItem" />
+            type="com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponseItem" />
     </data>
 
     <androidx.cardview.widget.CardView

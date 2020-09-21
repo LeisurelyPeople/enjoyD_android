@@ -5,12 +5,22 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.leisurely.people.enjoyd.data.remote.api.AuthService
 import com.leisurely.people.enjoyd.data.remote.api.EnjoyDService
+import com.leisurely.people.enjoyd.data.remote.interceptor.AuthInterceptor
 import com.leisurely.people.enjoyd.di.provideAuthService
+import com.leisurely.people.enjoyd.di.provideDefaultOkHttpClient
 import com.leisurely.people.enjoyd.di.provideEnjoyDService
+import com.leisurely.people.enjoyd.di.provideOkHttpClient
+import com.leisurely.people.enjoyd.model.enums.RetrofitQualifiers
 import com.leisurely.people.enjoyd.util.coroutine.appContext
-import okhttp3.OkHttpClient
+import org.junit.After
 import org.junit.Before
 import org.junit.runner.RunWith
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.dsl.module
+import org.koin.test.KoinTest
+import org.koin.test.get
+import org.koin.test.inject
 import org.robolectric.annotation.Config
 
 /**
@@ -28,15 +38,28 @@ import org.robolectric.annotation.Config
  */
 @RunWith(AndroidJUnit4::class)
 @Config(application = Application::class)
-abstract class AndroidBaseTest : BaseTest() {
-    protected lateinit var authApi: EnjoyDService
-    protected lateinit var noneAuthApi: AuthService
+abstract class AndroidBaseTest : BaseTest(), KoinTest {
+    val authApi: EnjoyDService by inject()
+    val noneAuthApi: AuthService by inject()
+
+    val mockModule = module {
+        single { AuthInterceptor(ApplicationProvider.getApplicationContext()) }
+        single { provideEnjoyDService(get(qualifier = RetrofitQualifiers.ENJOYD)) }
+        single { provideAuthService(get(qualifier = RetrofitQualifiers.AUTH)) }
+        single(RetrofitQualifiers.ENJOYD) { provideOkHttpClient(get()) }
+        single(RetrofitQualifiers.AUTH) { provideDefaultOkHttpClient() }
+    }
 
     @Before
     fun setupContext() {
-        appContext = ApplicationProvider.getApplicationContext()
+        startKoin { modules(mockModule) }
 
-        authApi = provideEnjoyDService(OkHttpClient())
-        noneAuthApi = provideAuthService(OkHttpClient())
+        appContext = ApplicationProvider.getApplicationContext()
     }
+
+    @After
+    fun after() {
+        stopKoin()
+    }
+
 }

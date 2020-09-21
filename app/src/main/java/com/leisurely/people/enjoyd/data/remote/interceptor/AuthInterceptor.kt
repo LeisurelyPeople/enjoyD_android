@@ -4,6 +4,8 @@ import android.content.Context
 import com.google.gson.Gson
 import com.leisurely.people.enjoyd.data.local.prefs.TokenManager
 import com.leisurely.people.enjoyd.data.remote.data.response.UserTokenResponse
+import com.leisurely.people.enjoyd.util.coroutine.dummyUserAccessToken
+import com.leisurely.people.enjoyd.util.coroutine.isUnitTest
 import okhttp3.Interceptor
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Request
@@ -23,6 +25,14 @@ class AuthInterceptor(private val context: Context) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val originRequest = chain.request()
+
+        // 만약 유닛 테스트에서 요청한 작업이라면 더미 유저의 엑세스 토큰을 헤더에 넣어준다.
+        if (isUnitTest)
+            return chain.proceed(
+                originRequest.newBuilder().addHeaders(dummyUserAccessToken).build()
+            )
+
+        // 유저 토큰을 가져온다. null 이라면 그냥 넘어간다.
         val userToken = TokenManager.getUserToken(context) ?: kotlin.run {
             return chain.proceed(originRequest.newBuilder().build())
         }

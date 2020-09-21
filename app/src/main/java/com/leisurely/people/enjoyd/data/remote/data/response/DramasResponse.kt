@@ -9,12 +9,12 @@ import kotlinx.serialization.Serializable
  * @since v1.0.0 / 2020.07.12
  */
 @Serializable
-data class DramaInfoResponse(
+data class DramasResponse(
     val count: Int,
 
     val next: String,
 
     val previous: String,
 
-    val results: List<DramaInfoResponseItem>
+    val results: List<DramasResponseItem>
 )
