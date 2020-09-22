@@ -3,7 +3,6 @@ package com.leisurely.people.enjoyd.ui.search
 import android.text.Editable
 import android.util.Log
 import android.view.View
-import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
@@ -16,7 +15,7 @@ import com.leisurely.people.enjoyd.util.coroutine.CoroutineKey.SEARCH_CLICK_SEAR
 import com.leisurely.people.enjoyd.util.coroutine.SafeScope
 import com.leisurely.people.enjoyd.util.ext.applySingleSchedulers
 import com.leisurely.people.enjoyd.util.observer.DisposableSingleObserver
-import com.leisurely.people.enjoyd.util.provider.SearchWordsProvider
+import com.leisurely.people.enjoyd.data.local.prefs.SearchWordsManager
 import com.leisurely.people.enjoyd.util.time.TimePoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -96,7 +95,7 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
             "리뷰 TOP 화제 드라마"
         )
 
-        _recents.value = SearchWordsProvider.init()
+        _recents.value = SearchWordsManager.init()
 
         _autoResults.value = listOf()
 
@@ -130,7 +129,7 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
         }
         _isTyping.value = false
 
-        _recents.value = SearchWordsProvider.put(
+        _recents.value = SearchWordsManager.put(
             RecentSearch(id = TimePoint.now.unixMillis, title = _query.value ?: " ")
         )
 
@@ -138,19 +137,18 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
             Log.i(tag, "searchBtnClick")
 
             // 서버로부터 데이터를 받아온 후 키보드를 닫음 처리한다.
-            dramaRepository.dramaInfoSearch(
-                _query.value, "avg_rating"
-            ).applySingleSchedulers(
-            ).subscribeWith(object : DisposableSingleObserver<DramasSearchResponse>() {
-                override fun onSuccess(searchDramas: DramasSearchResponse) {
-                    _searchResults.value = searchDramas
-                }
+            dramaRepository.dramaInfoSearch(_query.value, "avg_rating")
+                .applySingleSchedulers()
+                .subscribeWith(object : DisposableSingleObserver<DramasSearchResponse>() {
+                    override fun onSuccess(searchDramas: DramasSearchResponse) {
+                        _searchResults.value = searchDramas
+                    }
 
-                override fun onError(e: Throwable) {
-                    super.onError(e)
-                    _searchResults.value = listOf()
-                }
-            })
+                    override fun onError(e: Throwable) {
+                        super.onError(e)
+                        _searchResults.value = listOf()
+                    }
+                })
         }
     }
 
@@ -165,29 +163,28 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
         SafeScope(logicName = SEARCH_CLICK_SEARCH_BTN).launch(Dispatchers.Main) {
             Log.i(tag, "searchBtnClick")
 
-            _recents.value = SearchWordsProvider.put(
+            _recents.value = SearchWordsManager.put(
                 RecentSearch(id = TimePoint.now.unixMillis, title = recentText)
             )
 
             // 서버로부터 데이터를 받아온 후 키보드를 닫음 처리한다.
-            dramaRepository.dramaInfoSearch(
-                recentText, "avg_rating"
-            ).applySingleSchedulers(
-            ).subscribeWith(object : DisposableSingleObserver<DramasSearchResponse>() {
-                override fun onSuccess(searchDramas: DramasSearchResponse) {
-                    _searchResults.value = searchDramas
-                }
+            dramaRepository.dramaInfoSearch(recentText, "avg_rating")
+                .applySingleSchedulers()
+                .subscribeWith(object : DisposableSingleObserver<DramasSearchResponse>() {
+                    override fun onSuccess(searchDramas: DramasSearchResponse) {
+                        _searchResults.value = searchDramas
+                    }
 
-                override fun onError(e: Throwable) {
-                    super.onError(e)
-                    _searchResults.value = listOf()
-                }
-            })
+                    override fun onError(e: Throwable) {
+                        super.onError(e)
+                        _searchResults.value = listOf()
+                    }
+                })
         }
     }
 
     /** 최근 검색어 아이템 삭제를 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
     fun searchRecentItemRemoveClick(recent: RecentSearch) {
-        _recents.value = SearchWordsProvider.delete(recent.title)
+        _recents.value = SearchWordsManager.delete(recent.title)
     }
 }

@@ -1,4 +1,4 @@
-package com.leisurely.people.enjoyd.util.provider
+package com.leisurely.people.enjoyd.data.local.prefs
 
 import com.leisurely.people.enjoyd.model.search.RecentSearch
 import com.leisurely.people.enjoyd.ui.base.EnjoyDApplication.Companion.appContext
@@ -10,7 +10,7 @@ import com.leisurely.people.enjoyd.util.ext.putSharedPreference
 import kotlinx.serialization.builtins.list
 import kotlinx.serialization.json.Json
 
-object SearchWordsProvider {
+object SearchWordsManager {
     private var recents = mutableListOf<RecentSearch>()
 
     fun init(): List<RecentSearch> {
@@ -67,7 +67,9 @@ object SearchWordsProvider {
         recents.clear()
 
         // SharedPreference 내에 변동 내역을 저장한다.
-        val recentJsonArrayStr = Json.stringify(RecentSearch.serializer().list, recents)
+        val recentJsonArrayStr = Json.stringify(RecentSearch.serializer().list,
+            recents
+        )
         appContext.putSharedPreference(PREF_RECENT_SEARCH_WORD, recentJsonArrayStr)
 
         return listOf()
