@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.leisurely.people.enjoyd.ui.search.SearchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:focusableInTouchMode="true"
+        tools:context=".ui.search.SearchActivity">
+
+        <!-- 헤더 레이아웃 (검색바) -->
+        <include
+            android:id="@+id/layout_header"
+            layout="@layout/layout_search_header"
+            app:vm="@{vm}" />
+
+        <!-- 검색 결과 데이터를 보여주는 레이아웃 -->
+        <include
+            android:id="@+id/layout_result"
+            layout="@layout/layout_search_result"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{!vm.isTyping ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_header"
+            app:vm="@{vm}" />
+
+        <!-- 현재 자동완성 리스트를 사용하지 않으므로 주석 처리 함
+        &lt;!&ndash; 검색 자동완성 리스트 레이아웃 (프로그램 / 배우) &ndash;&gt;
+        <include
+            android:id="@+id/layout_auto_result"
+            layout="@layout/layout_search_auto_result"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{vm.initClick &amp;&amp; vm.query.length() != 0 ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_header"
+            app:vm="@{vm}" />
+            -->
+
+        <!-- 최근 검색어 리스트 레이아웃 -->
+        <include
+            android:id="@+id/layout_recent"
+            layout="@layout/layout_search_recent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{vm.initClick &amp;&amp; vm.isTyping ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_header"
+            app:vm="@{vm}" />
+
+        <!-- 처음 들어갈 시 보여주는 추천 리스트 레이아웃 -->
+        <include
+            android:id="@+id/layout_basic"
+            layout="@layout/layout_search_basic"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{vm.initClick ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_header"
+            app:vm="@{vm}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

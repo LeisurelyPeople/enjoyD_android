@@ -10,7 +10,7 @@ import java.util.Calendar.*
  * DateUtil 클래스 테스트
  *
  * @author ricky
- * @since v11.4.0 / 2020.06.26
+ * @since v1.0.0 / 2020.06.26
  */
 class DateUtilTest {
     /** 시간점의 각 프로퍼티를 제대로 처리하는지 테스트 */

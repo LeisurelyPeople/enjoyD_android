@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.leisurely.people.enjoyd.data.remote.data.request.SignUpRequest
 import com.leisurely.people.enjoyd.data.repository.AccountRepository
 import com.leisurely.people.enjoyd.model.enums.Gender
-import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.model.login.SocialLoginModel
+import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.ext.applySchedulers
 import com.leisurely.people.enjoyd.util.ext.convertToServerDate
 import com.leisurely.people.enjoyd.util.lifecycle.LiveEvent
