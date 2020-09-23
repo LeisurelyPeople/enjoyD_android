@@ -5,19 +5,18 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.leisurely.people.enjoyd.data.local.prefs.SearchWordsManager
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponseItem
-import com.leisurely.people.enjoyd.model.search.RecentSearch
-import com.leisurely.people.enjoyd.model.search.AutoResult
 import com.leisurely.people.enjoyd.data.repository.DramaRepository
+import com.leisurely.people.enjoyd.model.search.AutoResult
+import com.leisurely.people.enjoyd.model.search.RecentSearch
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.coroutine.CoroutineKey.SEARCH_CLICK_SEARCH_BTN
-import com.leisurely.people.enjoyd.util.coroutine.SafeScope
 import com.leisurely.people.enjoyd.util.ext.applySingleSchedulers
 import com.leisurely.people.enjoyd.util.observer.DisposableSingleObserver
-import com.leisurely.people.enjoyd.data.local.prefs.SearchWordsManager
 import com.leisurely.people.enjoyd.util.time.TimePoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
@@ -48,7 +47,7 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
 
     /** 검색 쿼리 텍스트 */
     private val _query = MutableLiveData("")
-    val query: LiveData<String> = _query
+    val query: MutableLiveData<String> = _query
 
     /** 검색을 위한 액션을 취했는지 안했는지를 감별하는 flag 값 (editText 버튼을 눌렀을 시 false) */
     private val _initClick = MutableLiveData<Boolean>(false)
@@ -123,52 +122,35 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
 
     /** 검색 버튼을 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
     fun searchBtnClick() {
-        if (_query.value.isNullOrEmpty()) {
-            liveToastMessage.value = "최소 한 글자 이상 입력해주세요."
-            return
-        }
-        _isTyping.value = false
-
-        _recents.value = SearchWordsManager.put(
-            RecentSearch(id = TimePoint.now.unixMillis, title = _query.value ?: " ")
-        )
-
-        SafeScope(logicName = SEARCH_CLICK_SEARCH_BTN).launch {
-            Log.i(tag, "searchBtnClick")
-
-            // 서버로부터 데이터를 받아온 후 키보드를 닫음 처리한다.
-            dramaRepository.dramaInfoSearch(_query.value, "avg_rating")
-                .applySingleSchedulers()
-                .subscribeWith(object : DisposableSingleObserver<DramasSearchResponse>() {
-                    override fun onSuccess(searchDramas: DramasSearchResponse) {
-                        _searchResults.value = searchDramas
-                    }
-
-                    override fun onError(e: Throwable) {
-                        super.onError(e)
-                        _searchResults.value = listOf()
-                    }
-                })
-        }
+        doSearch(_query.value)
     }
 
     /** 최근 검색어를 클릭한 후, UI 이전에 해야할 내용들을 작업한다. */
     fun searchRecentItemClick(recentText: String) {
         _query.value = recentText
+        doSearch(_query.value)
+    }
 
-        _isTyping.value = false
+    /** 특정 [query] 에 대해 검색을 진행한다. */
+    private fun doSearch(query: String?) {
+        viewModelScope.launch(vmDefaultExceptionHandler(SEARCH_CLICK_SEARCH_BTN)) {
+            if (query.isNullOrEmpty()) {
+                liveToastMessage.value = "최소 한 글자 이상 입력해주세요."
+                return@launch
+            }
 
-        // REMEMBER 기억하기 위해 일부로 Dispatchers.Main 을 언급함
-        //          SafeScope 내에서 LiveData 를 사용하려면 Dispatchers 가 반드시 Main 이어야 함
-        SafeScope(logicName = SEARCH_CLICK_SEARCH_BTN).launch(Dispatchers.Main) {
+            _isTyping.value = false
+
             Log.i(tag, "searchBtnClick")
 
-            _recents.value = SearchWordsManager.put(
-                RecentSearch(id = TimePoint.now.unixMillis, title = recentText)
-            )
+            launch {
+                _recents.value = SearchWordsManager.put(
+                    RecentSearch(id = TimePoint.now.unixMillis, title = query)
+                )
+            }
 
             // 서버로부터 데이터를 받아온 후 키보드를 닫음 처리한다.
-            dramaRepository.dramaInfoSearch(recentText, "avg_rating")
+            dramaRepository.dramaInfoSearch(query, "avg_rating")
                 .applySingleSchedulers()
                 .subscribeWith(object : DisposableSingleObserver<DramasSearchResponse>() {
                     override fun onSuccess(searchDramas: DramasSearchResponse) {

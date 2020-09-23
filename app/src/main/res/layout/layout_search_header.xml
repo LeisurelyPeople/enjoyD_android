@@ -50,13 +50,13 @@
                 android:hint="검색어를 입력해주세요."
                 android:inputType="text"
                 android:singleLine="true"
-                android:text="@{vm.query}"
+                android:text="@={vm.query}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/btn_search"
                 app:layout_constraintTop_toTopOf="parent"
-                app:onFocusChangeListener="@{vm.queryOneFocusChangeListener}"
                 app:onAfterTextChanged="@{vm.queryAfterTextChanged}"
+                app:onFocusChangeListener="@{vm.queryOneFocusChangeListener}"
                 bind:onClick="@{vm.searchEditTextClick}"
                 tools:text="검색어를 입력해주세요." />
 
