@@ -1,5 +1,7 @@
 package com.leisurely.people.enjoyd.util
 
+import com.leisurely.people.enjoyd.BuildConfig
+
 /**
  * Intent, Arguments, ACTION_VIEW 등의 키값을 설정하는 곳
  *
@@ -25,10 +27,23 @@ interface Constant {
         // SharedPreferences
         const val PREF_NAME = "ENJOY_D_PREF"
         const val PREF_USER_TOKEN = "PREF_USER_TOKEN"
+        const val PREF_RECENT_SEARCH_WORD = "PREF_RECENT_SEARCH_WORD"
 
         // Result Code (onActivityResult)
         const val RESULT_OK = 1
         const val RESULT_CANCEL = 0
         const val RESULT_ERROR = -1
+
+        // 기타
+        // 지금 실행되는 코드가 Unit Test 인지 확인하는 flag
+        var isUnitTest = false
+
+        // 더미 유저의 accessToken
+        const val dummyUserAccessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9" +
+                ".eyJ0eXBlIjoxLCJleHAiOjE2MDA3NDA3OTU2NjcsInVzZXJfbmFtZSI6InRlc3QifQ" +
+                ".MN9dAK-easXxnJrkKgK_sPq7Uln2IdOY7PivM5EI6uU"
+
+        // 앱 버전 정보
+        val appVersion: String by lazy { BuildConfig.VERSION_NAME }
     }
 }

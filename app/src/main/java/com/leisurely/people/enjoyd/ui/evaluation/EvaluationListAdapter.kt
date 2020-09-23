@@ -12,7 +12,7 @@ import com.leisurely.people.enjoyd.ui.base.adapter.BaseListAdapter
  * 평가 화면에서 사용되는 List 의 어뎁터
  *
  * @author ricky
- * @since v11.4.0 / 2020.07.01
+ * @since v1.0.0 / 2020.07.01
  */
 class EvaluationListAdapter : BaseListAdapter<String>(object : DiffUtil.ItemCallback<String>() {
     override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {

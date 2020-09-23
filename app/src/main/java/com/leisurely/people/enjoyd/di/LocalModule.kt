@@ -1,6 +1,7 @@
 package com.leisurely.people.enjoyd.di
 
 import com.leisurely.people.enjoyd.data.local.source.AccountLocalDataSource
+import com.leisurely.people.enjoyd.data.local.source.DramaLocalDataSource
 import com.leisurely.people.enjoyd.data.remote.source.AccountRemoteDataSource
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -15,5 +16,8 @@ import org.koin.dsl.module
 val localModule = module {
     single {
         AccountLocalDataSource(androidContext())
+    }
+    single {
+        DramaLocalDataSource(androidContext())
     }
 }

@@ -7,7 +7,7 @@ import android.text.TextUtils
  * 색상에 대한 유틸 클래스
  *
  * @author ricky
- * @since v11.4.0 / 2020.07.01
+ * @since v1.0.0 / 2020.07.01
  */
 object ColorUtil {
     private val TAG = ColorUtil::class.java.canonicalName
@@ -29,35 +29,30 @@ object ColorUtil {
      * @param bgColor   변환할 스트링 값
      * @param defaultBg 기본 값 (null = white)
      */
-    fun getColorStringToInt(bgColor: String?, defaultBg: String?): Int {
-        var bgColor = bgColor
-        var defaultBg = defaultBg
+    fun getColorStringToInt(bgColor: String?, defaultBg: String = "#ffffffff"): Int {
+        var backgroundColor = if (TextUtils.isEmpty(bgColor)) defaultBg else bgColor
         val color: Int
-        if (TextUtils.isEmpty(defaultBg)) {
-            defaultBg = "#ffffffff"
+
+        if (!backgroundColor!!.startsWith("#")) {
+            backgroundColor = "#$backgroundColor"
         }
-        if (TextUtils.isEmpty(bgColor)) {
-            bgColor = defaultBg
-        }
-        if (!bgColor!!.startsWith("#")) {
-            bgColor = "#$bgColor"
-        }
-        if (bgColor.contains(" ")) {
-            bgColor = bgColor.replace(" ".toRegex(), "")
+        if (backgroundColor.contains(" ")) {
+            backgroundColor = backgroundColor.replace(" ".toRegex(), "")
         }
         color = try {
-            Color.parseColor(bgColor)
+            Color.parseColor(backgroundColor)
         } catch (e: Exception) {
             // 더 구체적인 정보가 예외 메시지에 담기게 한다.
             val msg = """
                 잘못된 color 문자열
-                bgColor = "$bgColor"
+                bgColor = "$backgroundColor"
                 defaultBg = "$defaultBg"
                 """.trimIndent()
             e.printStackTrace()
 
             Color.parseColor(defaultBg)
         }
+
         return color
     }
 }

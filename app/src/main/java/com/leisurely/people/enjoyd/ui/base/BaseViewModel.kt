@@ -2,9 +2,11 @@ package com.leisurely.people.enjoyd.ui.base
 
 import androidx.lifecycle.ViewModel
 import com.leisurely.people.enjoyd.util.NotNullMutableLiveData
+import com.leisurely.people.enjoyd.util.coroutine.CoroutineUtil
 import com.leisurely.people.enjoyd.util.lifecycle.LiveEvent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.CoroutineExceptionHandler
 
 /**
  * ViewModel Base 클래스
@@ -19,6 +21,20 @@ abstract class BaseViewModel : ViewModel() {
     var liveToastMessage = LiveEvent<String>()
 
     private val compositeDisposable = CompositeDisposable()
+
+    /**
+     * ViewModel 기본 예외 처리기
+     * ViewModel 내에서는 이 exceptionHandler 를 사용한다.
+     */
+    fun vmDefaultExceptionHandler(logicName: String) = CoroutineExceptionHandler { _, throwable ->
+        throwable.printStackTrace()
+
+//    if (!isTestable && logicName != UNKNOWN_LOGIC)
+//        FCrashlytics.logException(CoroutineUtil.generateThrowable(logicName, throwable))
+//    else
+//        FCrashlytics.logException(throwable)
+        CoroutineUtil.clear(logicName)
+    }
 
     fun showLoading() {
         liveLoading.value = true

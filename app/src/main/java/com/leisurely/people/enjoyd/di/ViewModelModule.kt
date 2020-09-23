@@ -7,6 +7,7 @@ import com.leisurely.people.enjoyd.ui.login.sociallogin.KakaoLogin
 import com.leisurely.people.enjoyd.ui.main.MainViewModel
 import com.leisurely.people.enjoyd.ui.onboarding.SummaryEvaluationViewModel
 import com.leisurely.people.enjoyd.ui.onboarding.UserInfoInputViewModel
+import com.leisurely.people.enjoyd.ui.search.SearchViewModel
 import com.leisurely.people.enjoyd.ui.splash.SplashViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -23,6 +24,7 @@ val viewModelModule = module {
     viewModel { SplashViewModel(get()) }
     viewModel { MainViewModel() }
     viewModel { EvaluationViewModel() }
+    viewModel { SearchViewModel(get()) }
     viewModel { (kakaoLogin: KakaoLogin) ->
         LoginViewModel(kakaoLogin, get())
     }

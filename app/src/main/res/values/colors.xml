@@ -26,4 +26,13 @@
     <color name="color_app_background">#212121</color>
 
     <color name="color_black">#000000</color>
+
+    <color name="layout_search_background">#212121</color>
+
+    <color name="layout_search_header_background">#212121</color>
+    <color name="layout_search_header_et_normal">#141516</color>
+    <color name="layout_search_header_et_text_color">#6a6a6a</color>
+
+    <color name="layout_search_basic_background">#212121</color>
+    <color name="item_basic_background">#212121</color>
 </resources>

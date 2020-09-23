@@ -75,4 +75,22 @@
         <item name="android:windowMinWidthMinor">80%</item>
     </style>
 
+    <!-- No ActionBar theme -->
+    <style name="NoActionBarAppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- 검색화면 헤더 EditText theme -->
+    <style name="SearchEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="colorControlNormal">@color/layout_search_header_et_text_color</item>
+        <item name="colorControlActivated">@color/layout_search_header_et_text_color</item>
+        <item name="android:textCursorDrawable">@color/layout_search_header_et_text_color</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/layout_search_header_et_text_color</item>
+        <item name="android:textColorHint">@color/layout_search_header_et_text_color</item>
+        <item name="android:textColorHighlight">@color/layout_search_header_et_text_color</item>
+    </style>
 </resources>

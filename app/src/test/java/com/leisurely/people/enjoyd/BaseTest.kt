@@ -1,6 +1,6 @@
 package com.leisurely.people.enjoyd
 
-import com.leisurely.people.enjoyd.util.coroutine.isUnitTest
+import com.leisurely.people.enjoyd.util.Constant.Companion.isUnitTest
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.schedulers.Schedulers
 import org.junit.BeforeClass
