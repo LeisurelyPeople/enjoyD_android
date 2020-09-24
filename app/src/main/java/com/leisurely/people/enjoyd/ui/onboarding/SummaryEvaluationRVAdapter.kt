@@ -23,7 +23,6 @@ class SummaryEvaluationRVAdapter(private val ratingBarChanged: (rating: Float, i
         item: DramaEvaluationResponse
     ) {
         (binding as ItemDramaEvaluationBinding).item = item
-
     }
 
     override fun onCreateBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
