@@ -19,16 +19,6 @@ fun TimePoint.formatToServerDate(): String {
     return this.format("yyyy-MM-dd")
 }
 
-fun String.convertDateFormatToTimeStamp(): Long {
-    val date = getAccessTokenDateFormat().parse(this)
-    return date?.let {
-        Calendar.getInstance().apply { time = date }.timeInMillis
-    } ?: -1L
-}
-
 fun getViewDateFormat(): SimpleDateFormat = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
 
 fun getServerDateFormat(): SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
-fun getAccessTokenDateFormat(): SimpleDateFormat =
-    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss:SSS", Locale.getDefault())
