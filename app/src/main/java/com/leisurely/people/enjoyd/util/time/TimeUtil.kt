@@ -46,6 +46,10 @@ class TimePoint private constructor(
     constructor(year: Int, month: Int, day: Int, hour: Int = 0, minute: Int = 0, second: Int = 0)
             : this(GregorianCalendar(year, month - 1, day, hour, minute, second))
 
+    constructor(unixMillis: Long) : this(Calendar.getInstance().apply { timeInMillis = unixMillis })
+
+    constructor(date: Date) : this(Calendar.getInstance().apply { time = date })
+
     val year: Int get() = calendar[Calendar.YEAR]
     val month: Int get() = calendar[Calendar.MONTH] + 1
     val day: Int get() = calendar[Calendar.DAY_OF_MONTH]
