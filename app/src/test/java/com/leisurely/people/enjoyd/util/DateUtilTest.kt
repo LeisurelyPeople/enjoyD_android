@@ -159,7 +159,10 @@ class DateUtilTest {
     /** 큰 [TimeAmount]를 더할 때 오버플로 일어나는지 테스트 */
     @Test
     fun overflow() {
-        assertEquals(TimePoint(2019, 5, 31), TimePoint(2019, 5, 1) + 30.days)
+        assertEquals(
+            TimePoint(2019, 5, 31),
+            TimePoint(2019, 5, 1) + 30.days
+        )
         assertEquals(
             TimePoint(2019, 1, 1) + 365.millis,
             TimePoint(2018, 1, 1) + 365.days + 365.millis
@@ -169,27 +172,35 @@ class DateUtilTest {
     /** Long 타입 constructor 일 때 정상적인 [TimePoint] 가 생성되는 지 테스트 */
     @Test
     fun longConstructorTest() {
-        assertEquals(TimePoint(1558537200000L), TimePoint(2019, 5, 23))
+        val calendar = getInstance()
+
         assertEquals(
-            TimePoint(1558537200000L) - 1.days,
-            TimePoint(2019, 5, 21) + 1.days
+            TimePoint(TimePoint.today.unixMillis),
+            TimePoint(calendar[YEAR], calendar[MONTH] + 1, calendar[DAY_OF_MONTH])
+        )
+        assertEquals(
+            TimePoint(TimePoint.today.unixMillis) - 1.days,
+            TimePoint(TimePoint.today.unixMillis) - 2.days + 1.days
         )
     }
 
     /** Date 타입 constructor 일 때 정상적인 [TimePoint] 가 생성되는 지 테스트 */
     @Test
     fun dateConstructorTest() {
+        val calendar = getInstance()
+        val date = Date(TimePoint.today.unixMillis)
+
         assertEquals(
-            TimePoint(Date().apply { time = 1558537200000L }),
-            TimePoint(2019, 5, 23)
+            TimePoint(date),
+            TimePoint(calendar[YEAR], calendar[MONTH] + 1, calendar[DAY_OF_MONTH])
         )
         assertEquals(
-            TimePoint(Date().apply { time = 1558537200000L }),
-            TimePoint(1558537200000L)
+            TimePoint(date),
+            TimePoint(TimePoint.today.unixMillis)
         )
         assertEquals(
-            TimePoint(Date().apply { time = 1558537200000L }) - 1.days,
-            TimePoint(2019, 5, 21) + 1.days
+            TimePoint(date) - 1.days,
+            TimePoint(date) - 2.days + 1.days
         )
     }
 }
