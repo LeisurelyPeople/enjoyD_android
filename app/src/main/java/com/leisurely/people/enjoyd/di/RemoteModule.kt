@@ -1,6 +1,7 @@
 package com.leisurely.people.enjoyd.di
 
 import com.leisurely.people.enjoyd.data.remote.source.AccountRemoteDataSource
+import com.leisurely.people.enjoyd.data.remote.source.evaluation.DramaEvaluationDataSource
 import com.leisurely.people.enjoyd.data.remote.source.drama.DramaSearchRemoteDataSource
 import org.koin.dsl.module
 
@@ -12,12 +13,7 @@ import org.koin.dsl.module
  */
 
 val remoteModule = module {
-    single {
-        AccountRemoteDataSource(get())
-    }
-    single {
-        DramaSearchRemoteDataSource(
-            get()
-        )
-    }
+    single { AccountRemoteDataSource(get()) }
+    single { DramaEvaluationDataSource(get()) }
+    single { DramaSearchRemoteDataSource(get()) }
 }

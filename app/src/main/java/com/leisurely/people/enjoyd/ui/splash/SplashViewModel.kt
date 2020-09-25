@@ -3,6 +3,7 @@ package com.leisurely.people.enjoyd.ui.splash
 import com.leisurely.people.enjoyd.data.repository.AccountRepository
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.ext.applySchedulers
+import com.leisurely.people.enjoyd.util.ext.convertDateFormatToTimeStamp
 import com.leisurely.people.enjoyd.util.lifecycle.LiveEvent
 import com.leisurely.people.enjoyd.util.observer.DisposableCompletableObserver
 
@@ -27,7 +28,7 @@ class SplashViewModel(private val accountRepository: AccountRepository) : BaseVi
         }
 
         /** access token 만료 되었을 경우 */
-        if (userToken.expireDate.toLong() < System.currentTimeMillis()) {
+        if (userToken.expireDate < System.currentTimeMillis()) {
             refreshUserToken(userToken.refreshToken)
         } else {
             _startMain.value = null

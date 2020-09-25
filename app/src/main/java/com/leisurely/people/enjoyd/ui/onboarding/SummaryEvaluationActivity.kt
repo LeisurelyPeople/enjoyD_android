@@ -1,61 +1,74 @@
 package com.leisurely.people.enjoyd.ui.onboarding
 
-import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannedString
 import android.text.style.ForegroundColorSpan
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.os.bundleOf
 import androidx.core.text.buildSpannedString
-import com.leisurely.people.enjoyd.R
 import androidx.lifecycle.Observer
-import com.leisurely.people.enjoyd.databinding.ActivityUserInfoInputBinding
+import androidx.recyclerview.widget.RecyclerView
+import com.leisurely.people.enjoyd.R
+import com.leisurely.people.enjoyd.databinding.ActivitySummaryEvaluationBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
-import com.leisurely.people.enjoyd.model.login.SocialLoginModel
-import com.leisurely.people.enjoyd.util.Constant
+import com.leisurely.people.enjoyd.ui.main.MainActivity
+import com.leisurely.people.enjoyd.util.CustomItemDecoration
 import com.leisurely.people.enjoyd.util.CustomTypefaceSpan
-import com.leisurely.people.enjoyd.util.ext.formatToViewDate
-import com.leisurely.people.enjoyd.util.time.TimePoint
-import com.leisurely.people.enjoyd.util.time.days
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 /**
- * 사용자 정보 입력 화면 (회원가입)
+ * 온보딩 과정중의 평가하기 액티비티
  *
  * @author Wayne
- * @since v1.0.0 / 2020.07.20
+ * @since v1.0.0 / 2020.09.09
  */
-
-class UserInfoInputActivity :
-    BaseActivity<ActivityUserInfoInputBinding, UserInfoInputViewModel>(
-        R.layout.activity_user_info_input
+class SummaryEvaluationActivity :
+    BaseActivity<ActivitySummaryEvaluationBinding, SummaryEvaluationViewModel>(
+        R.layout.activity_summary_evaluation
     ) {
 
-    override val viewModel: UserInfoInputViewModel by viewModel {
-        parametersOf(intent.getParcelableExtra(Constant.EXTRA_SOCIAL_LOGIN_INFO))
-    }
+    override val viewModel: SummaryEvaluationViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setSummaryEvaluationRV()
         binding.tvScreenTitle.text = getScreenTitleStringBuilder()
+        viewModel.getDramaEvaluationItems()
 
-        viewModel.startBirthDayPicker.observe(this, Observer {
-            openDatePicker()
+        viewModel.startMain.observe(this, Observer {
+            onStartEnjoyDService()
         })
+    }
 
-        viewModel.startBackScreen.observe(this, Observer {
-            finish()
-        })
+    override fun onBackPressed() {
+        onStartEnjoyDService()
+    }
 
-        viewModel.startSummaryEvaluation.observe(this, Observer {
-            startActivity(SummaryEvaluationActivity.getIntent(this))
-            finish()
-        })
+    private fun setSummaryEvaluationRV() {
+        binding.rvEvaluationDrama.run {
+            adapter = SummaryEvaluationRVAdapter { rating: Float, idx: Int ->
+                viewModel.onDramaRatingChanged(rating, idx)
+            }
+            addItemDecoration(object : CustomItemDecoration() {
+                override fun setSpacingForDirection(
+                    outRect: Rect,
+                    layoutManager: RecyclerView.LayoutManager?,
+                    position: Int,
+                    itemCount: Int
+                ) {
+                    outRect.bottom = if (position != itemCount - 1) {
+                        resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_24dp)
+                    } else {
+                        0
+                    }
+                }
+
+            })
+        }
     }
 
     private fun getScreenTitleStringBuilder(): SpannedString {
@@ -65,7 +78,7 @@ class UserInfoInputActivity :
             ResourcesCompat.getFont(this, R.font.noto_sans_kr_demi_light)
 
         return buildSpannedString {
-            append(SpannableString("모든 웹드라마").apply {
+            append(SpannableString("감상한 웹드라마").apply {
                 setSpan(
                     CustomTypefaceSpan(typefaceNotoSansBold),
                     0,
@@ -79,7 +92,7 @@ class UserInfoInputActivity :
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
             })
-            append(SpannableString("를 ").apply {
+            append(SpannableString(" 작품을\n").apply {
                 setSpan(
                     CustomTypefaceSpan(typefaceNotoSansDemiLight),
                     0,
@@ -93,7 +106,7 @@ class UserInfoInputActivity :
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
             })
-            append(SpannableString("한곳에서\n간편하게").apply {
+            append(SpannableString("평가").apply {
                 setSpan(
                     CustomTypefaceSpan(typefaceNotoSansBold),
                     0,
@@ -107,7 +120,7 @@ class UserInfoInputActivity :
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
             })
-            append(SpannableString(" 즐기는 방법").apply {
+            append(SpannableString("해주세요!").apply {
                 setSpan(
                     CustomTypefaceSpan(typefaceNotoSansDemiLight),
                     0,
@@ -124,29 +137,16 @@ class UserInfoInputActivity :
         }
     }
 
-    private fun openDatePicker() {
-        val dateTimePoint = TimePoint.now
-        DatePickerDialog(
-            this,
-            R.style.UserBirthDayDatePickerStyle,
-            DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                val userBirthCalendar = TimePoint(year, month, dayOfMonth)
-                viewModel.setUserBirthDayValue(userBirthCalendar.formatToViewDate())
-            },
-            dateTimePoint.year,
-            dateTimePoint.month,
-            dateTimePoint.day
-        ).apply {
-            datePicker.minDate = TimePoint(1970, 1, 1).unixMillis
-            datePicker.maxDate = dateTimePoint.unixMillis
-        }.show()
+    private fun onStartEnjoyDService() {
+        val intent = MainActivity.getIntent(this).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        startActivity(intent)
     }
 
     companion object {
-        fun startActivity(context: Context, socialLoginModel: SocialLoginModel) {
-            context.startActivity(Intent(context, UserInfoInputActivity::class.java).apply {
-                putExtras(bundleOf(Constant.EXTRA_SOCIAL_LOGIN_INFO to socialLoginModel))
-            })
+        fun getIntent(context: Context): Intent {
+            return Intent(context, SummaryEvaluationActivity::class.java)
         }
     }
 }

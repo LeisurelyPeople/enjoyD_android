@@ -1,10 +1,16 @@
 package com.leisurely.people.enjoyd.data.remote.api
 
+import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
+import com.leisurely.people.enjoyd.data.remote.data.request.evaluation.DramaEvaluationRequest
+import com.leisurely.people.enjoyd.data.remote.data.response.evaluation.DramaEvaluationResponse
+import io.reactivex.Completable
+import io.reactivex.Single
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
-import io.reactivex.Single
-import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -17,6 +23,17 @@ import retrofit2.http.Query
  * @since v1.0.0 / 2020.09.08
  */
 interface EnjoyDService {
+    /** 드라마 평가를 위한 데이터 가져오는 API */
+    @GET("accounts/dramas/ratings")
+    fun getDramasRatings(
+        @Query("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): Single<PagingResponse<DramaEvaluationResponse>>
+
+    /** 드라마 평가한 데이터 서버로 보내는 API */
+    @POST("accounts/dramas/ratings")
+    fun postDramasRatings(@Body data: HashMap<String, List<DramaEvaluationRequest>>): Completable
+
     /** 간략한 드라마 정보 리스트 API (/dramas) */
     @GET("/dramas/")
     fun getDramas(): Single<DramasResponse>

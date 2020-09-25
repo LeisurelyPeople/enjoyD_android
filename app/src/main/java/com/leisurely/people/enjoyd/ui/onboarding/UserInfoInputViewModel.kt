@@ -82,9 +82,9 @@ class UserInfoInputViewModel(
     private val _startBackScreen: LiveEvent<Unit> = LiveEvent()
     val startBackScreen: LiveEvent<Unit> = _startBackScreen
 
-    /** 메인 화면으로 이동 시키기 위한 LiveData */
-    private val _startMain: LiveEvent<Unit> = LiveEvent()
-    val startMain: LiveEvent<Unit> = _startMain
+    /** 요약 평가하기 화면으로 이동하기 위한 LiveData */
+    private val _startSummaryEvaluation: LiveEvent<Unit> = LiveEvent()
+    val startSummaryEvaluation: LiveEvent<Unit> = _startSummaryEvaluation
 
 
     /** 유저 이름 텍스트 변화 감지 메소드 */
@@ -187,7 +187,7 @@ class UserInfoInputViewModel(
             .applySchedulers()
             .subscribeWith(object : DisposableCompletableObserver() {
                 override fun onComplete() {
-                    _startMain.value = null
+                    _startSummaryEvaluation.value = null
                 }
 
                 override fun onError(e: Throwable) {

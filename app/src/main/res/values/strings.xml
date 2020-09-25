@@ -17,6 +17,9 @@
     <string name="user_job_warning_text">직업을 선택해주세요.</string>
     <string name="user_detail_job_warning_text">직업을 입력해주세요.</string>
     <string name="sign_up">회원가입</string>
+    
+    <!-- 요약 평가하기 (Summary Evaluation) -->
+    <string name="evaluation_complete">평가 완료</string>
 
 
     <!-- 공통 (common) -->
@@ -26,6 +29,7 @@
     <string name="student">학생</string>
     <string name="office_workers">직장인</string>
     <string name="etc">기타</string>
+    <string name="skip">SKIP</string>
 
 
     <!-- 에러 관련 -->

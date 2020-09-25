@@ -5,6 +5,7 @@ import com.leisurely.people.enjoyd.ui.login.LoginViewModel
 import com.leisurely.people.enjoyd.model.login.SocialLoginModel
 import com.leisurely.people.enjoyd.ui.login.sociallogin.KakaoLogin
 import com.leisurely.people.enjoyd.ui.main.MainViewModel
+import com.leisurely.people.enjoyd.ui.onboarding.SummaryEvaluationViewModel
 import com.leisurely.people.enjoyd.ui.onboarding.UserInfoInputViewModel
 import com.leisurely.people.enjoyd.ui.search.SearchViewModel
 import com.leisurely.people.enjoyd.ui.splash.SplashViewModel
@@ -30,4 +31,5 @@ val viewModelModule = module {
     viewModel { (socialLoginModel: SocialLoginModel) ->
         UserInfoInputViewModel(socialLoginModel, get())
     }
+    viewModel { SummaryEvaluationViewModel(get()) }
 }

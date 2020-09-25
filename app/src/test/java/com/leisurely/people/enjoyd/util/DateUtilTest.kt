@@ -4,6 +4,7 @@ import com.leisurely.people.enjoyd.util.time.*
 import junit.framework.TestCase.assertEquals
 import org.junit.Assert
 import org.junit.Test
+import java.util.*
 import java.util.Calendar.*
 
 /**
@@ -162,6 +163,33 @@ class DateUtilTest {
         assertEquals(
             TimePoint(2019, 1, 1) + 365.millis,
             TimePoint(2018, 1, 1) + 365.days + 365.millis
+        )
+    }
+
+    /** Long 타입 constructor 일 때 정상적인 [TimePoint] 가 생성되는 지 테스트 */
+    @Test
+    fun longConstructorTest() {
+        assertEquals(TimePoint(1558537200000L), TimePoint(2019, 5, 23))
+        assertEquals(
+            TimePoint(1558537200000L) - 1.days,
+            TimePoint(2019, 5, 21) + 1.days
+        )
+    }
+
+    /** Date 타입 constructor 일 때 정상적인 [TimePoint] 가 생성되는 지 테스트 */
+    @Test
+    fun dateConstructorTest() {
+        assertEquals(
+            TimePoint(Date().apply { time = 1558537200000L }),
+            TimePoint(2019, 5, 23)
+        )
+        assertEquals(
+            TimePoint(Date().apply { time = 1558537200000L }),
+            TimePoint(1558537200000L)
+        )
+        assertEquals(
+            TimePoint(Date().apply { time = 1558537200000L }) - 1.days,
+            TimePoint(2019, 5, 21) + 1.days
         )
     }
 }
