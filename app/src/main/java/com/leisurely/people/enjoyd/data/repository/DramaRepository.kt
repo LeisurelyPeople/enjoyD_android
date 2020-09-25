@@ -1,7 +1,7 @@
 package com.leisurely.people.enjoyd.data.repository
 
 import com.leisurely.people.enjoyd.data.local.source.DramaLocalDataSource
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchGetResponse
 import com.leisurely.people.enjoyd.data.remote.source.drama.DramaSearchRemoteDataSource
 import io.reactivex.Single
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +21,7 @@ class DramaRepository(
     suspend fun dramaInfoSearch(
         search: String?,
         ordering: String
-    ): Single<DramasSearchResponse> = withContext(Dispatchers.IO) {
+    ): Single<DramasSearchGetResponse> = withContext(Dispatchers.IO) {
         // 아직은 로컬 영역에서 별도로 하는 작업이 없음 (더미 함수 넣어놓음)
         dramaLocalDataSource.dramaInfoSearch()
 

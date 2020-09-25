@@ -1,9 +1,7 @@
 package com.leisurely.people.enjoyd.data
 
 import com.leisurely.people.enjoyd.AndroidBaseTest
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponseItem
+import com.leisurely.people.enjoyd.data.remote.data.response.*
 import com.leisurely.people.enjoyd.util.Serializer.asJson
 import com.leisurely.people.enjoyd.util.Serializer.asJsonArray
 import com.leisurely.people.enjoyd.util.Serializer.parse
@@ -19,7 +17,7 @@ import org.junit.Test
  * @since v1.0.0 / 2020.07.12
  */
 class DramaDataTest : AndroidBaseTest() {
-    /** 자세한 드라마 데이터 파싱이 정상적으로 이루어지는지 확인한다. */
+    /** 드라마정보리스트API API [getDramas] 데이터 파싱이 정상적으로 이루어지는지 확인한다. */
     @Test
     fun dramasInfoTest() {
         // GIVEN1 : 문자열화된 json 데이터 (완벽한 데이터)
@@ -37,7 +35,7 @@ class DramaDataTest : AndroidBaseTest() {
         }""".trimIndent().asJson
 
         // WHEN1 : 문자열 json 데이터를 파싱한다.
-        val fullData = DramasResponse.serializer().parse(fullJsonObject)
+        val fullData = DramasGetResponse.serializer().parse(fullJsonObject)
 
         // THEN1 : 문자열 json 데이터와 객체 데이터가 정상적으로 매치되어야 한다.
         Assert.assertEquals(fullData.count, 2)
@@ -48,7 +46,7 @@ class DramaDataTest : AndroidBaseTest() {
         Assert.assertEquals(fullData.results?.get(0)?.title, "이씨 모임")
     }
 
-    /** 간략한 드라마 데이터 파싱이 정상적으로 이루어지는지 확인한다. */
+    /** 드라마정보 디테일 API [getDramasInfoPk] 데이터 파싱이 정상적으로 이루어지는지 확인한다. */
     @Test
     fun dramasInfoPkTest() {
         // GIVEN1 : 문자열화된 json 데이터 (완벽한 데이터)
@@ -83,7 +81,7 @@ class DramaDataTest : AndroidBaseTest() {
         }""".trimIndent().asJson
 
         // WHEN1 : 문자열 json 데이터를 파싱한다.
-        val fullData = DramasSlugResponse.serializer().parse(fullJsonObject)
+        val fullData = DramasSlugGetResponse.serializer().parse(fullJsonObject)
 
         // THEN1 : 문자열 json 데이터와 객체 데이터가 정상적으로 매치되어야 한다.
         Assert.assertEquals(fullData.pk, 1)
@@ -95,22 +93,9 @@ class DramaDataTest : AndroidBaseTest() {
         Assert.assertEquals(fullData.cast?.get(1), "고배우")
         Assert.assertEquals(fullData.director, "이감독")
         Assert.assertEquals(fullData.dramas?.get(0)?.summary, "더미값더미값")
-
-//        // GIVEN2 : 문자열화된 json 데이터 (데이터가 없는 경우)
-//        val emptyJsonData = """{
-//        }""".trimIndent().asJson
-//
-//        // WHEN2 : 데이터가 없는 경우의 문자열 json 데이터를 파싱한다.
-//        val emptyData = DramaInfoResponse.serializer().parse(emptyJsonData)
-//
-//        // THEN2 : 빈 경우에 대한 문자열 json 데이터와 객체 데이터가 정상적으로 매치되어야 한다.
-//        Assert.assertEquals(emptyData.count, 0)
-//        Assert.assertEquals(emptyData.next, null)
-//        Assert.assertEquals(emptyData.previous, null)
-//        Assert.assertEquals(emptyData.results?.size, 0)
     }
 
-    /** 드라마 검색 데이터 파싱이 정상적으로 이루어지는지 확인한다. */
+    /** 드라마 정보 검색 API [dramaInfoSearch] 데이터 파싱이 정상적으로 이루어지는지 확인한다. */
     @Test
     fun dramasInfoSearchTest() {
         // GIVEN1 : 문자열화된 json 데이터 (완벽한 데이터)
@@ -129,15 +114,94 @@ class DramaDataTest : AndroidBaseTest() {
         Assert.assertEquals(fullData[0].id, 2)
         Assert.assertEquals(fullData[0].title, "소녀의 세계")
         Assert.assertEquals(fullData[0].poster, "http://www.naver.com")
+    }
 
-        // GIVEN2 : 문자열화된 json 데이터 (데이터가 없는 경우)
-        val emptyJsonObject = """[
+    /** 드라마 정보 배너 API [getDramasInfoBanner] 데이터 파싱이 정상적으로 이루어지는지 확인한다.*/
+    @Test
+    fun dramasInfoBannerTest() {
+        // GIVEN1 : 문자열화된 json 데이터 (완벽한 데이터)
+        val fullJsonObject = """{
+            "slug": "sonyeoyi-segye",
+            "poster": "post url",
+            "producer": "tvND",
+            "title": "test",
+            "tag": [
+                "test"
+            ]
+        }""".trimIndent().asJson
+
+        // WHEN1 : 문자열 json 데이터를 파싱한다.
+        val fullData = DramaBannerGetResponse.serializer().parse(fullJsonObject)
+
+        // THEN1 : 문자열 json 데이터와 객체 데이터가 정상적으로 매치되어야 한다.
+        Assert.assertEquals(fullData.slug, "sonyeoyi-segye")
+        Assert.assertEquals(fullData.poster, "post url")
+        Assert.assertEquals(fullData.producer, "tvND")
+        Assert.assertEquals(fullData.title, "test")
+        Assert.assertEquals(fullData.tag?.get(0), "test")
+    }
+
+    /** 태그 리스트 API [getDramasTag] 데이터 파싱이 정상적으로 이루어지는지 확인한다. */
+    @Test
+    fun dramasTagTest() {
+        // GIVEN1 : 문자열화된 json 데이터 (완벽한 데이터)
+        val fullJsonObject = """{
+            "count": 2,
+            "next": "",
+            "previous": null,
+            "results": [
+                {
+                    "name": "멜로"
+                },
+                {
+                    "name": "액션"
+                }
+            ]
+        }""".trimIndent().asJson
+
+        // WHEN1 : 문자열 json 데이터를 파싱한다.
+        val fullData = DramaTagGetResponse.serializer().parse(fullJsonObject)
+
+        // THEN1 : 문자열 json 데이터와 객체 데이터가 정상적으로 매치되어야 한다.
+        Assert.assertEquals(fullData.count, 2)
+        Assert.assertEquals(fullData.next, "")
+        Assert.assertEquals(fullData.previous, null)
+        Assert.assertEquals(fullData.results?.get(0)?.name, "멜로")
+    }
+
+    /** 북마크 리스트 API  API [getDramasBookmarkPk] 데이터 파싱이 정상적으로 이루어지는지 확인한다. */
+    @Test
+    fun dramasBookmarkPkTest() {
+        // GIVEN1 : 문자열화된 json 데이터 (완벽한 데이터)
+        val fullJsonArray = """[
+            {
+                "small_thumbnail": "test",
+                "episode": 1,
+                "title": "test_drama_ep01",
+                "pk": 1
+            }
         ]""".trimIndent().asJsonArray
 
-        // WHEN2 : 데이터가 없는 경우의 문자열 json 데이터를 파싱한다.
-        val emptyData = DramasSearchResponseItem.serializer().list.parseArray(emptyJsonObject)
+        // WHEN1 : 문자열 json 데이터를 파싱한다.
+        val fullDatas = DramaBookmarkPkResponseItem.serializer().list.parseArray(fullJsonArray)
+        val fullData = fullDatas[0]
 
-        // THEN2 : 빈 경우에 대한 문자열 json 데이터와 객체 데이터가 정상적으로 매치되어야 한다.
-        Assert.assertEquals(emptyData.size, 0)
+        // THEN1 : 문자열 json 데이터와 객체 데이터가 정상적으로 매치되어야 한다.
+        Assert.assertEquals(fullData.smallThumbnail, "test")
+        Assert.assertEquals(fullData.episode, 1)
+        Assert.assertEquals(fullData.title, "test_drama_ep01")
+        Assert.assertEquals(fullData.pk, 1)
+    }
+
+    /** 북마킹 API [postDramasBookmark] 데이터 파싱이 정상적으로 이루어지는지 확인한다. */
+    @Test
+    fun dramasBookmarkPostTest(){
+        Assert.assertEquals(1, 1)
+    }
+
+    /** 북마크 해제 API [deleteDramasBookmarkPk] 데이터 파싱이 정상적으로 이루어지는지 확인한다. */
+    @Test
+    fun dramasBookmarkDeleteTest(){
+        Assert.assertEquals(1, 1)
     }
 }

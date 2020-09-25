@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.leisurely.people.enjoyd.data.local.prefs.SearchWordsManager
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchGetResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponseItem
 import com.leisurely.people.enjoyd.data.repository.DramaRepository
 import com.leisurely.people.enjoyd.model.search.AutoResult
@@ -152,8 +152,8 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
             // 서버로부터 데이터를 받아온 후 키보드를 닫음 처리한다.
             dramaRepository.dramaInfoSearch(query, "avg_rating")
                 .applySingleSchedulers()
-                .subscribeWith(object : DisposableSingleObserver<DramasSearchResponse>() {
-                    override fun onSuccess(searchDramas: DramasSearchResponse) {
+                .subscribeWith(object : DisposableSingleObserver<DramasSearchGetResponse>() {
+                    override fun onSuccess(searchDramas: DramasSearchGetResponse) {
                         _searchResults.value = searchDramas
                     }
 

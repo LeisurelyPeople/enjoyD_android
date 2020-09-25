@@ -1,12 +1,10 @@
 package com.leisurely.people.enjoyd.data.remote.api
 
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
+import com.google.gson.JsonObject
+import com.leisurely.people.enjoyd.data.remote.data.request.DeleteAccountsDramasDramaBookmarksRequest
+import com.leisurely.people.enjoyd.data.remote.data.response.*
 import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 /**
  * EnjoyD Api 들을 관리하는 인터페이스
@@ -17,20 +15,52 @@ import retrofit2.http.Query
  * @since v1.0.0 / 2020.09.08
  */
 interface EnjoyDService {
-    /** 간략한 드라마 정보 리스트 API (/dramas) */
-    @GET("/dramas/")
-    fun getDramas(): Single<DramasResponse>
 
-    /** 자세한 드라마 정보 리스트 API (/dramas/{drama_info_slug}) */
+    /** 드라마 정보 배너 API (/dramas/banner/)  */
+    @GET("/dramas/banner/")
+    fun getDramasBanner(): Single<DramaBannerGetResponse>
+
+    /** 드라마정보리스트API API (/dramas) */
+    @GET("/dramas/")
+    fun getDramas(): Single<DramasGetResponse>
+
+    /** 드라마정보 디테일 API (/dramas/{drama_info_slug}) */
     @GET("/dramas/{drama_info_slug}/")
     fun getDramasSlug(
         @Path("drama_info_slug") dramaInfoSlug: String
-    ): Single<DramasSlugResponse>
+    ): Single<DramasSlugGetResponse>
 
     /** 드라마 정보 검색 API (/dramas/search) */
     @GET("/dramas/search/")
     fun getDramasSearch(
         @Query("search") search: String?,
         @Query("order") order: String = "avg_rating"
-    ): Single<DramasSearchResponse>
+    ): Single<DramasSearchGetResponse>
+
+    /** 태그 리스트 API (/dramas/tag/) */
+    @GET("/dramas/tag/")
+    fun getDramasTag(): Single<DramaTagGetResponse>
+
+    /** 북마크 리스트 API (/accounts/dramas/drama/bookmarks/) */
+    @GET("/accounts/dramas/drama/bookmarks/")
+    fun getAccountsDramasDramaBookmarks(
+    ): Single<AccountsDramasDramaBookmarksGetResponse>
+
+    /** 북마크 다중 해제 API (/accounts/dramas/drama/bookmarks/) */
+    @HTTP(method = "DELETE", path = "/accounts/dramas/drama/bookmarks/", hasBody = true)
+    fun deleteAccountsDramasDramaBookmarks(
+        @Body data: DeleteAccountsDramasDramaBookmarksRequest
+    ): Single<JsonObject>
+
+    /** 북마크 API (/accounts/dramas/drama/{drama_pk}/bookmark/) */
+    @POST("/accounts/dramas/drama/{drama_pk}/bookmark/")
+    fun postAccountsDramasDramaPkBookmark(
+        @Path("drama_pk") dramaPk: Int
+    ): Single<JsonObject>
+
+    /** 북마크 해제 API (/accounts/dramas/drama/<int:drama_pk>/bookmark/)  */
+    @DELETE("/accounts/dramas/drama/{drama_pk}/bookmark/")
+    fun deleteAccountsDramasDramaPkBookmark(
+        @Path("drama_pk") dramaPk: Int
+    ): Single<JsonObject>
 }
