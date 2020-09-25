@@ -3,7 +3,6 @@ package com.leisurely.people.enjoyd.ui.splash
 import com.leisurely.people.enjoyd.data.repository.AccountRepository
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.ext.applySchedulers
-import com.leisurely.people.enjoyd.util.ext.convertDateFormatToTimeStamp
 import com.leisurely.people.enjoyd.util.lifecycle.LiveEvent
 import com.leisurely.people.enjoyd.util.observer.DisposableCompletableObserver
 
