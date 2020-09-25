@@ -169,6 +169,8 @@ class DateUtilTest {
     /** Long 타입 constructor 일 때 정상적인 [TimePoint] 가 생성되는 지 테스트 */
     @Test
     fun longConstructorTest() {
+        print("${TimePoint(1558537200000L)}, ${TimePoint(2019, 5, 23)}")
+
         assertEquals(TimePoint(1558537200000L), TimePoint(2019, 5, 23))
         assertEquals(
             TimePoint(1558537200000L) - 1.days,
@@ -179,6 +181,8 @@ class DateUtilTest {
     /** Date 타입 constructor 일 때 정상적인 [TimePoint] 가 생성되는 지 테스트 */
     @Test
     fun dateConstructorTest() {
+        print("${TimePoint(1558537200000L)}, ${TimePoint(2019, 5, 23)}")
+
         assertEquals(
             TimePoint(Date().apply { time = 1558537200000L }),
             TimePoint(2019, 5, 23)
