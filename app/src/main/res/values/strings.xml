@@ -30,6 +30,12 @@
     <string name="office_workers">직장인</string>
     <string name="etc">기타</string>
     <string name="skip">SKIP</string>
+    <string name="home">홈</string>
+    <string name="evaluation">평가</string>
+    <string name="my_page">마이페이지</string>
+
+    <!-- 메인 (Main) -->
+    <string name="screen_title">Enjoy:D</string>
 
 
     <!-- 에러 관련 -->
