@@ -1,8 +1,12 @@
 package com.leisurely.people.enjoyd.data.remote.api
 
 import com.google.gson.JsonObject
+import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
 import com.leisurely.people.enjoyd.data.remote.data.request.DeleteAccountsDramasDramaBookmarksRequest
+import com.leisurely.people.enjoyd.data.remote.data.request.evaluation.DramaEvaluationRequest
 import com.leisurely.people.enjoyd.data.remote.data.response.*
+import com.leisurely.people.enjoyd.data.remote.data.response.evaluation.DramaEvaluationResponse
+import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*
 
