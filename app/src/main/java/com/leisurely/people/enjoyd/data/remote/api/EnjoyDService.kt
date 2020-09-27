@@ -15,6 +15,16 @@ import retrofit2.http.*
  * @since v1.0.0 / 2020.09.08
  */
 interface EnjoyDService {
+    /** 드라마 평가를 위한 데이터 가져오는 API */
+    @GET("accounts/dramas/ratings")
+    fun getDramasRatings(
+        @Query("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): Single<PagingResponse<DramaEvaluationResponse>>
+
+    /** 드라마 평가한 데이터 서버로 보내는 API */
+    @POST("accounts/dramas/ratings")
+    fun postDramasRatings(@Body data: HashMap<String, List<DramaEvaluationRequest>>): Completable
 
     /** 드라마 정보 배너 API (/dramas/banner/)  */
     @GET("/dramas/banner/")

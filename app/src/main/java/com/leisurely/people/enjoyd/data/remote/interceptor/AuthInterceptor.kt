@@ -41,7 +41,7 @@ class AuthInterceptor(private val context: Context) : Interceptor {
         val accessToken = userToken.accessToken
         val refreshToken = userToken.refreshToken
 
-        return if (accessTokenExpiredDate.toLong() > System.currentTimeMillis()) {
+        return if (accessTokenExpiredDate > System.currentTimeMillis()) {
             chain.proceed(originRequest.newBuilder().addHeaders(accessToken).build())
         } else {
             val body = JSONObject().put("refresh_token", refreshToken).toString()
