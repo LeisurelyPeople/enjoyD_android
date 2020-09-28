@@ -11,6 +11,7 @@ import retrofit2.http.POST
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasBannerResponse
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -50,4 +51,7 @@ interface EnjoyDService {
         @Query("search") search: String?,
         @Query("order") order: String = "avg_rating"
     ): Single<DramasSearchResponse>
+
+    @GET("/dramas/banner/")
+    suspend fun getDramasBanner(): DramasBannerResponse
 }
