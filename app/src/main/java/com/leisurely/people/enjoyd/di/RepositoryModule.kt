@@ -4,6 +4,7 @@ import com.leisurely.people.enjoyd.data.repository.AccountRepository
 import com.leisurely.people.enjoyd.data.repository.evaluation.DramaEvaluationRepository
 import com.leisurely.people.enjoyd.data.repository.DramaRepository
 import com.leisurely.people.enjoyd.data.repository.DramasBannerRepository
+import com.leisurely.people.enjoyd.data.repository.DramasTagsRepository
 import org.koin.dsl.module
 
 /**
@@ -18,4 +19,5 @@ val repositoryModule = module {
     single { DramaEvaluationRepository(get()) }
     single { DramaRepository(get(), get()) }
     single { DramasBannerRepository(get()) }
+    single { DramasTagsRepository(get()) }
 }

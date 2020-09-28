@@ -12,6 +12,7 @@ import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasBannerResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -54,4 +55,7 @@ interface EnjoyDService {
 
     @GET("/dramas/banner/")
     suspend fun getDramasBanner(): DramasBannerResponse
+
+    @GET("/dramas/tags/")
+    suspend fun getDramasTags(): PagingResponse<DramasTagsResponse>
 }
