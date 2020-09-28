@@ -1,4 +1,4 @@
-package com.leisurely.people.enjoyd.ui.main.home
+package com.leisurely.people.enjoyd.ui.main.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

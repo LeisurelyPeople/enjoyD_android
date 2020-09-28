@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ConcatAdapter
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.FragmentHomeBinding
 import com.leisurely.people.enjoyd.ui.base.BaseFragment
+import com.leisurely.people.enjoyd.ui.main.home.adapter.HomeBannerRVAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
