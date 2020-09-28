@@ -64,7 +64,7 @@
             app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+            app:layout_constraintTop_toBottomOf="@+id/view_divider" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation_view"
