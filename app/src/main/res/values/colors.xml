@@ -12,6 +12,8 @@
 
     <color name="color_grey_350">#1B1C1D</color>
     <color name="color_grey_400">#171819</color>
+    <color name="color_grey_400_88">#E0171819</color>
+    <color name="color_grey_400_0">#00171819</color>
     <color name="color_grey_500">#141516</color>
     <color name="color_grey_600">#111111</color>
 
