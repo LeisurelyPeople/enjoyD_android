@@ -3,6 +3,7 @@ package com.leisurely.people.enjoyd.di
 import com.leisurely.people.enjoyd.ui.evaluation.EvaluationViewModel
 import com.leisurely.people.enjoyd.ui.login.LoginViewModel
 import com.leisurely.people.enjoyd.model.login.SocialLoginModel
+import com.leisurely.people.enjoyd.ui.detail.DetailViewModel
 import com.leisurely.people.enjoyd.ui.login.sociallogin.KakaoLogin
 import com.leisurely.people.enjoyd.ui.main.MainViewModel
 import com.leisurely.people.enjoyd.ui.onboarding.SummaryEvaluationViewModel
@@ -32,4 +33,5 @@ val viewModelModule = module {
         UserInfoInputViewModel(socialLoginModel, get())
     }
     viewModel { SummaryEvaluationViewModel(get()) }
+    viewModel { DetailViewModel() }
 }
