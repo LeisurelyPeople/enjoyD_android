@@ -1,10 +1,9 @@
 package com.leisurely.people.enjoyd.ui.main.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.MergeAdapter
+import androidx.recyclerview.widget.ConcatAdapter
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.FragmentHomeBinding
 import com.leisurely.people.enjoyd.ui.base.BaseFragment
@@ -39,7 +38,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     private fun setHomeRV() {
         binding.rvHome.run {
-            adapter = MergeAdapter(homeBannerRVAdapter)
+            adapter = ConcatAdapter(homeBannerRVAdapter)
         }
     }
 
