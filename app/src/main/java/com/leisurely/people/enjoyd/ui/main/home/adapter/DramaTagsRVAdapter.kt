@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse
 import com.leisurely.people.enjoyd.databinding.ItemDramaTagBinding
-import com.leisurely.people.enjoyd.ui.base.adapter.OnRecyclerViewItemClick
 
 /**
  * 드라마 태그 어댑터
@@ -13,7 +12,7 @@ import com.leisurely.people.enjoyd.ui.base.adapter.OnRecyclerViewItemClick
  * @author Wayne
  * @since v1.0.0 / 2020.09.28
  */
-class DramaTagsRVAdapter(private val onItemClick: OnRecyclerViewItemClick<DramasTagsResponse>) :
+class DramaTagsRVAdapter(private val onItemClickedChanged: (DramasTagsResponse) -> Unit) :
     RecyclerView.Adapter<DramaTagsRVAdapter.DramaTagsVH>() {
 
     private val items: MutableList<DramasTagsResponse> = mutableListOf()
@@ -35,7 +34,6 @@ class DramaTagsRVAdapter(private val onItemClick: OnRecyclerViewItemClick<Dramas
             )
         ).apply {
             itemView.setOnClickListener {
-                onItemClick(items[bindingAdapterPosition])
                 checkedPosition = bindingAdapterPosition
                 notifyDataSetChanged()
             }
@@ -54,7 +52,9 @@ class DramaTagsRVAdapter(private val onItemClick: OnRecyclerViewItemClick<Dramas
         fun bind(item: DramasTagsResponse) {
             binding.item = item
             binding.isChecked = bindingAdapterPosition == checkedPosition
+            if (binding.isChecked) {
+                onItemClickedChanged(items[bindingAdapterPosition])
+            }
         }
-
     }
 }

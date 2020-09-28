@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse
 import com.leisurely.people.enjoyd.databinding.ItemHomeTagsBinding
-import com.leisurely.people.enjoyd.ui.base.adapter.OnRecyclerViewItemClick
 import com.leisurely.people.enjoyd.util.CustomItemDecoration
 
 /**
@@ -16,7 +15,7 @@ import com.leisurely.people.enjoyd.util.CustomItemDecoration
  * @author Wayne
  * @since v1.0.0 / 2020.09.28
  */
-class HomeTagsRVAdapter(private val onItemClick: OnRecyclerViewItemClick<DramasTagsResponse>) :
+class HomeTagsRVAdapter(private val onItemClickedChanged: (DramasTagsResponse) -> Unit) :
     RecyclerView.Adapter<HomeTagsRVAdapter.HomeTagsVH>() {
 
     private val dramaTagsRecycledViewPool = RecyclerView.RecycledViewPool()
@@ -53,7 +52,7 @@ class HomeTagsRVAdapter(private val onItemClick: OnRecyclerViewItemClick<DramasT
         fun setDramaTagChildRV() {
             binding.rvDramaTag.run {
                 adapter = DramaTagsRVAdapter {
-                    onItemClick(it)
+                    onItemClickedChanged(it)
                 }
                 setRecycledViewPool(dramaTagsRecycledViewPool)
                 setHasFixedSize(false)
@@ -78,7 +77,5 @@ class HomeTagsRVAdapter(private val onItemClick: OnRecyclerViewItemClick<DramasT
         fun bind() {
             (binding.rvDramaTag.adapter as DramaTagsRVAdapter).setDramaTags(items)
         }
-
     }
-
 }
