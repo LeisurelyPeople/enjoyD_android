@@ -2,6 +2,7 @@ package com.leisurely.people.enjoyd.data.remote.api
 
 import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
 import com.leisurely.people.enjoyd.data.remote.data.request.evaluation.DramaEvaluationRequest
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasItemResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.evaluation.DramaEvaluationResponse
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -9,7 +10,6 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasBannerResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse
@@ -38,7 +38,11 @@ interface EnjoyDService {
 
     /** 간략한 드라마 정보 리스트 API (/dramas) */
     @GET("/dramas/")
-    fun getDramas(): Single<DramasResponse>
+    suspend fun getDramas(
+        @Query("tag") tag: String,
+        @Query("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): PagingResponse<DramasItemResponse>
 
     /** 자세한 드라마 정보 리스트 API (/dramas/{drama_info_slug}) */
     @GET("/dramas/{drama_info_slug}/")
@@ -53,9 +57,11 @@ interface EnjoyDService {
         @Query("order") order: String = "avg_rating"
     ): Single<DramasSearchResponse>
 
+    /** 드라마 배너 조회 API (/drmas/banner/) */
     @GET("/dramas/banner/")
     suspend fun getDramasBanner(): DramasBannerResponse
 
+    /** 드라마 태그 조회 API (/drmas/banner/) */
     @GET("/dramas/tags/")
     suspend fun getDramasTags(): PagingResponse<DramasTagsResponse>
 }

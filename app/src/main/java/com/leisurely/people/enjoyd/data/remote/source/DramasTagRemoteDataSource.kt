@@ -2,6 +2,7 @@ package com.leisurely.people.enjoyd.data.remote.source
 
 import com.leisurely.people.enjoyd.data.remote.api.EnjoyDService
 import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasItemResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse
 
 /**
@@ -14,5 +15,13 @@ class DramasTagRemoteDataSource(private val enjoyDService: EnjoyDService) {
 
     suspend fun getDramasTags(): PagingResponse<DramasTagsResponse> {
         return enjoyDService.getDramasTags()
+    }
+
+    suspend fun getDramas(
+        tag: String,
+        page: Int,
+        pageSize: Int
+    ): PagingResponse<DramasItemResponse> {
+        return enjoyDService.getDramas(tag, page, pageSize)
     }
 }
