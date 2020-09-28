@@ -2,6 +2,8 @@ package com.leisurely.people.enjoyd.data.repository
 
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasBannerResponse
 import com.leisurely.people.enjoyd.data.remote.source.DramasBannerRemoteDataSource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * 드라마 배너 정보 관련 Repository 클래스
@@ -14,6 +16,8 @@ class DramasBannerRepository(
 ) {
 
     suspend fun getDramasBanner(): DramasBannerResponse {
-        return dramasBannerRemoteDataSource.getDramasBanner()
+        return withContext(Dispatchers.IO) {
+            dramasBannerRemoteDataSource.getDramasBanner()
+        }
     }
 }

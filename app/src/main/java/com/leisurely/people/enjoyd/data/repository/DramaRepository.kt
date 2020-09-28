@@ -38,6 +38,8 @@ class DramaRepository(
         page: Int,
         pageSize: Int
     ): PagingResponse<DramasItemResponse> {
-        return dramasTagRemoteDataSource.getDramas(tag, page, pageSize)
+        return withContext(Dispatchers.IO) {
+            dramasTagRemoteDataSource.getDramas(tag, page, pageSize)
+        }
     }
 }
