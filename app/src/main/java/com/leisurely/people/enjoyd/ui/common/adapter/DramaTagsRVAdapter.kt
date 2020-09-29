@@ -1,7 +1,8 @@
-package com.leisurely.people.enjoyd.ui.main.home.adapter
+package com.leisurely.people.enjoyd.ui.common.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse
 import com.leisurely.people.enjoyd.databinding.ItemDramaTagBinding

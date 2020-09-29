@@ -3,8 +3,11 @@
 
     <dimen name="toolbar_height">56dp</dimen>
 
+    <dimen name="recyclerview_spacing_size_4dp">4dp</dimen>
     <dimen name="recyclerview_spacing_size_8dp">8dp</dimen>
+    <dimen name="recyclerview_spacing_size_12dp">12dp</dimen>
     <dimen name="recyclerview_spacing_size_16dp">16dp</dimen>
+    <dimen name="recyclerview_spacing_size_20dp">20dp</dimen>
     <dimen name="recyclerview_spacing_size_24dp">24dp</dimen>
     <dimen name="recyclerview_spacing_size_32dp">32dp</dimen>
 

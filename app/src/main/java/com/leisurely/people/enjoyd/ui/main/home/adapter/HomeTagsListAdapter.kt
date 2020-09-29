@@ -3,10 +3,14 @@ package com.leisurely.people.enjoyd.ui.main.home.adapter
 import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.leisurely.people.enjoyd.R
+import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse
 import com.leisurely.people.enjoyd.databinding.ItemHomeTagsBinding
+import com.leisurely.people.enjoyd.ui.common.adapter.DramaTagsRVAdapter
 import com.leisurely.people.enjoyd.util.CustomItemDecoration
 
 /**
@@ -15,18 +19,21 @@ import com.leisurely.people.enjoyd.util.CustomItemDecoration
  * @author Wayne
  * @since v1.0.0 / 2020.09.28
  */
-class HomeTagsRVAdapter(private val onItemClickedChanged: (DramasTagsResponse) -> Unit) :
-    RecyclerView.Adapter<HomeTagsRVAdapter.HomeTagsVH>() {
+class HomeTagsListAdapter(private val onItemClickedChanged: (DramasTagsResponse) -> Unit) :
+    ListAdapter<PagingResponse<DramasTagsResponse>, HomeTagsListAdapter.HomeTagsVH>(object :
+        DiffUtil.ItemCallback<PagingResponse<DramasTagsResponse>>() {
+        override fun areItemsTheSame(
+            oldItem: PagingResponse<DramasTagsResponse>,
+            newItem: PagingResponse<DramasTagsResponse>
+        ): Boolean = oldItem == newItem
+
+        override fun areContentsTheSame(
+            oldItem: PagingResponse<DramasTagsResponse>,
+            newItem: PagingResponse<DramasTagsResponse>
+        ): Boolean = oldItem == newItem
+    }) {
 
     private val dramaTagsRecycledViewPool = RecyclerView.RecycledViewPool()
-
-    private val items: MutableList<DramasTagsResponse> = mutableListOf()
-
-    fun setDramaTagItems(items: List<DramasTagsResponse>) {
-        this.items.clear()
-        this.items.addAll(items)
-        notifyDataSetChanged()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeTagsVH {
         return HomeTagsVH(
@@ -40,8 +47,6 @@ class HomeTagsRVAdapter(private val onItemClickedChanged: (DramasTagsResponse) -
         }
     }
 
-    override fun getItemCount(): Int = if (items.isNullOrEmpty()) 0 else 1
-
     override fun onBindViewHolder(holder: HomeTagsVH, position: Int) {
         holder.bind()
     }
@@ -49,13 +54,14 @@ class HomeTagsRVAdapter(private val onItemClickedChanged: (DramasTagsResponse) -
     inner class HomeTagsVH(private val binding: ItemHomeTagsBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        private val dramaTagsRVAdapter = DramaTagsRVAdapter {
+            onItemClickedChanged(it)
+        }
+
         fun setDramaTagChildRV() {
             binding.rvDramaTag.run {
-                adapter = DramaTagsRVAdapter {
-                    onItemClickedChanged(it)
-                }
+                adapter = dramaTagsRVAdapter
                 setRecycledViewPool(dramaTagsRecycledViewPool)
-                setHasFixedSize(false)
                 addItemDecoration(object : CustomItemDecoration() {
                     override fun setSpacingForDirection(
                         outRect: Rect,
@@ -69,13 +75,12 @@ class HomeTagsRVAdapter(private val onItemClickedChanged: (DramasTagsResponse) -
                             resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_8dp)
                         }
                     }
-
                 })
             }
         }
 
         fun bind() {
-            (binding.rvDramaTag.adapter as DramaTagsRVAdapter).setDramaTags(items)
+            dramaTagsRVAdapter.setDramaTags(currentList.singleOrNull()?.results ?: mutableListOf())
         }
     }
 }
