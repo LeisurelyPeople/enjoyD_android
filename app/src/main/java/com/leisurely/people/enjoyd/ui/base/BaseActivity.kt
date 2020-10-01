@@ -6,8 +6,11 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.leisurely.people.enjoyd.BR
+import com.leisurely.people.enjoyd.ui.common.fragment.ProgressDialogFragment
+import com.leisurely.people.enjoyd.util.Constant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -45,6 +48,20 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
 
         viewModel.startLogout.observe(this, Observer {
             EnjoyDApplication.instance.logout()
+        })
+
+        viewModel.liveLoading.observe(this, Observer { isLoading ->
+            val progressDialog = supportFragmentManager
+                .findFragmentByTag(Constant.FRAGMENT_TAG_PROGRESS_BAR_DIALOG) as? DialogFragment
+
+            if (isLoading) {
+                if (progressDialog == null) {
+                    ProgressDialogFragment.newInstance()
+                        .show(supportFragmentManager, Constant.FRAGMENT_TAG_PROGRESS_BAR_DIALOG)
+                }
+            } else {
+                progressDialog?.dismissAllowingStateLoss()
+            }
         })
 
         viewModel.liveToastMessage.observe(this, Observer { message ->

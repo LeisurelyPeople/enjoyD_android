@@ -34,6 +34,9 @@ interface Constant {
         const val RESULT_CANCEL = 0
         const val RESULT_ERROR = -1
 
+        // Fragment Tag
+        const val FRAGMENT_TAG_PROGRESS_BAR_DIALOG = "FRAGMENT_TAG_PROGRESS_BAR_DIALOG"
+
         // 기타
         // 지금 실행되는 코드가 Unit Test 인지 확인하는 flag
         var isUnitTest = false

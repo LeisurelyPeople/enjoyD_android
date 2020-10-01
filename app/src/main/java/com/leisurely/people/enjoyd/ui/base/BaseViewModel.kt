@@ -1,5 +1,6 @@
 package com.leisurely.people.enjoyd.ui.base
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.leisurely.people.enjoyd.util.NotNullMutableLiveData
@@ -19,8 +20,11 @@ import retrofit2.HttpException
 
 abstract class BaseViewModel : ViewModel() {
 
-    private var liveLoading: NotNullMutableLiveData<Boolean> = NotNullMutableLiveData(false)
-    var liveToastMessage = LiveEvent<String>()
+    private val _liveLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    val liveLoading: LiveData<Boolean> = _liveLoading
+
+    private val _liveToastMessage: LiveEvent<String> = LiveEvent()
+    var liveToastMessage = _liveToastMessage
 
     private val _startLogout: LiveEvent<Unit> = LiveEvent()
     val startLogout: LiveEvent<Unit> = _startLogout
@@ -31,7 +35,7 @@ abstract class BaseViewModel : ViewModel() {
         when (throwable) {
             is HttpException -> {
                 /** 토큰 값이 만료 되었을 경우 */
-                if (throwable.code() == 404) {
+                if (throwable.code() == 401) {
                     _startLogout.value = null // 로그아웃 처리
                 }
             }
@@ -53,15 +57,15 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     fun showLoading() {
-        liveLoading.value = true
+        _liveLoading.value = true
     }
 
     fun hideLoading() {
-        liveLoading.value = false
+        _liveLoading.value = false
     }
 
     fun showToast(message: String) {
-        liveToastMessage.value = message
+        _liveToastMessage.value = message
     }
 
     protected fun Disposable.addDisposable() {
