@@ -20,7 +20,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
     private val evaluationFragment = EvaluationFragment.newInstance()
     private val myPageFragment = MyPageFragment.newInstance()
 
-    private lateinit var activeFragment: Fragment
+    private var activeFragment: Fragment = homeFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
