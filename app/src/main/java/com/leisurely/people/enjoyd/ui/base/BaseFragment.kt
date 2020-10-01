@@ -34,6 +34,10 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
             lifecycleOwner = viewLifecycleOwner
         }
 
+        viewModel.startLogout.observe(viewLifecycleOwner, Observer {
+            EnjoyDApplication.instance.logout()
+        })
+
         viewModel.liveToastMessage.observe(viewLifecycleOwner, Observer { message ->
             context?.let { context ->
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show()

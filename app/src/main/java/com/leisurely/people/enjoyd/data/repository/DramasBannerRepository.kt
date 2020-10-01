@@ -2,6 +2,8 @@ package com.leisurely.people.enjoyd.data.repository
 
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasBannerResponse
 import com.leisurely.people.enjoyd.data.remote.source.DramasBannerRemoteDataSource
+import com.leisurely.people.enjoyd.util.coroutine.ResultWrapper
+import com.leisurely.people.enjoyd.util.coroutine.safeApiCall
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -15,8 +17,8 @@ class DramasBannerRepository(
     private val dramasBannerRemoteDataSource: DramasBannerRemoteDataSource
 ) {
 
-    suspend fun getDramasBanner(): DramasBannerResponse {
-        return withContext(Dispatchers.IO) {
+    suspend fun getDramasBanner(): ResultWrapper<DramasBannerResponse> {
+        return safeApiCall(Dispatchers.IO) {
             dramasBannerRemoteDataSource.getDramasBanner()
         }
     }

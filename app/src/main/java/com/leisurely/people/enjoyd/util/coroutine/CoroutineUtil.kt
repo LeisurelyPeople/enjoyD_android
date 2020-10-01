@@ -2,9 +2,9 @@ package com.leisurely.people.enjoyd.util.coroutine
 
 import android.util.Log
 import androidx.annotation.VisibleForTesting
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.*
+import retrofit2.HttpException
+import java.io.IOException
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -27,6 +27,20 @@ private fun defaultExceptionHandler(logicName: String) = CoroutineExceptionHandl
 //    else
 //        FCrashlytics.logException(throwable)
     CoroutineUtil.clear(logicName)
+}
+
+/** API 통신 시 성공/실패 여부를 구분해주는 메소드 */
+suspend fun <T> safeApiCall(
+    dispatcher: CoroutineDispatcher,
+    apiCall: suspend () -> T
+): ResultWrapper<T> {
+    return withContext(dispatcher) {
+        try {
+            ResultWrapper.Success(apiCall.invoke())
+        } catch (throwable: Throwable) {
+            ResultWrapper.Error(throwable)
+        }
+    }
 }
 
 /** 예외가 발생해도 크래시를 일으키지 않는 최상위 [코루틴 스코프][CoroutineScope]를 생성한다. */

@@ -43,6 +43,10 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
             lifecycleOwner = this@BaseActivity // liveData 사용을 위한 lifecycleOwner 설정
         }
 
+        viewModel.startLogout.observe(this, Observer {
+            EnjoyDApplication.instance.logout()
+        })
+
         viewModel.liveToastMessage.observe(this, Observer { message ->
             Toast.makeText(baseContext, message, Toast.LENGTH_SHORT).show()
         })
