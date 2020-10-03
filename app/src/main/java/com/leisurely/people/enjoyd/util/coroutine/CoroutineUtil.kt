@@ -2,9 +2,11 @@ package com.leisurely.people.enjoyd.util.coroutine
 
 import android.util.Log
 import androidx.annotation.VisibleForTesting
+import com.leisurely.people.enjoyd.ui.base.EnjoyDApplication
+import com.leisurely.people.enjoyd.util.Constant
+import com.leisurely.people.enjoyd.util.ext.isNetworkConnected
 import kotlinx.coroutines.*
-import retrofit2.HttpException
-import java.io.IOException
+import java.net.ConnectException
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -34,11 +36,15 @@ suspend fun <T> safeApiCall(
     dispatcher: CoroutineDispatcher,
     apiCall: suspend () -> T
 ): ResultWrapper<T> {
-    return withContext(dispatcher) {
-        try {
-            ResultWrapper.Success(apiCall.invoke())
-        } catch (throwable: Throwable) {
-            ResultWrapper.Error(throwable)
+    return if (EnjoyDApplication.instance.isNetworkConnected().not()) {
+        ResultWrapper.Error(ConnectException(Constant.ERROR_NETWORK_CONNECTION_FAIL))
+    } else { // 네트워크 연결이 되어있을 경우에만 API call 처리
+        withContext(dispatcher) {
+            try {
+                ResultWrapper.Success(apiCall.invoke())
+            } catch (throwable: Throwable) {
+                ResultWrapper.Error(throwable)
+            }
         }
     }
 }

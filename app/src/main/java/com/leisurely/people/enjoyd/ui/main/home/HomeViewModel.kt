@@ -1,6 +1,5 @@
 package com.leisurely.people.enjoyd.ui.main.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
@@ -15,7 +14,6 @@ import com.leisurely.people.enjoyd.data.repository.DramasTagsRepository
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.coroutine.ResultWrapper
 import kotlinx.coroutines.*
-import retrofit2.HttpException
 
 /**
  * 홈탭 관련 ViewModel class
