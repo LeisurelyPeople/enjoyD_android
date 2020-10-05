@@ -13,6 +13,8 @@ import com.leisurely.people.enjoyd.data.repository.DramasBannerRepository
 import com.leisurely.people.enjoyd.data.repository.DramasTagsRepository
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.coroutine.ResultWrapper
+import com.leisurely.people.enjoyd.util.coroutine.onError
+import com.leisurely.people.enjoyd.util.coroutine.onSuccess
 import kotlinx.coroutines.*
 
 /**
@@ -29,18 +31,16 @@ class HomeViewModel(
 
     /** 드라마 배너 정보를 가지고 있는 LiveData */
     val dramasBannerData: LiveData<DramasBannerResponse> = liveData {
-        when (val response = dramasBannerRepository.getDramasBanner()) {
-            is ResultWrapper.Success -> emit(response.value)
-            is ResultWrapper.Error -> handleException(response.throwable)
-        }
+        dramasBannerRepository.getDramasBanner()
+            .onSuccess { emit(it) }
+            .onError(::handleException)
     }
 
     /** 드라마 태그 정보를 가지고 있는 LiveData */
     val dramasTagsInfo: LiveData<PagingResponse<DramasTagsResponse>> = liveData {
-        when (val response = dramasTagsRepository.getDramasTags()) {
-            is ResultWrapper.Success -> emit(response.value)
-            is ResultWrapper.Error -> handleException(response.throwable)
-        }
+        dramasTagsRepository.getDramasTags()
+            .onSuccess { emit(it) }
+            .onError(::handleException)
     }
 
     /** 현재 활성화된 태그 정보를 가지고 있는 LiveData */
@@ -59,25 +59,20 @@ class HomeViewModel(
     fun getDramaItemsUsingTags(tag: String, page: Int) {
         _page.value = page
         viewModelScope.launch {
-            when (val response = dramasRepository.getDramasUsingTags(tag, page, 10)) {
+            dramasRepository.getDramasUsingTags(tag, page, 10)
                 /** 응답값이 성공으로 떨어질 경우 */
-                is ResultWrapper.Success -> {
-                    with(response.value) {
-                        /** 기존에 활성화된 태그와 다른 태그를 사용자가 클릭했을 경우 */
-                        val items = if (_tag.value != tag) {
-                            results
-                        } else {
-                            results.plus(_dramaItems.value?.results ?: mutableListOf())
-                        }
-                        _tag.value = tag
-                        _dramaItems.value = PagingResponse(totalCount, next, items)
+                .onSuccess {
+                    /** 기존에 활성화된 태그와 다른 태그를 사용자가 클릭했을 경우 */
+                    val items = if (_tag.value != tag) {
+                        it.results
+                    } else {
+                        it.results.plus(_dramaItems.value?.results ?: mutableListOf())
                     }
+                    _tag.value = tag
+                    _dramaItems.value = PagingResponse(it.totalCount, it.next, items)
                 }
                 /** 응답값이 실패로로 떨어질 경우 */
-                is ResultWrapper.Error -> {
-                    handleException(response.throwable)
-                }
-            }
+                .onError(::handleException)
         }
     }
 }

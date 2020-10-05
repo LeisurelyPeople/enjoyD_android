@@ -49,6 +49,18 @@ suspend fun <T> safeApiCall(
     }
 }
 
+/** safeApiCall 에 대한 성공 응답값을 쉽게 처리하기 위한 유틸성 고차함수 */
+inline fun <T : Any> ResultWrapper<T>.onSuccess(action: (T) -> Unit): ResultWrapper<T> {
+    if (this is ResultWrapper.Success) action(value)
+    return this
+}
+
+/** safeApiCall 에 대한 에러값을 쉽게 처리하기 위한 유틸성 고차함수 */
+inline fun <T : Any> ResultWrapper<T>.onError(action: (Throwable) -> Unit): ResultWrapper<T> {
+    if (this is ResultWrapper.Error) action(throwable)
+    return this
+}
+
 /** 예외가 발생해도 크래시를 일으키지 않는 최상위 [코루틴 스코프][CoroutineScope]를 생성한다. */
 @Suppress("FunctionName")
 fun SafeScope(
