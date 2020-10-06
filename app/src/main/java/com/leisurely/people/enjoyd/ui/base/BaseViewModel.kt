@@ -35,6 +35,7 @@ abstract class BaseViewModel : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
     fun handleException(throwable: Throwable) {
+        if (_liveLoading.value!!) hideLoading()
         when (throwable) {
             is HttpException -> {
                 /** 토큰 값이 만료 되었을 경우 */

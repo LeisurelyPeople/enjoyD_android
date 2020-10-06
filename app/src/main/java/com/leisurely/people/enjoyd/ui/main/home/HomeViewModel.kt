@@ -59,6 +59,7 @@ class HomeViewModel(
     fun getDramaItemsUsingTags(tag: String, page: Int) {
         _page.value = page
         viewModelScope.launch {
+            showLoading()
             dramasRepository.getDramasUsingTags(tag, page, 10)
                 /** 응답값이 성공으로 떨어질 경우 */
                 .onSuccess {
@@ -73,6 +74,7 @@ class HomeViewModel(
                 }
                 /** 응답값이 실패로로 떨어질 경우 */
                 .onError(::handleException)
+            hideLoading()
         }
     }
 }
