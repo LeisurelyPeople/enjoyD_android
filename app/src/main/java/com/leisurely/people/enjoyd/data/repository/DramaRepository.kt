@@ -6,7 +6,7 @@ import com.leisurely.people.enjoyd.data.remote.data.response.DramasItemResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
 import com.leisurely.people.enjoyd.data.remote.source.DramasTagRemoteDataSource
 import com.leisurely.people.enjoyd.data.remote.source.drama.DramaSearchRemoteDataSource
-import com.leisurely.people.enjoyd.util.coroutine.ResultWrapper
+import com.leisurely.people.enjoyd.util.coroutine.ApiCallResultWrapper
 import com.leisurely.people.enjoyd.util.coroutine.safeApiCall
 import io.reactivex.Single
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +39,7 @@ class DramaRepository(
         tag: String,
         page: Int,
         pageSize: Int
-    ): ResultWrapper<PagingResponse<DramasItemResponse>> {
+    ): ApiCallResultWrapper<PagingResponse<DramasItemResponse>> {
         return safeApiCall(Dispatchers.IO) {
             dramasTagRemoteDataSource.getDramas(tag, page, pageSize)
         }

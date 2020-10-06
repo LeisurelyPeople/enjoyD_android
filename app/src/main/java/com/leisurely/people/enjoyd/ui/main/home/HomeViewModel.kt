@@ -12,7 +12,6 @@ import com.leisurely.people.enjoyd.data.repository.DramaRepository
 import com.leisurely.people.enjoyd.data.repository.DramasBannerRepository
 import com.leisurely.people.enjoyd.data.repository.DramasTagsRepository
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
-import com.leisurely.people.enjoyd.util.coroutine.ResultWrapper
 import com.leisurely.people.enjoyd.util.coroutine.onError
 import com.leisurely.people.enjoyd.util.coroutine.onSuccess
 import kotlinx.coroutines.*

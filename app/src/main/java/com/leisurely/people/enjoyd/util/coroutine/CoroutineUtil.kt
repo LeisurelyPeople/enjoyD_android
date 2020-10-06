@@ -35,29 +35,33 @@ private fun defaultExceptionHandler(logicName: String) = CoroutineExceptionHandl
 suspend fun <T> safeApiCall(
     dispatcher: CoroutineDispatcher,
     apiCall: suspend () -> T
-): ResultWrapper<T> {
+): ApiCallResultWrapper<T> {
     return if (EnjoyDApplication.instance.isNetworkConnected().not()) {
-        ResultWrapper.Error(ConnectException(Constant.ERROR_NETWORK_CONNECTION_FAIL))
+        ApiCallResultWrapper.Error(ConnectException(Constant.ERROR_NETWORK_CONNECTION_FAIL))
     } else { // 네트워크 연결이 되어있을 경우에만 API call 처리
         withContext(dispatcher) {
             try {
-                ResultWrapper.Success(apiCall.invoke())
+                ApiCallResultWrapper.Success(apiCall.invoke())
             } catch (throwable: Throwable) {
-                ResultWrapper.Error(throwable)
+                ApiCallResultWrapper.Error(throwable)
             }
         }
     }
 }
 
 /** safeApiCall 에 대한 성공 응답값을 쉽게 처리하기 위한 유틸성 고차함수 */
-inline fun <T : Any> ResultWrapper<T>.onSuccess(action: (T) -> Unit): ResultWrapper<T> {
-    if (this is ResultWrapper.Success) action(value)
+inline fun <T : Any> ApiCallResultWrapper<T>.onSuccess(
+    action: (T) -> Unit
+): ApiCallResultWrapper<T> {
+    if (this is ApiCallResultWrapper.Success) action(value)
     return this
 }
 
 /** safeApiCall 에 대한 에러값을 쉽게 처리하기 위한 유틸성 고차함수 */
-inline fun <T : Any> ResultWrapper<T>.onError(action: (Throwable) -> Unit): ResultWrapper<T> {
-    if (this is ResultWrapper.Error) action(throwable)
+inline fun <T : Any> ApiCallResultWrapper<T>.onError(
+    action: (Throwable) -> Unit
+): ApiCallResultWrapper<T> {
+    if (this is ApiCallResultWrapper.Error) action(throwable)
     return this
 }
 
