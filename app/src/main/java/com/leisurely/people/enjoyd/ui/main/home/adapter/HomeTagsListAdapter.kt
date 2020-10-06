@@ -10,6 +10,7 @@ import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse
 import com.leisurely.people.enjoyd.databinding.ItemHomeTagsBinding
+import com.leisurely.people.enjoyd.model.ResultWrapperModel
 import com.leisurely.people.enjoyd.ui.common.adapter.DramaTagsRVAdapter
 import com.leisurely.people.enjoyd.util.CustomItemDecoration
 
@@ -20,18 +21,18 @@ import com.leisurely.people.enjoyd.util.CustomItemDecoration
  * @since v1.0.0 / 2020.09.28
  */
 class HomeTagsListAdapter(private val onItemClickedChanged: (DramasTagsResponse) -> Unit) :
-    ListAdapter<PagingResponse<DramasTagsResponse>, HomeTagsListAdapter.HomeTagsVH>(object :
-        DiffUtil.ItemCallback<PagingResponse<DramasTagsResponse>>() {
-        override fun areItemsTheSame(
-            oldItem: PagingResponse<DramasTagsResponse>,
-            newItem: PagingResponse<DramasTagsResponse>
-        ): Boolean = oldItem == newItem
+    ListAdapter<ResultWrapperModel<List<DramasTagsResponse>>, HomeTagsListAdapter.HomeTagsVH>(
+        object : DiffUtil.ItemCallback<ResultWrapperModel<List<DramasTagsResponse>>>() {
+            override fun areItemsTheSame(
+                oldItem: ResultWrapperModel<List<DramasTagsResponse>>,
+                newItem: ResultWrapperModel<List<DramasTagsResponse>>
+            ): Boolean = oldItem == newItem
 
-        override fun areContentsTheSame(
-            oldItem: PagingResponse<DramasTagsResponse>,
-            newItem: PagingResponse<DramasTagsResponse>
-        ): Boolean = oldItem == newItem
-    }) {
+            override fun areContentsTheSame(
+                oldItem: ResultWrapperModel<List<DramasTagsResponse>>,
+                newItem: ResultWrapperModel<List<DramasTagsResponse>>
+            ): Boolean = oldItem == newItem
+        }) {
 
     private val dramaTagsRecycledViewPool = RecyclerView.RecycledViewPool()
 
@@ -80,7 +81,7 @@ class HomeTagsListAdapter(private val onItemClickedChanged: (DramasTagsResponse)
         }
 
         fun bind() {
-            dramaTagsRVAdapter.setDramaTags(currentList.singleOrNull()?.results ?: mutableListOf())
+            dramaTagsRVAdapter.setDramaTags(currentList.singleOrNull()?.data ?: mutableListOf())
         }
     }
 }

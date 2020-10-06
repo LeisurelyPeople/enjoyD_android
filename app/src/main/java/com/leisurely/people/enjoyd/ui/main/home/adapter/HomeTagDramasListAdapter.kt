@@ -14,14 +14,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.leisurely.people.enjoyd.R
-import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasItemResponse
 import com.leisurely.people.enjoyd.databinding.ItemHomeTagDramasBinding
+import com.leisurely.people.enjoyd.model.ResultWrapperModel
 import com.leisurely.people.enjoyd.ui.base.adapter.OnRecyclerViewItemClick
 import com.leisurely.people.enjoyd.ui.common.adapter.DramaListAdapter
 import com.leisurely.people.enjoyd.util.CustomItemDecoration
 import com.leisurely.people.enjoyd.util.CustomTypefaceSpan
-
 
 /**
  * 홈 화면안에 태그를 통해 검색한 드라마 RecyclerView Adapter 클래스
@@ -30,26 +29,24 @@ import com.leisurely.people.enjoyd.util.CustomTypefaceSpan
  */
 class HomeTagDramasListAdapter(
     private val onItemClick: OnRecyclerViewItemClick<DramasItemResponse>
-) : ListAdapter<PagingResponse<DramasItemResponse>, HomeTagDramasListAdapter.HomeTagDramasVH>(
-    object : DiffUtil.ItemCallback<PagingResponse<DramasItemResponse>>() {
+) : ListAdapter<ResultWrapperModel<List<DramasItemResponse>>,
+        HomeTagDramasListAdapter.HomeTagDramasVH>(
+    object : DiffUtil.ItemCallback<ResultWrapperModel<List<DramasItemResponse>>>() {
         override fun areItemsTheSame(
-            oldItem: PagingResponse<DramasItemResponse>,
-            newItem: PagingResponse<DramasItemResponse>
+            oldItem: ResultWrapperModel<List<DramasItemResponse>>,
+            newItem: ResultWrapperModel<List<DramasItemResponse>>
         ): Boolean = oldItem == newItem
 
+
         override fun areContentsTheSame(
-            oldItem: PagingResponse<DramasItemResponse>,
-            newItem: PagingResponse<DramasItemResponse>
+            oldItem: ResultWrapperModel<List<DramasItemResponse>>,
+            newItem: ResultWrapperModel<List<DramasItemResponse>>
         ): Boolean = oldItem == newItem
     }) {
 
     private val tagDramasTagsRecycledViewPool = RecyclerView.RecycledViewPool()
 
-    private var tag: String = ""
-
-    fun setTag(tag: String) {
-        this.tag = tag
-    }
+    var tag: String = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeTagDramasVH {
         return HomeTagDramasVH(
@@ -99,7 +96,7 @@ class HomeTagDramasListAdapter(
 
         fun bind() {
             binding.tvTitle.text = getTagDramasTitle(binding.root.context)
-            binding.items = currentList.singleOrNull()?.results ?: mutableListOf()
+            binding.items = currentList.singleOrNull()?.data ?: mutableListOf()
         }
 
         /** 해당 UI의 타이틀 값을 가져오기 위한 메소드 */
