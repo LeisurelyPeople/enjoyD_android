@@ -1,6 +1,7 @@
 package com.leisurely.people.enjoyd.util.ext
 
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseListAdapter
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseRVAdapter
@@ -31,5 +32,5 @@ fun RecyclerView.replaceAllItems(items: List<Any>?) {
 @Suppress("UNCHECKED_CAST")
 @BindingAdapter("submitList")
 fun RecyclerView.submitList(items: List<Any>?) {
-    (adapter as? BaseListAdapter<Any>)?.submitList(items)
+    (adapter as? ListAdapter<Any, *>)?.submitList(items)
 }
