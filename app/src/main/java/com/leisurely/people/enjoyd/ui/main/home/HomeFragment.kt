@@ -2,14 +2,17 @@ package com.leisurely.people.enjoyd.ui.main.home
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.FragmentHomeBinding
+import com.leisurely.people.enjoyd.model.ResultWrapperModel
 import com.leisurely.people.enjoyd.ui.base.BaseFragment
 import com.leisurely.people.enjoyd.ui.main.home.adapter.HomeBannerListAdapter
+import com.leisurely.people.enjoyd.ui.main.home.adapter.HomeDramasViewMoreListAdapter
 import com.leisurely.people.enjoyd.ui.main.home.adapter.HomeTagDramasListAdapter
 import com.leisurely.people.enjoyd.ui.main.home.adapter.HomeTagsListAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -43,6 +46,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         }
     }
 
+    /** 홈화면 드라마 정보 더보기 UI를 담당하는 Adapter */
+    private val homeDramasViewMoreListAdapter by lazy {
+        HomeDramasViewMoreListAdapter {
+            viewModel.getDramaItemsUsingTags(viewModel.tag.value!!, viewModel.page.value!!.plus(1))
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHomeRV()
@@ -65,6 +75,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             homeTagDramasListAdapter.tag = viewModel.tag.value ?: ""
             homeTagDramasListAdapter.submitList(listOf(it))
         })
+
+        /** 드라마 더보기 버튼을 활성화 시킬지에 대한 observe */
+        viewModel.dramaViewMoreItem.observe(viewLifecycleOwner, Observer {
+            homeDramasViewMoreListAdapter.tag = viewModel.tag.value ?: ""
+            homeDramasViewMoreListAdapter.submitList(it)
+        })
     }
 
     private fun setHomeRV() {
@@ -72,7 +88,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             adapter = ConcatAdapter(
                 homeBannerListAdapter,
                 homeTagsListAdapter,
-                homeTagDramasListAdapter
+                homeTagDramasListAdapter,
+                homeDramasViewMoreListAdapter
             )
             addItemDecoration(object : RecyclerView.ItemDecoration() {
                 override fun getItemOffsets(
@@ -91,8 +108,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                     ) {
                         outRect.top =
                             resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_20dp)
-                        outRect.bottom =
+                    }
+
+                    if (parent.getChildViewHolder(view)
+                                is HomeDramasViewMoreListAdapter.HomeDramasViewMoreVH
+                    ) {
+                        outRect.top =
                             resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_4dp)
+                        outRect.bottom =
+                            resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_80dp)
+                        outRect.left =
+                            resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_16dp)
+                        outRect.right =
+                            resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_16dp)
+
                     }
                 }
             })

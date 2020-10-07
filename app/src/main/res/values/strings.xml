@@ -37,6 +37,9 @@
     <!-- 메인 (Main) -->
     <string name="screen_title">Enjoy:D</string>
 
+    <!-- 홈 (Home) -->
+    <string name="dramas_view_more_text">%s 장르 더보기</string>
+
     <!-- 에러 관련 -->
     <string name="network_disconnected_notice">네트워크 상태를 확인해주세요.</string>
 
