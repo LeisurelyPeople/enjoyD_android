@@ -6,10 +6,6 @@
 
     <data>
 
-        <variable
-            name="tag"
-            type="String" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,14 +18,14 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/noto_sans_kr_regular"
             android:lineSpacingExtra="4sp"
-            android:text="@{String.format(@string/dramas_view_more_text, tag)}"
+            android:text="@string/view_all"
             android:textColor="#505050"
             android:textSize="@dimen/text_size_16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="하이틴 장르 더보기" />
+            tools:text="전체보기" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.leisurely.people.enjoyd.databinding.ItemHomeDramasViewMoreBinding
+import com.leisurely.people.enjoyd.databinding.ItemHomeDramasViewAllBinding
 import com.leisurely.people.enjoyd.model.ResultWrapperModel
 
 /**
@@ -14,8 +14,8 @@ import com.leisurely.people.enjoyd.model.ResultWrapperModel
  * @author Wayne
  * @since v1.0.0 / 2020.10.06
  */
-class HomeDramasViewMoreListAdapter(private val onItemClick: () -> Unit) :
-    ListAdapter<ResultWrapperModel<Unit>, HomeDramasViewMoreListAdapter.HomeDramasViewMoreVH>(
+class HomeDramasViewAllListAdapter(private val onItemClick: () -> Unit) :
+    ListAdapter<ResultWrapperModel<Unit>, HomeDramasViewAllListAdapter.HomeDramasViewMoreVH>(
         object : DiffUtil.ItemCallback<ResultWrapperModel<Unit>>() {
             override fun areItemsTheSame(
                 oldItem: ResultWrapperModel<Unit>,
@@ -32,7 +32,7 @@ class HomeDramasViewMoreListAdapter(private val onItemClick: () -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeDramasViewMoreVH {
         return HomeDramasViewMoreVH(
-            ItemHomeDramasViewMoreBinding.inflate(
+            ItemHomeDramasViewAllBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -44,16 +44,8 @@ class HomeDramasViewMoreListAdapter(private val onItemClick: () -> Unit) :
         }
     }
 
-    override fun onBindViewHolder(holder: HomeDramasViewMoreVH, position: Int) {
-        holder.bind()
-    }
+    override fun onBindViewHolder(holder: HomeDramasViewMoreVH, position: Int) = Unit
 
-    inner class HomeDramasViewMoreVH(private val binding: ItemHomeDramasViewMoreBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind() {
-            binding.tag = tag
-        }
-
-    }
+    inner class HomeDramasViewMoreVH(binding: ItemHomeDramasViewAllBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }

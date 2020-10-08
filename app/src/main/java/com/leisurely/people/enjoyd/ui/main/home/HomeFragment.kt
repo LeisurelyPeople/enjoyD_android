@@ -2,17 +2,16 @@ package com.leisurely.people.enjoyd.ui.main.home
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.FragmentHomeBinding
-import com.leisurely.people.enjoyd.model.ResultWrapperModel
 import com.leisurely.people.enjoyd.ui.base.BaseFragment
 import com.leisurely.people.enjoyd.ui.main.home.adapter.HomeBannerListAdapter
-import com.leisurely.people.enjoyd.ui.main.home.adapter.HomeDramasViewMoreListAdapter
+import com.leisurely.people.enjoyd.ui.main.home.adapter.HomeDramasViewAllListAdapter
 import com.leisurely.people.enjoyd.ui.main.home.adapter.HomeTagDramasListAdapter
 import com.leisurely.people.enjoyd.ui.main.home.adapter.HomeTagsListAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -35,21 +34,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     /** 홈화면 태그 리스트 UI 부분을 담당하는 Adapter */
     private val homeTagsListAdapter by lazy {
         HomeTagsListAdapter {
-            viewModel.getDramaItemsUsingTags(it.name, 1)
+            viewModel.getDramaItemsUsingTags(it.name)
         }
     }
 
     /** 홈화면 태그값을 이용해 검색된 드라마 리스트 UI 부분을 담당하는 Adapter */
     private val homeTagDramasListAdapter by lazy {
         HomeTagDramasListAdapter {
-            // TODO 드라마 상세 페이지 연결 (ricky)
+            // TODO 드라마 상세 페이지 연결 (담당자 : ricky)
         }
     }
 
-    /** 홈화면 드라마 정보 더보기 UI를 담당하는 Adapter */
-    private val homeDramasViewMoreListAdapter by lazy {
-        HomeDramasViewMoreListAdapter {
-            viewModel.getDramaItemsUsingTags(viewModel.tag.value!!, viewModel.page.value!!.plus(1))
+    /** 홈화면 드라마 정보 전체보기 UI를 담당하는 Adapter */
+    private val homeDramasViewAllListAdapter by lazy {
+        HomeDramasViewAllListAdapter {
+            Toast.makeText(requireContext(), "전체보기 클릭", Toast.LENGTH_SHORT).show()
+            // TODO 전체 보기 화면으로 전환 (담당장 : Wayne)
         }
     }
 
@@ -76,10 +76,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             homeTagDramasListAdapter.submitList(listOf(it))
         })
 
-        /** 드라마 더보기 버튼을 활성화 시킬지에 대한 observe */
-        viewModel.dramaViewMoreItem.observe(viewLifecycleOwner, Observer {
-            homeDramasViewMoreListAdapter.tag = viewModel.tag.value ?: ""
-            homeDramasViewMoreListAdapter.submitList(it)
+        /** 드라마 전체보기 버튼을 활성화 시킬지에 대한 observe */
+        viewModel.dramaViewAllItem.observe(viewLifecycleOwner, Observer {
+            homeDramasViewAllListAdapter.tag = viewModel.tag.value ?: ""
+            homeDramasViewAllListAdapter.submitList(it)
         })
     }
 
@@ -89,7 +89,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                 homeBannerListAdapter,
                 homeTagsListAdapter,
                 homeTagDramasListAdapter,
-                homeDramasViewMoreListAdapter
+                homeDramasViewAllListAdapter
             )
             addItemDecoration(object : RecyclerView.ItemDecoration() {
                 override fun getItemOffsets(
@@ -111,7 +111,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                     }
 
                     if (parent.getChildViewHolder(view)
-                                is HomeDramasViewMoreListAdapter.HomeDramasViewMoreVH
+                                is HomeDramasViewAllListAdapter.HomeDramasViewMoreVH
                     ) {
                         outRect.top =
                             resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_4dp)
