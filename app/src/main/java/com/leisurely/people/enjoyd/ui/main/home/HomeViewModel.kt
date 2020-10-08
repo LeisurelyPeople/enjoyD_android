@@ -27,20 +27,32 @@ class HomeViewModel(
 ) : BaseViewModel() {
 
     /** 드라마 배너 정보를 가지고 있는 LiveData */
-    val dramasBannerData: LiveData<DramasBannerResponse> = liveData {
+    private val _dramasBannerData: LiveData<DramasBannerResponse> = liveData {
         dramasBannerRepository.getDramasBanner()
             .onSuccess { emit(it) }
             .onError(::handleException)
     }
+    val dramasBannerData: LiveData<List<DramasBannerResponse>>
+        get() = _dramasBannerData.map {
+            listOf(it)
+        }
 
     /** 드라마 태그 정보를 가지고 있는 LiveData */
-    val dramasTagsInfo: LiveData<ResultWrapperModel<List<DramasTagsResponse>>> = liveData {
+    private val _dramasTagsInfo: LiveData<ResultWrapperModel<List<DramasTagsResponse>>> = liveData {
         showLoading()
         dramasTagsRepository.getDramasTags()
             .onSuccess { emit(it.toResultWrapper()) }
             .onError(::handleException)
         hideLoading()
     }
+    val dramasTagsInfo: LiveData<List<ResultWrapperModel<List<DramasTagsResponse>>>>
+        get() = _dramasTagsInfo.map {
+            if (it.data.isNotEmpty()) {
+                listOf(it)
+            } else {
+                emptyList()
+            }
+        }
 
     /** 현재 활성화된 태그 정보를 가지고 있는 LiveData */
     private val _tag: MutableLiveData<String> = MutableLiveData("")
@@ -49,7 +61,14 @@ class HomeViewModel(
     /** 드라마 아이템 정보들을 가지고 있는 LiveData */
     private val _dramaItems: MutableLiveData<ResultWrapperModel<List<DramasItemResponse>>> =
         MutableLiveData()
-    val dramaItems: LiveData<ResultWrapperModel<List<DramasItemResponse>>> = _dramaItems
+    val dramaItems: LiveData<List<ResultWrapperModel<List<DramasItemResponse>>>>
+        get() = _dramaItems.map {
+            if (it.data.isNotEmpty()) {
+                listOf(it)
+            } else {
+                emptyList()
+            }
+        }
 
     /** 현재 조회한 데이터 이후로 추가 데이터가 남아있는지 판별하기 위한 LiveData */
     private val _existsDramaItems: MutableLiveData<Boolean> = MutableLiveData(false)

@@ -62,18 +62,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private fun observeViewModelLiveData() {
         /** 드라마 배너 데이터 observe */
         viewModel.dramasBannerData.observe(viewLifecycleOwner, Observer {
-            homeBannerListAdapter.submitList(listOf(it))
+            homeBannerListAdapter.submitList(it)
         })
 
         /** 드라마 태그 데이터 observe */
         viewModel.dramasTagsInfo.observe(viewLifecycleOwner, Observer {
-            homeTagsListAdapter.submitList(listOf(it))
+            homeTagsListAdapter.submitList(it)
         })
 
         /** 드라마 태그값을 이용한 드라마 정보 관련 observe */
         viewModel.dramaItems.observe(viewLifecycleOwner, Observer {
             homeTagDramasListAdapter.tag = viewModel.tag.value ?: ""
-            homeTagDramasListAdapter.submitList(listOf(it))
+            homeTagDramasListAdapter.submitList(it)
         })
 
         /** 드라마 전체보기 버튼을 활성화 시킬지에 대한 observe */
