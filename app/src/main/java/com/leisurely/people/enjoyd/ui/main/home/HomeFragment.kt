@@ -10,10 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.FragmentHomeBinding
 import com.leisurely.people.enjoyd.ui.base.BaseFragment
-import com.leisurely.people.enjoyd.ui.main.home.adapter.HomeBannerListAdapter
-import com.leisurely.people.enjoyd.ui.main.home.adapter.HomeDramasViewAllListAdapter
-import com.leisurely.people.enjoyd.ui.main.home.adapter.HomeTagDramasListAdapter
-import com.leisurely.people.enjoyd.ui.main.home.adapter.HomeTagsListAdapter
+import com.leisurely.people.enjoyd.ui.common.adapter.DramaListAdapter
+import com.leisurely.people.enjoyd.ui.main.home.adapter.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -38,10 +36,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         }
     }
 
-    /** 홈화면 태그값을 이용해 검색된 드라마 리스트 UI 부분을 담당하는 Adapter */
-    private val homeTagDramasListAdapter by lazy {
-        HomeTagDramasListAdapter {
-            // TODO 드라마 상세 페이지 연결 (담당자 : ricky)
+    /** 홈화면 드라마 리스트 UI를 보여주기 위한 Parent Wrapper Adapter */
+    private val homeParentDramasRVAdapter by lazy {
+        HomeParentDramasRVAdapter(homeChildDramaListAdapter)
+    }
+
+    /** 홈화면 드라마 리스트 UI를 보여주기 위한 child Adapter */
+    private val homeChildDramaListAdapter by lazy {
+        DramaListAdapter {
+            Toast.makeText(requireContext(), it.poster, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -72,8 +75,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
         /** 드라마 태그값을 이용한 드라마 정보 관련 observe */
         viewModel.dramaItems.observe(viewLifecycleOwner, Observer {
-            homeTagDramasListAdapter.tag = viewModel.tag.value ?: ""
-            homeTagDramasListAdapter.submitList(it)
+            homeChildDramaListAdapter.submitList(it)
         })
 
         /** 드라마 전체보기 버튼을 활성화 시킬지에 대한 observe */
@@ -88,7 +90,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             adapter = ConcatAdapter(
                 homeBannerListAdapter,
                 homeTagsListAdapter,
-                homeTagDramasListAdapter,
+                homeParentDramasRVAdapter,
                 homeDramasViewAllListAdapter
             )
             addItemDecoration(object : RecyclerView.ItemDecoration() {
@@ -102,12 +104,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                     if (parent.getChildViewHolder(view) is HomeTagsListAdapter.HomeTagsVH) {
                         outRect.top =
                             resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_32dp)
-                    }
-                    if (parent.getChildViewHolder(view)
-                                is HomeTagDramasListAdapter.HomeTagDramasVH
-                    ) {
-                        outRect.top =
-                            resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_20dp)
                     }
 
                     if (parent.getChildViewHolder(view)

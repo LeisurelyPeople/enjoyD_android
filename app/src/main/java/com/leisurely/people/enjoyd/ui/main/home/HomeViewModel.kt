@@ -59,16 +59,9 @@ class HomeViewModel(
     val tag: LiveData<String> = _tag
 
     /** 드라마 아이템 정보들을 가지고 있는 LiveData */
-    private val _dramaItems: MutableLiveData<ResultWrapperModel<List<DramasItemResponse>>> =
-        MutableLiveData()
-    val dramaItems: LiveData<List<ResultWrapperModel<List<DramasItemResponse>>>>
-        get() = _dramaItems.map {
-            if (it.data.isNotEmpty()) {
-                listOf(it)
-            } else {
-                emptyList()
-            }
-        }
+    private val _dramaItems: MutableLiveData<List<DramasItemResponse>> =
+        MutableLiveData(mutableListOf())
+    val dramaItems: LiveData<List<DramasItemResponse>> = _dramaItems
 
     /** 현재 조회한 데이터 이후로 추가 데이터가 남아있는지 판별하기 위한 LiveData */
     private val _existsDramaItems: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -92,7 +85,7 @@ class HomeViewModel(
                 /** 응답값이 성공으로 떨어질 경우 */
                 .onSuccess {
                     _existsDramaItems.value = it.next
-                    _dramaItems.value = it.toResultWrapper()
+                    _dramaItems.value = _dramaItems.value?.toMutableList()?.plus(it.results)
                 }
                 /** 응답값이 실패로로 떨어질 경우 */
                 .onError(::handleException)
