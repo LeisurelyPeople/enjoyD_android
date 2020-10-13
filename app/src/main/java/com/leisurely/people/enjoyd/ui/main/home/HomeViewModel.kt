@@ -7,8 +7,8 @@ import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResp
 import com.leisurely.people.enjoyd.data.repository.DramaRepository
 import com.leisurely.people.enjoyd.data.repository.DramasBannerRepository
 import com.leisurely.people.enjoyd.data.repository.DramasTagsRepository
+import com.leisurely.people.enjoyd.model.DramasTagsModel
 import com.leisurely.people.enjoyd.model.ResultWrapperModel
-import com.leisurely.people.enjoyd.model.toResultWrapper
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.coroutine.onError
 import com.leisurely.people.enjoyd.util.coroutine.onSuccess
@@ -38,21 +38,20 @@ class HomeViewModel(
         }
 
     /** 드라마 태그 정보를 가지고 있는 LiveData */
-    private val _dramasTagsInfo: LiveData<ResultWrapperModel<List<DramasTagsResponse>>> = liveData {
+    val dramasTagsInfo: LiveData<List<DramasTagsModel>> = liveData {
         showLoading()
         dramasTagsRepository.getDramasTags()
-            .onSuccess { emit(it.toResultWrapper()) }
+            .onSuccess {
+                val items = it.results.map(DramasTagsResponse::toDramaTagsModel)
+                if (items.isNotEmpty()) {
+                    items[0].isSelected = true // 첫번째 아이템 클릭 상태로 만들기
+                    emit(items)
+                    getDramaItemsUsingTags(items[0].name)  // 첫번째 값 태그에 해당되는 드라마 정보 조회
+                }
+            }
             .onError(::handleException)
         hideLoading()
     }
-    val dramasTagsInfo: LiveData<List<ResultWrapperModel<List<DramasTagsResponse>>>>
-        get() = _dramasTagsInfo.map {
-            if (it.data.isNotEmpty()) {
-                listOf(it)
-            } else {
-                emptyList()
-            }
-        }
 
     /** 현재 활성화된 태그 정보를 가지고 있는 LiveData */
     private val _tag: MutableLiveData<String> = MutableLiveData("")
@@ -85,7 +84,7 @@ class HomeViewModel(
                 /** 응답값이 성공으로 떨어질 경우 */
                 .onSuccess {
                     _existsDramaItems.value = it.next
-                    _dramaItems.value = _dramaItems.value?.toMutableList()?.plus(it.results)
+                    _dramaItems.value = it.results
                 }
                 /** 응답값이 실패로로 떨어질 경우 */
                 .onError(::handleException)

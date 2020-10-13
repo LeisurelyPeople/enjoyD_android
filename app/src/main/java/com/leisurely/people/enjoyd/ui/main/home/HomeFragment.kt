@@ -11,6 +11,7 @@ import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.FragmentHomeBinding
 import com.leisurely.people.enjoyd.ui.base.BaseFragment
 import com.leisurely.people.enjoyd.ui.common.adapter.DramaListAdapter
+import com.leisurely.people.enjoyd.ui.common.adapter.DramaTagsListAdapter
 import com.leisurely.people.enjoyd.ui.main.home.adapter.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -29,9 +30,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         HomeBannerListAdapter()
     }
 
-    /** 홈화면 태그 리스트 UI 부분을 담당하는 Adapter */
-    private val homeTagsListAdapter by lazy {
-        HomeTagsListAdapter {
+    /** 홈화면 태그 리스트 UI를 보여주기 위한 Parent Wrapper Adapter */
+    private val homeParentTagsRVAdapter by lazy {
+        HomeParentTagsRVAdapter(homeChildTagsListAdapter)
+    }
+
+    /** 홈화면 태그 리스트 UI를 보여주기 위한 child Adapter */
+    private val homeChildTagsListAdapter by lazy {
+        DramaTagsListAdapter {
             viewModel.getDramaItemsUsingTags(it.name)
         }
     }
@@ -44,6 +50,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     /** 홈화면 드라마 리스트 UI를 보여주기 위한 child Adapter */
     private val homeChildDramaListAdapter by lazy {
         DramaListAdapter {
+            // TODO 드라마 상세 화면을 연결 작업 하는 곳 (담당자 : ricky)
             Toast.makeText(requireContext(), it.poster, Toast.LENGTH_SHORT).show()
         }
     }
@@ -70,7 +77,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
         /** 드라마 태그 데이터 observe */
         viewModel.dramasTagsInfo.observe(viewLifecycleOwner, Observer {
-            homeTagsListAdapter.submitList(it)
+            homeChildTagsListAdapter.submitList(it)
         })
 
         /** 드라마 태그값을 이용한 드라마 정보 관련 observe */
@@ -89,7 +96,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         binding.rvHome.run {
             adapter = ConcatAdapter(
                 homeBannerListAdapter,
-                homeTagsListAdapter,
+                homeParentTagsRVAdapter,
                 homeParentDramasRVAdapter,
                 homeDramasViewAllListAdapter
             )
@@ -101,7 +108,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                     state: RecyclerView.State
                 ) {
                     /** ConcatAdapter 사용 시 ViewHolder 객체 비교를 통해 spacing 값을 설정 */
-                    if (parent.getChildViewHolder(view) is HomeTagsListAdapter.HomeTagsVH) {
+                    if (parent.getChildViewHolder(view)
+                                is HomeParentTagsRVAdapter.HomeParentTagsVH
+                    ) {
                         outRect.top =
                             resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_32dp)
                     }

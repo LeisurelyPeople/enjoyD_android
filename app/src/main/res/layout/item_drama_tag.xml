@@ -6,19 +6,15 @@
     <data>
 
         <variable
-            name="isChecked"
-            type="boolean" />
-
-        <variable
             name="item"
-            type="com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse" />
+            type="com.leisurely.people.enjoyd.model.DramasTagsModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@{isChecked ? @drawable/bg_drama_tag_selected : @drawable/bg_drama_tag_de_selected}"
+        android:background="@{item.isSelected ? @drawable/bg_drama_tag_selected : @drawable/bg_drama_tag_de_selected}"
         tools:background="@drawable/bg_drama_tag_selected">
 
         <TextView
