@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.leisurely.people.enjoyd.databinding.ItemHomeDramasViewMoreBinding
-import com.leisurely.people.enjoyd.model.ResultWrapperModel
 
 /**
  * 홈화면 드라마 더보기 버튼 어댑터
