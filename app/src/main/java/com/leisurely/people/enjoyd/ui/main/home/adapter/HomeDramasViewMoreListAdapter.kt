@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.leisurely.people.enjoyd.databinding.ItemHomeDramasViewAllBinding
+import com.leisurely.people.enjoyd.databinding.ItemHomeDramasViewMoreBinding
 import com.leisurely.people.enjoyd.model.ResultWrapperModel
 
 /**
@@ -14,17 +14,17 @@ import com.leisurely.people.enjoyd.model.ResultWrapperModel
  * @author Wayne
  * @since v1.0.0 / 2020.10.06
  */
-class HomeDramasViewAllListAdapter(private val onItemClick: () -> Unit) :
-    ListAdapter<ResultWrapperModel<Unit>, HomeDramasViewAllListAdapter.HomeDramasViewMoreVH>(
-        object : DiffUtil.ItemCallback<ResultWrapperModel<Unit>>() {
+class HomeDramasViewMoreListAdapter(private val onItemClick: () -> Unit) :
+    ListAdapter<Unit, HomeDramasViewMoreListAdapter.HomeDramasViewMoreVH>(
+        object : DiffUtil.ItemCallback<Unit>() {
             override fun areItemsTheSame(
-                oldItem: ResultWrapperModel<Unit>,
-                newItem: ResultWrapperModel<Unit>
+                oldItem: Unit,
+                newItem: Unit
             ): Boolean = oldItem == newItem
 
             override fun areContentsTheSame(
-                oldItem: ResultWrapperModel<Unit>,
-                newItem: ResultWrapperModel<Unit>
+                oldItem: Unit,
+                newItem: Unit
             ): Boolean = oldItem == newItem
         }) {
 
@@ -32,7 +32,7 @@ class HomeDramasViewAllListAdapter(private val onItemClick: () -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeDramasViewMoreVH {
         return HomeDramasViewMoreVH(
-            ItemHomeDramasViewAllBinding.inflate(
+            ItemHomeDramasViewMoreBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -44,8 +44,15 @@ class HomeDramasViewAllListAdapter(private val onItemClick: () -> Unit) :
         }
     }
 
-    override fun onBindViewHolder(holder: HomeDramasViewMoreVH, position: Int) = Unit
+    override fun onBindViewHolder(holder: HomeDramasViewMoreVH, position: Int) {
+        holder.bind()
+    }
 
-    inner class HomeDramasViewMoreVH(binding: ItemHomeDramasViewAllBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    inner class HomeDramasViewMoreVH(private val binding: ItemHomeDramasViewMoreBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind() {
+            binding.tag = tag
+        }
+    }
 }

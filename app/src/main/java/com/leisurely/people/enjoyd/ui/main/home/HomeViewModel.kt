@@ -8,7 +8,6 @@ import com.leisurely.people.enjoyd.data.repository.DramaRepository
 import com.leisurely.people.enjoyd.data.repository.DramasBannerRepository
 import com.leisurely.people.enjoyd.data.repository.DramasTagsRepository
 import com.leisurely.people.enjoyd.model.DramasTagsModel
-import com.leisurely.people.enjoyd.model.ResultWrapperModel
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.coroutine.onError
 import com.leisurely.people.enjoyd.util.coroutine.onSuccess
@@ -46,12 +45,16 @@ class HomeViewModel(
                 if (items.isNotEmpty()) {
                     items[0].isSelected = true // 첫번째 아이템 클릭 상태로 만들기
                     emit(items)
-                    getDramaItemsUsingTags(items[0].name)  // 첫번째 값 태그에 해당되는 드라마 정보 조회
+                    getDramaItemsUsingTags(1, items[0].name)  // 첫번째 값 태그에 해당되는 드라마 정보 조회
                 }
             }
             .onError(::handleException)
         hideLoading()
     }
+
+    /** 현재 데이터 조회 페이지 값에 해당 되는 LiveData (default : 1) */
+    private val _page: MutableLiveData<Int> = MutableLiveData(1)
+    val page: LiveData<Int> = _page
 
     /** 현재 활성화된 태그 정보를 가지고 있는 LiveData */
     private val _tag: MutableLiveData<String> = MutableLiveData("")
@@ -63,28 +66,31 @@ class HomeViewModel(
     val dramaItems: LiveData<List<DramasItemResponse>> = _dramaItems
 
     /** 현재 조회한 데이터 이후로 추가 데이터가 남아있는지 판별하기 위한 LiveData */
-    private val _existsDramaItems: MutableLiveData<Boolean> = MutableLiveData(false)
-
-    /** 드라마 전체보기 버튼을 보여 줄지 말지에 대한 값을 가지고 있는 LiveData */
-    val dramaViewAllItem: LiveData<List<ResultWrapperModel<Unit>>>
-        get() = _existsDramaItems.map {
+    private val _existsMoreDramaItems: MutableLiveData<Boolean> = MutableLiveData(false)
+    val existsMoreDramaItems: LiveData<List<Unit>>
+        get() = _existsMoreDramaItems.map {
             if (it) {
-                listOf(ResultWrapperModel(Unit))
+                listOf(Unit)
             } else {
                 emptyList()
             }
         }
 
     /** 태그값을 통해 드라마 정보를 가져오는 메소드 */
-    fun getDramaItemsUsingTags(tag: String) {
+    fun getDramaItemsUsingTags(page: Int, tag: String) {
         _tag.value = tag
+        _page.value = page
         viewModelScope.launch {
             showLoading()
-            dramasRepository.getDramasUsingTags(tag, 1, 10)
+            dramasRepository.getDramasUsingTags(tag, page, 10)
                 /** 응답값이 성공으로 떨어질 경우 */
                 .onSuccess {
-                    _existsDramaItems.value = it.next
-                    _dramaItems.value = it.results
+                    _existsMoreDramaItems.value = it.next
+                    if (page == 1) { // 첫 데이터 조회 or 새로운 태그에 대한 드라마 조회일 경우
+                        _dramaItems.value = it.results
+                    } else { // 페이징 처리 일 경우
+                        _dramaItems.value = _dramaItems.value?.plus(it.results)
+                    }
                 }
                 /** 응답값이 실패로로 떨어질 경우 */
                 .onError(::handleException)

@@ -38,7 +38,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     /** 홈화면 태그 리스트 UI를 보여주기 위한 child Adapter */
     private val homeChildTagsListAdapter by lazy {
         DramaTagsListAdapter {
-            viewModel.getDramaItemsUsingTags(it.name)
+            // 태그를 클릭했을 경우 새로운 드라마 데이터들을 가져옴.
+            viewModel.getDramaItemsUsingTags(1, it.name)
         }
     }
 
@@ -56,10 +57,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     }
 
     /** 홈화면 드라마 정보 전체보기 UI를 담당하는 Adapter */
-    private val homeDramasViewAllListAdapter by lazy {
-        HomeDramasViewAllListAdapter {
-            Toast.makeText(requireContext(), "전체보기 클릭", Toast.LENGTH_SHORT).show()
-            // TODO 전체 보기 화면으로 전환 (담당장 : Wayne)
+    private val homeDramasViewMoreListAdapter by lazy {
+        HomeDramasViewMoreListAdapter {
+            val page = viewModel.page.value?.plus(1) ?: return@HomeDramasViewMoreListAdapter
+            val tag = viewModel.tag.value ?: return@HomeDramasViewMoreListAdapter
+            viewModel.getDramaItemsUsingTags(page, tag)
         }
     }
 
@@ -85,10 +87,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             homeChildDramaListAdapter.submitList(it)
         })
 
-        /** 드라마 전체보기 버튼을 활성화 시킬지에 대한 observe */
-        viewModel.dramaViewAllItem.observe(viewLifecycleOwner, Observer {
-            homeDramasViewAllListAdapter.tag = viewModel.tag.value ?: ""
-            homeDramasViewAllListAdapter.submitList(it)
+        /** 드라마 더보기 버튼을 활성화 시킬지에 대한 observe */
+        viewModel.existsMoreDramaItems.observe(viewLifecycleOwner, Observer {
+            homeDramasViewMoreListAdapter.tag = viewModel.tag.value ?: ""
+            homeDramasViewMoreListAdapter.submitList(it)
         })
     }
 
@@ -98,7 +100,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                 homeBannerListAdapter,
                 homeParentTagsRVAdapter,
                 homeParentDramasRVAdapter,
-                homeDramasViewAllListAdapter
+                homeDramasViewMoreListAdapter
             )
             addItemDecoration(object : RecyclerView.ItemDecoration() {
                 override fun getItemOffsets(
@@ -116,7 +118,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                     }
 
                     if (parent.getChildViewHolder(view)
-                                is HomeDramasViewAllListAdapter.HomeDramasViewMoreVH
+                                is HomeDramasViewMoreListAdapter.HomeDramasViewMoreVH
                     ) {
                         outRect.top =
                             resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_4dp)
