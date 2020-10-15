@@ -48,10 +48,11 @@ class DramaTagsListAdapter(private val onItemClickedChanged: (DramasTagsModel) -
                 lastCheckedPosition = checkedPosition
                 checkedPosition = bindingAdapterPosition
                 val items = currentList.map {
-                    DramasTagsModel(it.name, it.isSelected)
+                    it.copy()
+                }.also {
+                    it[checkedPosition].isSelected = true
+                    it[lastCheckedPosition].isSelected = false
                 }
-                items[checkedPosition].isSelected = true
-                items[lastCheckedPosition].isSelected = false
                 submitList(items)
                 onItemClickedChanged(items[bindingAdapterPosition])
             }
