@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
  * @since v1.0.0 / 2020.07.20
  */
 class DramaSearchRemoteDataSource(private val enjoyDService: EnjoyDService) {
-    suspend fun dramaInfoSearch(
+    suspend fun getDramasSearch(
         search: String?,
         ordering: String
     ): Single<DramasSearchGetResponse> = withContext(Dispatchers.IO) {

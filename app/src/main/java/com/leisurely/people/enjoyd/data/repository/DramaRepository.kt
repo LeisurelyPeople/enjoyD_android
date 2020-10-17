@@ -18,7 +18,7 @@ class DramaRepository(
     private val dramaSearchRemoteDataSource: DramaSearchRemoteDataSource,
     private val dramaLocalDataSource: DramaLocalDataSource
 ) {
-    suspend fun dramaInfoSearch(
+    suspend fun getDramasSearch(
         search: String?,
         ordering: String
     ): Single<DramasSearchGetResponse> = withContext(Dispatchers.IO) {
@@ -26,6 +26,6 @@ class DramaRepository(
         dramaLocalDataSource.dramaInfoSearch()
 
         // 리모트 영역에서 가져온 데이터 리턴
-        return@withContext dramaSearchRemoteDataSource.dramaInfoSearch(search, ordering)
+        return@withContext dramaSearchRemoteDataSource.getDramasSearch(search, ordering)
     }
 }

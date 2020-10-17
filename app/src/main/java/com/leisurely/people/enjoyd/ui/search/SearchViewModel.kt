@@ -150,7 +150,7 @@ class SearchViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
             }
 
             // 서버로부터 데이터를 받아온 후 키보드를 닫음 처리한다.
-            dramaRepository.dramaInfoSearch(query, "avg_rating")
+            dramaRepository.getDramasSearch(query, "avg_rating")
                 .applySingleSchedulers()
                 .subscribeWith(object : DisposableSingleObserver<DramasSearchGetResponse>() {
                     override fun onSuccess(searchDramas: DramasSearchGetResponse) {
