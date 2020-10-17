@@ -37,20 +37,23 @@ class HomeViewModel(
         }
 
     /** 드라마 태그 정보를 가지고 있는 LiveData */
-    val dramasTagsInfo: LiveData<List<DramasTagsModel>> = liveData {
+    private val _dramasTagsInfo: LiveData<List<DramasTagsModel>> = liveData {
         showLoading()
         dramasTagsRepository.getDramasTags()
-            .onSuccess {
-                val items = it.results.map(DramasTagsResponse::toDramaTagsModel)
-                if (items.isNotEmpty()) {
-                    items[0].isSelected = true // 첫번째 아이템 클릭 상태로 만들기
-                    emit(items)
-                    getDramaItemsUsingTags(1, items[0].name)  // 첫번째 값 태그에 해당되는 드라마 정보 조회
-                }
-            }
+            .onSuccess { emit(it.results.map(DramasTagsResponse::toDramaTagsModel)) }
             .onError(::handleException)
         hideLoading()
     }
+    val dramasTagsInfo: LiveData<List<DramasTagsModel>>
+        get() = _dramasTagsInfo.map { items ->
+            items.firstOrNull()?.let { item ->
+                item.isSelected = true
+                getDramaItemsUsingTags(1, item.name)
+                items
+            } ?: kotlin.run {
+                emptyList<DramasTagsModel>()
+            }
+        }
 
     /** 현재 데이터 조회 페이지 값에 해당 되는 LiveData (default : 1) */
     private val _page: MutableLiveData<Int> = MutableLiveData(1)
