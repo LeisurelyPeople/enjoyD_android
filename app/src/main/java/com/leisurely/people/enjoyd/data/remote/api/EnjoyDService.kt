@@ -13,6 +13,7 @@ import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasBannerResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasWatchingResponse
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -64,4 +65,10 @@ interface EnjoyDService {
     /** 드라마 태그 조회 API (/drmas/banner/) */
     @GET("/dramas/tags/")
     suspend fun getDramasTags(): PagingResponse<DramasTagsResponse>
+
+    @GET("accounts/dramas/watching/")
+    suspend fun getDramasWatching(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): PagingResponse<DramasWatchingResponse>
 }
