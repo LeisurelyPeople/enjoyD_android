@@ -30,6 +30,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         HomeBannerListAdapter()
     }
 
+    /** 홈화면 시청중인 드라마 리스트 UI를 보며주기 위한 Parent Wrapper Adapter */
+    private val homeParentDramasWatchingRVAdapter by lazy {
+        HomeParentDramasWatchingRVAdapter(homeChildDramasWatchingListAdapter)
+    }
+
+    /** 홈화면 시청중인 드라마 리스트 UI를 보여주기 위한 Child Adapter */
+    private val homeChildDramasWatchingListAdapter by lazy {
+        HomeChildDramasWatchingListAdapter {
+            Toast.makeText(requireContext(), "클릭 아이템", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     /** 홈화면 태그 리스트 UI를 보여주기 위한 Parent Wrapper Adapter */
     private val homeParentTagsRVAdapter by lazy {
         HomeParentTagsRVAdapter(homeChildTagsListAdapter)
@@ -84,6 +96,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
         /** 시청중인 드라마 데이터 observe */
         viewModel.dramasWatchingData.observe(viewLifecycleOwner, Observer {
+            homeChildDramasWatchingListAdapter.submitList(it)
         })
 
         /** 드라마 태그 데이터 observe */
@@ -109,6 +122,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         binding.rvHome.run {
             adapter = ConcatAdapter(
                 homeBannerListAdapter,
+                homeParentDramasWatchingRVAdapter,
                 homeParentTagsRVAdapter,
                 homeDramasTitleListAdapter,
                 homeParentDramasRVAdapter,
@@ -128,6 +142,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                     ) {
                         outRect.top =
                             resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_32dp)
+                    }
+
+                    /** 시청중인 드라마 리스트 부모 Wrapper 어댑터에 spacing 값 설정 */
+                    if (parent.getChildViewHolder(view)
+                                is HomeParentDramasWatchingRVAdapter.HomeParentDramasWatchingVH
+                    ) {
+                        outRect.top =
+                            resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_12dp)
+
                     }
 
                     /** 드라마 리스트 타이틀 spacing 값 설정 */

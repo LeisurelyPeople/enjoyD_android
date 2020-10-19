@@ -15,6 +15,8 @@ data class DramasWatchingResponse(
     val videoId: String,
     @SerializedName("title")
     val title: String,
+    @SerializedName("producer")
+    val producer: String,
     @SerializedName("default_thumbnail")
     val defaultThumbnail: String
 )
