@@ -77,6 +77,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             homeBannerListAdapter.submitList(it)
         })
 
+        /** 시청중인 드라마 데이터 observe */
+        viewModel.dramasWatchingData.observe(viewLifecycleOwner, Observer {
+        })
+
         /** 드라마 태그 데이터 observe */
         viewModel.dramasTagsInfo.observe(viewLifecycleOwner, Observer {
             homeChildTagsListAdapter.submitList(it)

@@ -4,9 +4,11 @@ import androidx.lifecycle.*
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasItemResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasBannerResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasWatchingResponse
 import com.leisurely.people.enjoyd.data.repository.DramaRepository
 import com.leisurely.people.enjoyd.data.repository.DramasBannerRepository
 import com.leisurely.people.enjoyd.data.repository.DramasTagsRepository
+import com.leisurely.people.enjoyd.data.repository.DramasWatchingRepository
 import com.leisurely.people.enjoyd.model.DramasTagsModel
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.coroutine.onError
@@ -21,6 +23,7 @@ import kotlinx.coroutines.*
  */
 class HomeViewModel(
     private val dramasBannerRepository: DramasBannerRepository,
+    private val dramasWatchingRepository: DramasWatchingRepository,
     private val dramasTagsRepository: DramasTagsRepository,
     private val dramasRepository: DramaRepository
 ) : BaseViewModel() {
@@ -35,6 +38,14 @@ class HomeViewModel(
         get() = _dramasBannerData.map {
             listOf(it)
         }
+
+    /** 시청중인 드라마 정보를 가지고 있는 LiveData */
+    private val _dramasWatchingData: LiveData<List<DramasWatchingResponse>> = liveData {
+        dramasWatchingRepository.getDramasWatching(1, 10) // 페이징이 없는 고정픽
+            .onSuccess { emit(it.results) }
+            .onError(::handleException)
+    }
+    val dramasWatchingData: LiveData<List<DramasWatchingResponse>> = _dramasWatchingData
 
     /** 드라마 태그 정보를 가지고 있는 LiveData */
     private val _dramasTagsInfo: LiveData<List<DramasTagsModel>> = liveData {
