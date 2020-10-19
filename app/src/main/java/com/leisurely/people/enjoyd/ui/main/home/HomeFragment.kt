@@ -44,7 +44,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private val homeChildDramasWatchingListAdapter by lazy {
         HomeChildDramasWatchingListAdapter {
             // TODO 유튜브 플레이어로 바로 열어주기 (담당자 : ricky)
-            Toast.makeText(requireContext(), it.title, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), it.episodeTitle, Toast.LENGTH_SHORT).show()
         }
     }
 

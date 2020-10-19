@@ -24,7 +24,7 @@ class HomeChildDramasWatchingListAdapter(
     override fun areItemsTheSame(
         oldItem: DramasWatchingResponse,
         newItem: DramasWatchingResponse
-    ): Boolean = oldItem.dramaPk == newItem.dramaPk
+    ): Boolean = oldItem.slug == newItem.slug
 
     override fun areContentsTheSame(
         oldItem: DramasWatchingResponse,

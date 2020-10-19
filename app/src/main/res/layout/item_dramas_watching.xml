@@ -55,15 +55,18 @@
             android:layout_marginTop="6dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="12dp"
+            android:ellipsize="end"
             android:fontFamily="@font/noto_sans_kr_medium"
-            android:text="@{item.title}"
+            android:lines="2"
+            android:maxLines="2"
+            android:text="@{String.format(@string/dramas_episode_title_format, item.episode, item.episodeTitle)}"
             android:textColor="@color/color_grey_0"
             android:textSize="@dimen/text_size_14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_drama_producer"
-            tools:text="연애플레이리스트4" />
+            tools:text="[EP.01] 연애플레이리스트4" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,14 +9,16 @@ import com.google.gson.annotations.SerializedName
  * @since v1.0.0 / 2020.10.19
  */
 data class DramasWatchingResponse(
-    @SerializedName("drama_pk")
-    val dramaPk: String,
+    @SerializedName("slug")
+    val slug: String, // 에피소드가 속하는 드라마 고유 값
+    @SerializedName("episode")
+    val episode: Int, // 에피소드 회차 값 (1화 = 1, 2화 = 2)
     @SerializedName("video_id")
-    val videoId: String,
-    @SerializedName("title")
-    val title: String,
+    val videoId: String, // 유튜브 video id
+    @SerializedName("episode_title")
+    val episodeTitle: String, // 에피소드 제목
     @SerializedName("producer")
-    val producer: String,
+    val producer: String, // 드라마 프로듀서
     @SerializedName("default_thumbnail")
-    val defaultThumbnail: String
+    val defaultThumbnail: String // 에피소드 썸네일 이미지
 )
