@@ -43,6 +43,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         }
     }
 
+    /** 홈화면 드라마 리스트 타이틀 UI를 보여주기 위한 Adapter */
+    private val homeDramasTitleListAdapter by lazy {
+        HomeDramasTitleListAdapter()
+    }
+
     /** 홈화면 드라마 리스트 UI를 보여주기 위한 Parent Wrapper Adapter */
     private val homeParentDramasRVAdapter by lazy {
         HomeParentDramasRVAdapter(homeChildDramaListAdapter)
@@ -89,6 +94,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         /** 드라마 태그값을 이용한 드라마 정보 관련 observe */
         viewModel.dramaItems.observe(viewLifecycleOwner, Observer {
             homeChildDramaListAdapter.submitList(it)
+            // 드라마 리스트가 비어있지 않을 경우 타이틀 UI 보여주기
+            if (it.isNotEmpty()) homeDramasTitleListAdapter.submitList(listOf(viewModel.tag.value))
         })
 
         /** 드라마 더보기 버튼을 활성화 시킬지에 대한 observe */
@@ -103,9 +110,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             adapter = ConcatAdapter(
                 homeBannerListAdapter,
                 homeParentTagsRVAdapter,
+                homeDramasTitleListAdapter,
                 homeParentDramasRVAdapter,
                 homeDramasViewMoreListAdapter
             )
+            /** ConcatAdapter 사용 시 ViewHolder 객체 비교를 통해 spacing 값을 설정 */
             addItemDecoration(object : RecyclerView.ItemDecoration() {
                 override fun getItemOffsets(
                     outRect: Rect,
@@ -113,7 +122,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                     parent: RecyclerView,
                     state: RecyclerView.State
                 ) {
-                    /** ConcatAdapter 사용 시 ViewHolder 객체 비교를 통해 spacing 값을 설정 */
+                    /** 드라마 태그 리스트 spacing 값 설정 */
                     if (parent.getChildViewHolder(view)
                                 is HomeParentTagsRVAdapter.HomeParentTagsVH
                     ) {
@@ -121,6 +130,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                             resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_32dp)
                     }
 
+                    /** 드라마 리스트 타이틀 spacing 값 설정 */
+                    if (parent.getChildViewHolder(view)
+                                is HomeDramasTitleListAdapter.HomeDramasTitleVH
+                    ) {
+                        outRect.left =
+                            resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_16dp)
+                        outRect.right =
+                            resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_16dp)
+                        outRect.top =
+                            resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_20dp)
+                    }
+
+                    /** 드라마 리스트 부모 Wrapper 어댑터에 spacing 값 설정 */
+                    if (parent.getChildViewHolder(view)
+                                is HomeParentDramasRVAdapter.HomeParentDramasVH
+                    ) {
+                        outRect.top =
+                            resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_12dp)
+                    }
+
+                    /** 드라마 더보기 버튼 spacing 값 설정 */
                     if (parent.getChildViewHolder(view)
                                 is HomeDramasViewMoreListAdapter.HomeDramasViewMoreVH
                     ) {
