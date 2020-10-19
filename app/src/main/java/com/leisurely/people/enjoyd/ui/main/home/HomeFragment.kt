@@ -30,6 +30,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         HomeBannerListAdapter()
     }
 
+    /** 홈화면 시청중인 드라마 리스트 타이틀 UI를 보여주기 위한 Adapter */
+    private val homeDramasWatchingTitleListAdapter by lazy {
+        HomeDramasWatchingTitleListAdapter()
+    }
+
     /** 홈화면 시청중인 드라마 리스트 UI를 보며주기 위한 Parent Wrapper Adapter */
     private val homeParentDramasWatchingRVAdapter by lazy {
         HomeParentDramasWatchingRVAdapter(homeChildDramasWatchingListAdapter)
@@ -38,7 +43,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     /** 홈화면 시청중인 드라마 리스트 UI를 보여주기 위한 Child Adapter */
     private val homeChildDramasWatchingListAdapter by lazy {
         HomeChildDramasWatchingListAdapter {
-            Toast.makeText(requireContext(), "클릭 아이템", Toast.LENGTH_SHORT).show()
+            // TODO 유튜브 플레이어로 바로 열어주기 (담당자 : ricky)
+            Toast.makeText(requireContext(), it.title, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -96,6 +102,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
         /** 시청중인 드라마 데이터 observe */
         viewModel.dramasWatchingData.observe(viewLifecycleOwner, Observer {
+            if (it.isNotEmpty()) homeDramasWatchingTitleListAdapter.submitList(listOf(Unit))
             homeChildDramasWatchingListAdapter.submitList(it)
         })
 
@@ -106,9 +113,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
         /** 드라마 태그값을 이용한 드라마 정보 관련 observe */
         viewModel.dramaItems.observe(viewLifecycleOwner, Observer {
-            homeChildDramaListAdapter.submitList(it)
             // 드라마 리스트가 비어있지 않을 경우 타이틀 UI 보여주기
             if (it.isNotEmpty()) homeDramasTitleListAdapter.submitList(listOf(viewModel.tag.value))
+            homeChildDramaListAdapter.submitList(it)
         })
 
         /** 드라마 더보기 버튼을 활성화 시킬지에 대한 observe */
@@ -122,6 +129,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         binding.rvHome.run {
             adapter = ConcatAdapter(
                 homeBannerListAdapter,
+                homeDramasWatchingTitleListAdapter,
                 homeParentDramasWatchingRVAdapter,
                 homeParentTagsRVAdapter,
                 homeDramasTitleListAdapter,
@@ -136,10 +144,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                     parent: RecyclerView,
                     state: RecyclerView.State
                 ) {
-                    /** 드라마 태그 리스트 spacing 값 설정 */
+                    /** 시청중인 드라마 리스트 타이틀 spacing 값 설정 */
                     if (parent.getChildViewHolder(view)
-                                is HomeParentTagsRVAdapter.HomeParentTagsVH
+                                is HomeDramasWatchingTitleListAdapter.HomeDramasWatchingTitleVH
                     ) {
+                        outRect.left =
+                            resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_16dp)
+                        outRect.right =
+                            resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_16dp)
                         outRect.top =
                             resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_32dp)
                     }
@@ -150,7 +162,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                     ) {
                         outRect.top =
                             resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_12dp)
+                    }
 
+                    /** 드라마 태그 리스트 spacing 값 설정 */
+                    if (parent.getChildViewHolder(view)
+                                is HomeParentTagsRVAdapter.HomeParentTagsVH
+                    ) {
+                        outRect.top =
+                            resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_32dp)
                     }
 
                     /** 드라마 리스트 타이틀 spacing 값 설정 */
