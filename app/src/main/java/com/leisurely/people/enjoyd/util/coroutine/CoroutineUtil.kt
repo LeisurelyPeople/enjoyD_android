@@ -36,14 +36,16 @@ suspend fun <T> safeApiCall(
     dispatcher: CoroutineDispatcher,
     apiCall: suspend () -> T
 ): ApiCallResultWrapper<T> {
-    return if (EnjoyDApplication.instance.isNetworkConnected().not()) {
-        ApiCallResultWrapper.Error(ConnectException(Constant.ERROR_NETWORK_CONNECTION_FAIL))
-    } else { // 네트워크 연결이 되어있을 경우에만 API call 처리
-        withContext(dispatcher) {
-            try {
-                ApiCallResultWrapper.Success(apiCall.invoke())
-            } catch (throwable: Throwable) {
-                ApiCallResultWrapper.Error(throwable)
+    return withContext(dispatcher) {
+        if (EnjoyDApplication.instance.isNetworkConnected().not()) {
+            ApiCallResultWrapper.Error(ConnectException(Constant.ERROR_NETWORK_CONNECTION_FAIL))
+        } else { // 네트워크 연결이 되어있을 경우에만 API call 처리
+            withContext(dispatcher) {
+                try {
+                    ApiCallResultWrapper.Success(apiCall.invoke())
+                } catch (throwable: Throwable) {
+                    ApiCallResultWrapper.Error(throwable)
+                }
             }
         }
     }
