@@ -92,6 +92,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         super.onViewCreated(view, savedInstanceState)
         setHomeRV()
         observeViewModelLiveData()
+        viewModel.getHomeData()
     }
 
     private fun observeViewModelLiveData() {

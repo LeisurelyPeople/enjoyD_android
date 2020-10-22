@@ -1,5 +1,6 @@
 package com.leisurely.people.enjoyd.ui.main.home
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasItemResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasBannerResponse
@@ -13,7 +14,9 @@ import com.leisurely.people.enjoyd.model.DramasTagsModel
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.coroutine.onError
 import com.leisurely.people.enjoyd.util.coroutine.onSuccess
+import com.leisurely.people.enjoyd.util.coroutine.zip
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 
 /**
  * 홈탭 관련 ViewModel class
@@ -29,42 +32,19 @@ class HomeViewModel(
 ) : BaseViewModel() {
 
     /** 드라마 배너 정보를 가지고 있는 LiveData */
-    private val _dramasBannerData: LiveData<DramasBannerResponse> = liveData {
-        dramasBannerRepository.getDramasBanner()
-            .onSuccess { emit(it) }
-            .onError(::handleException)
+    private val _dramasBannerData: MutableLiveData<DramasBannerResponse> = MutableLiveData()
+    val dramasBannerData: LiveData<List<DramasBannerResponse>> = _dramasBannerData.map {
+        listOf(it)
     }
-    val dramasBannerData: LiveData<List<DramasBannerResponse>>
-        get() = _dramasBannerData.map {
-            listOf(it)
-        }
 
     /** 시청중인 드라마 정보를 가지고 있는 LiveData */
-    private val _dramasWatchingData: LiveData<List<DramasWatchingResponse>> = liveData {
-        dramasWatchingRepository.getDramasWatching(1, 10) // 페이징이 없는 고정픽
-            .onSuccess { emit(it.results) }
-            .onError(::handleException)
-    }
+    private val _dramasWatchingData: MutableLiveData<List<DramasWatchingResponse>> =
+        MutableLiveData(listOf())
     val dramasWatchingData: LiveData<List<DramasWatchingResponse>> = _dramasWatchingData
 
     /** 드라마 태그 정보를 가지고 있는 LiveData */
-    private val _dramasTagsInfo: LiveData<List<DramasTagsModel>> = liveData {
-        showLoading()
-        dramasTagsRepository.getDramasTags()
-            .onSuccess { emit(it.results.map(DramasTagsResponse::toDramaTagsModel)) }
-            .onError(::handleException)
-        hideLoading()
-    }
-    val dramasTagsInfo: LiveData<List<DramasTagsModel>>
-        get() = _dramasTagsInfo.map { items ->
-            items.firstOrNull()?.let { item ->
-                item.isSelected = true
-                getDramaItemsUsingTags(1, item.name)
-                items
-            } ?: kotlin.run {
-                emptyList<DramasTagsModel>()
-            }
-        }
+    private val _dramasTagsData: MutableLiveData<List<DramasTagsModel>> = MutableLiveData(listOf())
+    val dramasTagsInfo: LiveData<List<DramasTagsModel>> = _dramasTagsData
 
     /** 현재 데이터 조회 페이지 값에 해당 되는 LiveData (default : 1) */
     private val _page: MutableLiveData<Int> = MutableLiveData(1)
@@ -90,12 +70,36 @@ class HomeViewModel(
             }
         }
 
+    /** 배너, 시청중인 드라마, 드라마 태그 정보 가져오는 메소드 */
+    fun getHomeData() {
+        viewModelScope.launch {
+            zip(
+                dramasBannerRepository.getDramasBannerUsingFlow(),
+                dramasWatchingRepository.getDramasWatchingUsingFlow(1, 10),
+                dramasTagsRepository.getDramasTagsUsingFlow()
+            ) { bannerResponse, watchingDramasResponse, tagsModel ->
+                _dramasBannerData.value = bannerResponse
+                _dramasWatchingData.value = watchingDramasResponse.results
+                delay(500) // 텍스트로만 이루어져 있는 태그 정보들이 스크린에 먼저 그려져서 어색하게 보여 delay 값 추가
+                _dramasTagsData.value = tagsModel
+
+                // 태그 첫번째 값으로 드라마 리스트 조회
+                _dramasTagsData.value?.firstOrNull()?.let {
+                    getDramaItemsUsingTags(1, it.name)
+                }
+            }
+                .onStart { showLoading() }
+                .onCompletion { hideLoading() }
+                .catch { handleException(throwable = it) }
+                .collect()
+        }
+    }
+
     /** 태그값을 통해 드라마 정보를 가져오는 메소드 */
     fun getDramaItemsUsingTags(page: Int, tag: String) {
         _tag.value = tag
         _page.value = page
         viewModelScope.launch {
-            showLoading()
             dramasRepository.getDramasUsingTags(tag, page, 10)
                 /** 응답값이 성공으로 떨어질 경우 */
                 .onSuccess {
@@ -108,7 +112,6 @@ class HomeViewModel(
                 }
                 /** 응답값이 실패로로 떨어질 경우 */
                 .onError(::handleException)
-            hideLoading()
         }
     }
 }

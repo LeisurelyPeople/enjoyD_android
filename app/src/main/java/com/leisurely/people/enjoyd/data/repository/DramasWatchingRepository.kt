@@ -6,6 +6,8 @@ import com.leisurely.people.enjoyd.data.remote.source.DramasWatchingRemoteDataSo
 import com.leisurely.people.enjoyd.util.coroutine.ApiCallResultWrapper
 import com.leisurely.people.enjoyd.util.coroutine.safeApiCall
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 /**
  * 홈화면에 있는 시청중인 드라마 정보들을 가져오는 Repository 클래스
@@ -24,4 +26,8 @@ class DramasWatchingRepository(
             dramasWatchingRemoteDataSource.getDramasWatching(page, size)
         }
     }
+
+    suspend fun getDramasWatchingUsingFlow(page: Int, size: Int) = flow {
+        emit(dramasWatchingRemoteDataSource.getDramasWatching(page, size))
+    }.flowOn(Dispatchers.IO)
 }

@@ -6,6 +6,9 @@ import com.leisurely.people.enjoyd.data.remote.source.DramasTagRemoteDataSource
 import com.leisurely.people.enjoyd.util.coroutine.ApiCallResultWrapper
 import com.leisurely.people.enjoyd.util.coroutine.safeApiCall
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 
 /**
  * 홈화면에 있는 드라마 태그 정보들을 가져오는 Repository 클래스
@@ -20,4 +23,12 @@ class DramasTagsRepository(private val dramasTagRemoteDataSource: DramasTagRemot
             dramasTagRemoteDataSource.getDramasTags()
         }
     }
+
+    suspend fun getDramasTagsUsingFlow() = flow {
+        emit(dramasTagRemoteDataSource.getDramasTags())
+    }.map { response ->
+        response.results.map(DramasTagsResponse::toDramaTagsModel).also {
+            it.firstOrNull()?.isSelected = true
+        }
+    }.flowOn(Dispatchers.IO)
 }
