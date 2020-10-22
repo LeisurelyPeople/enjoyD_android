@@ -6,6 +6,8 @@ import com.leisurely.people.enjoyd.ui.base.EnjoyDApplication
 import com.leisurely.people.enjoyd.util.Constant
 import com.leisurely.people.enjoyd.util.ext.isNetworkConnected
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.zip
 import java.net.ConnectException
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
@@ -66,6 +68,18 @@ inline fun <T : Any> ApiCallResultWrapper<T>.onError(
     if (this is ApiCallResultWrapper.Error) action(throwable)
     return this
 }
+
+/** 3개의 flow 값들을 zip으로 사용하기 위한 메소드 */
+inline fun <T1, T2, T3, R> zip(
+    first: Flow<T1>,
+    second: Flow<T2>,
+    third: Flow<T3>,
+    crossinline transform: suspend (T1, T2, T3) -> R
+): Flow<R> =
+    first.zip(second) { a, b -> a to b }
+        .zip(third) { (a, b), c ->
+            transform(a, b, c)
+        }
 
 /** 예외가 발생해도 크래시를 일으키지 않는 최상위 [코루틴 스코프][CoroutineScope]를 생성한다. */
 @Suppress("FunctionName")
