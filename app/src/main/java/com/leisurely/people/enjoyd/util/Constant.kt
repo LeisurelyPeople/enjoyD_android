@@ -37,9 +37,6 @@ interface Constant {
         // Fragment Tag
         const val FRAGMENT_TAG_PROGRESS_BAR_DIALOG = "FRAGMENT_TAG_PROGRESS_BAR_DIALOG"
 
-        // api call error handling msg
-        const val ERROR_NETWORK_CONNECTION_FAIL = "ERROR_NETWORK_CONNECTION_FAIL"
-
         // 기타
         // 지금 실행되는 코드가 Unit Test 인지 확인하는 flag
         var isUnitTest = false

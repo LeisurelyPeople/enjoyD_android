@@ -42,11 +42,9 @@ abstract class BaseViewModel : ViewModel() {
                     _startLogout.value = null // 로그아웃 처리
                 }
             }
+            /** 네트워크 연결 끊김 및 불특정한 이유로 서버 연결 불가 */
             is ConnectException -> {
-                /** 네트워크 연결 실패 시 */
-                if (throwable.message == Constant.ERROR_NETWORK_CONNECTION_FAIL) {
-                    showToast("네트워크 상태를 확인해주세요.")
-                }
+                showToast("연결에 실패하였습니다.\n네트워크 상태 확인 또는 잠시 후 다시 시도해주세요.")
             }
         }
     }

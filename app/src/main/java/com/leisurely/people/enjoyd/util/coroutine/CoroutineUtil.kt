@@ -7,6 +7,8 @@ import com.leisurely.people.enjoyd.util.Constant
 import com.leisurely.people.enjoyd.util.ext.isNetworkConnected
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.zip
 import java.net.ConnectException
 import kotlin.coroutines.CoroutineContext
@@ -39,16 +41,10 @@ suspend fun <T> safeApiCall(
     apiCall: suspend () -> T
 ): ApiCallResultWrapper<T> {
     return withContext(dispatcher) {
-        if (EnjoyDApplication.instance.isNetworkConnected().not()) {
-            ApiCallResultWrapper.Error(ConnectException(Constant.ERROR_NETWORK_CONNECTION_FAIL))
-        } else { // 네트워크 연결이 되어있을 경우에만 API call 처리
-            withContext(dispatcher) {
-                try {
-                    ApiCallResultWrapper.Success(apiCall.invoke())
-                } catch (throwable: Throwable) {
-                    ApiCallResultWrapper.Error(throwable)
-                }
-            }
+        try {
+            ApiCallResultWrapper.Success(apiCall.invoke())
+        } catch (throwable: Throwable) {
+            ApiCallResultWrapper.Error(throwable)
         }
     }
 }
