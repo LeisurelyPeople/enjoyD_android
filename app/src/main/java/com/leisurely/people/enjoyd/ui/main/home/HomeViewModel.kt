@@ -43,16 +43,16 @@ class HomeViewModel(
     val dramasWatchingData: LiveData<List<DramasWatchingResponse>> = _dramasWatchingData
 
     /** 드라마 태그 정보를 가지고 있는 LiveData */
-    private val _dramasTagsData: MutableLiveData<List<DramasTagsModel>> = MutableLiveData(listOf())
-    val dramasTagsInfo: LiveData<List<DramasTagsModel>> = _dramasTagsData
+    private val _dramasTagsItem: MutableLiveData<List<DramasTagsModel>> = MutableLiveData(listOf())
+    val dramasTagsItem: LiveData<List<DramasTagsModel>> = _dramasTagsItem
 
     /** 현재 데이터 조회 페이지 값에 해당 되는 LiveData (default : 1) */
     private val _page: MutableLiveData<Int> = MutableLiveData(1)
     val page: LiveData<Int> = _page
 
     /** 현재 활성화된 태그 정보를 가지고 있는 LiveData */
-    private val _tag: MutableLiveData<String> = MutableLiveData("")
-    val tag: LiveData<String> = _tag
+    private val _selectedTag: MutableLiveData<String> = MutableLiveData("")
+    val selectedTag: LiveData<String> = _selectedTag
 
     /** 드라마 아이템 정보들을 가지고 있는 LiveData */
     private val _dramaItems: MutableLiveData<List<DramasItemResponse>> =
@@ -81,10 +81,10 @@ class HomeViewModel(
                 _dramasBannerData.value = bannerResponse
                 _dramasWatchingData.value = watchingDramasResponse.results
                 delay(500) // 텍스트로만 이루어져 있는 태그 정보들이 스크린에 먼저 그려져서 어색하게 보여 delay 값 추가
-                _dramasTagsData.value = tagsModel
+                _dramasTagsItem.value = tagsModel
 
                 // 태그 첫번째 값으로 드라마 리스트 조회
-                _dramasTagsData.value?.firstOrNull()?.let {
+                _dramasTagsItem.value?.firstOrNull()?.let {
                     getDramaItemsUsingTags(1, it.name)
                 }
             }
@@ -97,7 +97,7 @@ class HomeViewModel(
 
     /** 태그값을 통해 드라마 정보를 가져오는 메소드 */
     fun getDramaItemsUsingTags(page: Int, tag: String) {
-        _tag.value = tag
+        _selectedTag.value = tag
         _page.value = page
         viewModelScope.launch {
             dramasRepository.getDramasUsingTags(tag, page, 10)
@@ -113,5 +113,15 @@ class HomeViewModel(
                 /** 응답값이 실패로로 떨어질 경우 */
                 .onError(::handleException)
         }
+    }
+
+    /** 태그 클릭 메소드 */
+    fun onTagClick(dramasTagModel: DramasTagsModel) {
+        _dramasTagsItem.value = _dramasTagsItem.value?.map {
+            // copy 함수를 사용해 ListAdapter 에서 같은 객체가 사용되지 않도록 설정
+            it.copy(name = it.name, isSelected = dramasTagModel.name == it.name)
+        }
+        // 클릭된 태그에 해당되는 드라마 정보 갱신
+        getDramaItemsUsingTags(1, dramasTagModel.name)
     }
 }

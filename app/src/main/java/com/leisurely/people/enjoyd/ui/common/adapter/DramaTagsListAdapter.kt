@@ -23,7 +23,7 @@ class DramaTagsListAdapter(private val onItemClickedChanged: (DramasTagsModel) -
         override fun areItemsTheSame(
             oldItem: DramasTagsModel,
             newItem: DramasTagsModel
-        ): Boolean = oldItem.name == newItem.name
+        ): Boolean = (oldItem.name == newItem.name || oldItem.isSelected == newItem.isSelected)
 
         override fun areContentsTheSame(
             oldItem: DramasTagsModel,
@@ -31,10 +31,6 @@ class DramaTagsListAdapter(private val onItemClickedChanged: (DramasTagsModel) -
         ): Boolean = oldItem == newItem
 
     }) {
-
-    private var checkedPosition = 0
-
-    private var lastCheckedPosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DramaTagsVH {
         return DramaTagsVH(
@@ -45,16 +41,7 @@ class DramaTagsListAdapter(private val onItemClickedChanged: (DramasTagsModel) -
             )
         ).apply {
             itemView.setOnClickListener {
-                lastCheckedPosition = checkedPosition
-                checkedPosition = bindingAdapterPosition
-                val items = currentList.map {
-                    it.copy()
-                }.also {
-                    it[checkedPosition].isSelected = true
-                    it[lastCheckedPosition].isSelected = false
-                }
-                submitList(items)
-                onItemClickedChanged(items[bindingAdapterPosition])
+                onItemClickedChanged(getItem(bindingAdapterPosition))
             }
         }
     }

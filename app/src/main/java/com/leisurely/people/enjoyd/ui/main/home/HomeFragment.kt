@@ -57,7 +57,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private val homeChildTagsListAdapter by lazy {
         DramaTagsListAdapter {
             // 태그를 클릭했을 경우 새로운 드라마 데이터들을 가져옴.
-            viewModel.getDramaItemsUsingTags(1, it.name)
+            viewModel.onTagClick(it)
         }
     }
 
@@ -83,7 +83,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     private val homeDramasViewMoreListAdapter by lazy {
         HomeDramasViewMoreListAdapter {
             val page = viewModel.page.value?.plus(1) ?: return@HomeDramasViewMoreListAdapter
-            val tag = viewModel.tag.value ?: return@HomeDramasViewMoreListAdapter
+            val tag = viewModel.selectedTag.value ?: return@HomeDramasViewMoreListAdapter
             viewModel.getDramaItemsUsingTags(page, tag)
         }
     }
@@ -108,20 +108,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         })
 
         /** 드라마 태그 데이터 observe */
-        viewModel.dramasTagsInfo.observe(viewLifecycleOwner, Observer {
+        viewModel.dramasTagsItem.observe(viewLifecycleOwner, Observer {
             homeChildTagsListAdapter.submitList(it)
         })
 
         /** 드라마 태그값을 이용한 드라마 정보 관련 observe */
         viewModel.dramaItems.observe(viewLifecycleOwner, Observer {
             // 드라마 리스트가 비어있지 않을 경우 타이틀 UI 보여주기
-            if (it.isNotEmpty()) homeDramasTitleListAdapter.submitList(listOf(viewModel.tag.value))
+            if (it.isNotEmpty()) {
+                homeDramasTitleListAdapter.submitList(listOf(viewModel.selectedTag.value))
+            }
             homeChildDramaListAdapter.submitList(it)
         })
 
         /** 드라마 더보기 버튼을 활성화 시킬지에 대한 observe */
         viewModel.existsMoreDramaItems.observe(viewLifecycleOwner, Observer {
-            homeDramasViewMoreListAdapter.tag = viewModel.tag.value ?: ""
+            homeDramasViewMoreListAdapter.tag = viewModel.selectedTag.value ?: ""
             homeDramasViewMoreListAdapter.submitList(it)
         })
     }
