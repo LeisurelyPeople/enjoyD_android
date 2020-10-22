@@ -31,6 +31,10 @@ class HomeViewModel(
     private val dramasRepository: DramaRepository
 ) : BaseViewModel() {
 
+    /** 로딩 관련 LiveData */
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> = _isLoading
+
     /** 드라마 배너 정보를 가지고 있는 LiveData */
     private val _dramasBannerData: MutableLiveData<DramasBannerResponse> = MutableLiveData()
     val dramasBannerData: LiveData<List<DramasBannerResponse>> = _dramasBannerData.map {
@@ -88,8 +92,8 @@ class HomeViewModel(
                     getDramaItemsUsingTags(1, it.name)
                 }
             }
-                .onStart { showLoading() }
-                .onCompletion { hideLoading() }
+                .onStart { _isLoading.value = true }
+                .onCompletion { _isLoading.value = false }
                 .catch { handleException(throwable = it) }
                 .collect()
         }
@@ -100,6 +104,7 @@ class HomeViewModel(
         _selectedTag.value = tag
         _page.value = page
         viewModelScope.launch {
+            showLoading()
             dramasRepository.getDramasUsingTags(tag, page, 10)
                 /** 응답값이 성공으로 떨어질 경우 */
                 .onSuccess {
@@ -112,6 +117,7 @@ class HomeViewModel(
                 }
                 /** 응답값이 실패로로 떨어질 경우 */
                 .onError(::handleException)
+            hideLoading()
         }
     }
 

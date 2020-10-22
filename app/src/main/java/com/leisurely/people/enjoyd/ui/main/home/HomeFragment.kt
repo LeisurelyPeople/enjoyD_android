@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.FragmentHomeBinding
 import com.leisurely.people.enjoyd.ui.base.BaseFragment
@@ -21,7 +22,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * @author Wayne
  * @since v1.0.0 / 2020.09.26
  */
-class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
+class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home),
+    SwipeRefreshLayout.OnRefreshListener {
 
     override val viewModel: HomeViewModel by viewModel()
 
@@ -90,12 +92,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setSwipeRefreshLayout()
         setHomeRV()
         observeViewModelLiveData()
         viewModel.getHomeData()
     }
 
+    override fun onRefresh() {
+        viewModel.getHomeData()
+    }
+
+    private fun setSwipeRefreshLayout() {
+        binding.srlHome.setOnRefreshListener(this)
+    }
+
     private fun observeViewModelLiveData() {
+        /** 로딩 observe */
+        viewModel.isLoading.observe(viewLifecycleOwner, Observer {
+            binding.srlHome.isRefreshing = it
+        })
+
         /** 드라마 배너 데이터 observe */
         viewModel.dramasBannerData.observe(viewLifecycleOwner, Observer {
             homeBannerListAdapter.submitList(it)
