@@ -1,8 +1,11 @@
 package com.leisurely.people.enjoyd.ui.base
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
+import android.util.Log
 import androidx.annotation.VisibleForTesting
 import com.kakao.auth.KakaoSDK
 import com.kakao.usermgmt.UserManagement
@@ -25,12 +28,14 @@ import org.koin.core.context.startKoin
  */
 
 class EnjoyDApplication : Application() {
+    val tag = this::class.java.canonicalName
 
     override fun onCreate() {
         super.onCreate()
         instance = this
         appContext = this
 
+        initActivityLifeCycleCallbacks()
         KakaoSDK.init(KakaoSDKAdapter(this))
 
         startKoin {
@@ -45,6 +50,41 @@ class EnjoyDApplication : Application() {
                 searchViewModule
             )
         }
+    }
+
+    /**
+     * 모든 액티비티의 라이프사이클 콜백을 받아볼 수 있다.
+     */
+    private fun initActivityLifeCycleCallbacks() {
+        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                Log.i(tag, activity.javaClass.simpleName + " Created")
+            }
+
+            override fun onActivityStarted(activity: Activity) {
+                Log.i(tag, "${activity.javaClass.simpleName} Stopped")
+            }
+
+            override fun onActivityResumed(activity: Activity) {
+                Log.i(tag, "${activity.javaClass.simpleName} Resumed")
+            }
+
+            override fun onActivityPaused(activity: Activity) {
+                Log.i(tag, "${activity.javaClass.simpleName} Paused")
+            }
+
+            override fun onActivityStopped(activity: Activity) {
+                Log.i(tag, "${activity.javaClass.simpleName} Stopped")
+            }
+
+            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {
+                Log.i(tag, "${activity.javaClass.simpleName} SaveInstanceState")
+            }
+
+            override fun onActivityDestroyed(activity: Activity) {
+                Log.i(tag, "${activity.javaClass.simpleName} Destroyed")
+            }
+        })
     }
 
     fun logout() {
