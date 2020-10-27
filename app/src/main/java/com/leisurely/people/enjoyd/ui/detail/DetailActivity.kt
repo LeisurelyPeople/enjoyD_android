@@ -1,10 +1,13 @@
 package com.leisurely.people.enjoyd.ui.detail
 
 import android.os.Bundle
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.Observer
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.ActivityDetailBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
+import kotlinx.android.synthetic.main.layout_detail_other_reco.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -14,12 +17,20 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * @since v1.0.0 / 2020.09.28
  */
 class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(
-    layoutRes = R.layout.activity_detail
+    R.layout.activity_detail
 ) {
     override val viewModel: DetailViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val otherAdapter = DetailOtherAdapter()
+        rv_others.adapter = otherAdapter
+
+        val recoAdapter = DetailRecoAdapter()
+        rv_recos.adapter = recoAdapter
+
+        viewModel.init("manjjijnamnyeo")
 
         viewModel.startBackScreen.observe(this, Observer {
             finish()

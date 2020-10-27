@@ -1,5 +1,8 @@
 package com.leisurely.people.enjoyd.data.remote.data.response
 
+import android.widget.TextView
+import androidx.databinding.BindingAdapter
+import com.leisurely.people.enjoyd.util.ext.styledNumber
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -28,3 +31,11 @@ data class DramasSlugResponseItem(
     @SerialName("small_thumbnail")
     val smallThumbnail: String
 )
+
+@BindingAdapter("detailOtherTitle", "detailOtherEpisode")
+fun TextView.getDetailOtherTitle(
+    title: String,
+    episode: Int
+) {
+    text = "$title EP ${episode.styledNumber()}"
+}

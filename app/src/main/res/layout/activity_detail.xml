@@ -2,9 +2,12 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="String" />
 
         <variable
             name="vm"
@@ -70,8 +73,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="?android:attr/actionBarSize"
-                    android:src="@drawable/dummy_detail_poster"
-                    app:layout_collapseMode="parallax" />
+                    app:layout_collapseMode="parallax"
+                    bind:imgUrl="@{vm.detailDrama.poster}"
+                    tools:src="@drawable/dummy_detail_poster" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
@@ -160,6 +164,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="16dp"
                     android:lineSpacingExtra="4sp"
+                    android:text="@{vm.detailDrama.summary}"
                     android:textColor="@color/color_grey_050"
                     android:textSize="12sp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -198,6 +203,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="2dp"
                         android:gravity="center_horizontal"
+                        android:text="@{Double.toString(vm.detailDrama.avgRating)}"
                         android:textColor="@color/color_grey_0"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"

@@ -7,8 +7,8 @@
     <data>
 
         <variable
-            name="basic"
-            type="String" />
+            name="item"
+            type="com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponseItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,25 +29,27 @@
             tools:src="@drawable/dummy_detail_other_poster" />
 
         <TextView
-            android:id="@+id/reco_title_episode"
+            android:id="@+id/reco_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:lineSpacingExtra="6sp"
             android:textColor="@color/color_grey_0"
             android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/reco_poster"
-            tools:text="최고의 선물 EP.01" />
+            tools:text="두개의 빛" />
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/reco_episode_entire"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="6sp"
             android:textColor="@color/color_grey_0"
             android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@+id/reco_title_episode"
-            tools:text="굳세어라 청춘" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reco_title"
+            tools:text="EP.1 ~ 4" />
 
         <ImageView
             android:id="@+id/reco_bookmark"

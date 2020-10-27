@@ -2,13 +2,14 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="basic"
-            type="String" />
+            name="item"
+            type="com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponseItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
+            bind:imgUrl="@{item.smallThumbnail}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -36,16 +38,21 @@
             android:lineSpacingExtra="6sp"
             android:textColor="@color/color_grey_0"
             android:textSize="14sp"
+            app:detailOtherEpisode="@{item.episode}"
+            app:detailOtherTitle="@{item.title}"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/other_poster"
             tools:text="최고의 선물 EP.01" />
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/reco_episode_entire"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="6sp"
+            android:text="@{item.title}"
             android:textColor="@color/color_grey_0"
             android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/other_title_episode"
             tools:text="굳세어라 청춘" />
 

@@ -18,7 +18,7 @@ data class DramasSlugGetResponse(
     val title: String,
 
     @SerialName("avg_rating")
-    val avgRating: Int,
+    val avgRating: Double,
 
     val summary: String,
 

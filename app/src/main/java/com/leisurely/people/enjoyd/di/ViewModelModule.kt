@@ -10,6 +10,7 @@ import com.leisurely.people.enjoyd.ui.onboarding.SummaryEvaluationViewModel
 import com.leisurely.people.enjoyd.ui.onboarding.UserInfoInputViewModel
 import com.leisurely.people.enjoyd.ui.search.SearchViewModel
 import com.leisurely.people.enjoyd.ui.splash.SplashViewModel
+import com.leisurely.people.enjoyd.ui.video.VideoViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -33,5 +34,6 @@ val viewModelModule = module {
         UserInfoInputViewModel(socialLoginModel, get())
     }
     viewModel { SummaryEvaluationViewModel(get()) }
-    viewModel { DetailViewModel() }
+    viewModel { DetailViewModel(get()) }
+    viewModel { VideoViewModel() }
 }
