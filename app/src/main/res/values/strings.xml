@@ -17,7 +17,7 @@
     <string name="user_job_warning_text">직업을 선택해주세요.</string>
     <string name="user_detail_job_warning_text">직업을 입력해주세요.</string>
     <string name="sign_up">회원가입</string>
-    
+
     <!-- 요약 평가하기 (Summary Evaluation) -->
     <string name="evaluation_complete">평가 완료</string>
 
@@ -30,7 +30,17 @@
     <string name="office_workers">직장인</string>
     <string name="etc">기타</string>
     <string name="skip">SKIP</string>
+    <string name="home">홈</string>
+    <string name="evaluation">평가</string>
+    <string name="my_page">마이페이지</string>
+    <string name="view_all">전체보기</string>
+    <string name="dramas_episode_title_format">[EP.%02d] %s</string>
 
+    <!-- 메인 (Main) -->
+    <string name="screen_title">Enjoy:D</string>
+
+    <!-- 홈 (Home) -->
+    <string name="dramas_view_more_text">%s 장르 더보기</string>
 
     <!-- 에러 관련 -->
     <string name="network_disconnected_notice">네트워크 상태를 확인해주세요.</string>

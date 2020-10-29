@@ -2,9 +2,15 @@ package com.leisurely.people.enjoyd.util.coroutine
 
 import android.util.Log
 import androidx.annotation.VisibleForTesting
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
+import com.leisurely.people.enjoyd.ui.base.EnjoyDApplication
+import com.leisurely.people.enjoyd.util.Constant
+import com.leisurely.people.enjoyd.util.ext.isNetworkConnected
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.zip
+import java.net.ConnectException
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -28,6 +34,48 @@ private fun defaultExceptionHandler(logicName: String) = CoroutineExceptionHandl
 //        FCrashlytics.logException(throwable)
     CoroutineUtil.clear(logicName)
 }
+
+/** API 통신 시 성공/실패 여부를 구분해주는 메소드 */
+suspend fun <T> safeApiCall(
+    dispatcher: CoroutineDispatcher,
+    apiCall: suspend () -> T
+): ApiCallResultWrapper<T> {
+    return withContext(dispatcher) {
+        try {
+            ApiCallResultWrapper.Success(apiCall.invoke())
+        } catch (throwable: Throwable) {
+            ApiCallResultWrapper.Error(throwable)
+        }
+    }
+}
+
+/** safeApiCall 에 대한 성공 응답값을 쉽게 처리하기 위한 유틸성 고차함수 */
+inline fun <T : Any> ApiCallResultWrapper<T>.onSuccess(
+    action: (T) -> Unit
+): ApiCallResultWrapper<T> {
+    if (this is ApiCallResultWrapper.Success) action(value)
+    return this
+}
+
+/** safeApiCall 에 대한 에러값을 쉽게 처리하기 위한 유틸성 고차함수 */
+inline fun <T : Any> ApiCallResultWrapper<T>.onError(
+    action: (Throwable) -> Unit
+): ApiCallResultWrapper<T> {
+    if (this is ApiCallResultWrapper.Error) action(throwable)
+    return this
+}
+
+/** 3개의 flow 값들을 zip으로 사용하기 위한 메소드 */
+inline fun <T1, T2, T3, R> zip(
+    first: Flow<T1>,
+    second: Flow<T2>,
+    third: Flow<T3>,
+    crossinline transform: suspend (T1, T2, T3) -> R
+): Flow<R> =
+    first.zip(second) { a, b -> a to b }
+        .zip(third) { (a, b), c ->
+            transform(a, b, c)
+        }
 
 /** 예외가 발생해도 크래시를 일으키지 않는 최상위 [코루틴 스코프][CoroutineScope]를 생성한다. */
 @Suppress("FunctionName")

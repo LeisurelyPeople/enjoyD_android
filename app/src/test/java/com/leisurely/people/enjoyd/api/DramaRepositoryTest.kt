@@ -11,21 +11,6 @@ import java.util.concurrent.TimeUnit
  * @since v1.0.0 / 2020.07.12
  */
 class DramaRepositoryTest : AndroidBaseTest() {
-    /** 간략한 드라마 정보 리스트 API 를 테스트한다. */
-    @Test
-    fun dramasTest() {
-        val dramaInfoResponse = authApi.getDramas()
-        dramaInfoResponse.doOnSuccess {
-            println("doOnSuccess : $it")
-        }.test()
-            .awaitDone(3, TimeUnit.SECONDS)
-            .assertValue {
-                println("assertValue : $it")
-                true
-            }
-            .assertComplete()
-    }
-
     /** 자세한 드라마 정보 리스트 API 를 테스트한다. */
     @Test
     fun dramasInfoSlugTest() {

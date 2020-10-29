@@ -1,10 +1,12 @@
 package com.leisurely.people.enjoyd.di
 
-import com.leisurely.people.enjoyd.ui.evaluation.EvaluationViewModel
 import com.leisurely.people.enjoyd.ui.login.LoginViewModel
 import com.leisurely.people.enjoyd.model.login.SocialLoginModel
 import com.leisurely.people.enjoyd.ui.login.sociallogin.KakaoLogin
 import com.leisurely.people.enjoyd.ui.main.MainViewModel
+import com.leisurely.people.enjoyd.ui.main.evaluation.EvaluationViewModel
+import com.leisurely.people.enjoyd.ui.main.home.HomeViewModel
+import com.leisurely.people.enjoyd.ui.main.mypage.MyPageViewModel
 import com.leisurely.people.enjoyd.ui.onboarding.SummaryEvaluationViewModel
 import com.leisurely.people.enjoyd.ui.onboarding.UserInfoInputViewModel
 import com.leisurely.people.enjoyd.ui.search.SearchViewModel
@@ -23,7 +25,9 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { SplashViewModel(get()) }
     viewModel { MainViewModel() }
+    viewModel { HomeViewModel(get(), get(), get(), get()) }
     viewModel { EvaluationViewModel() }
+    viewModel { MyPageViewModel() }
     viewModel { SearchViewModel(get()) }
     viewModel { (kakaoLogin: KakaoLogin) ->
         LoginViewModel(kakaoLogin, get())

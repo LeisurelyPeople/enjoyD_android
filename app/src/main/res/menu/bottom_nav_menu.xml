@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/selector_nav_home"
+        android:title="@string/home" />
+
+    <item
+        android:id="@+id/evaluation"
+        android:icon="@drawable/selector_nav_evaluation"
+        android:title="@string/evaluation" />
+
+    <item
+        android:id="@+id/my_page"
+        android:icon="@drawable/selector_nav_mypage"
+        android:title="@string/my_page" />
+</menu>

@@ -1,6 +1,9 @@
 package com.leisurely.people.enjoyd.di
 
 import com.leisurely.people.enjoyd.data.remote.source.AccountRemoteDataSource
+import com.leisurely.people.enjoyd.data.remote.source.DramasBannerRemoteDataSource
+import com.leisurely.people.enjoyd.data.remote.source.DramasTagRemoteDataSource
+import com.leisurely.people.enjoyd.data.remote.source.DramasWatchingRemoteDataSource
 import com.leisurely.people.enjoyd.data.remote.source.evaluation.DramaEvaluationDataSource
 import com.leisurely.people.enjoyd.data.remote.source.drama.DramaSearchRemoteDataSource
 import org.koin.dsl.module
@@ -16,4 +19,7 @@ val remoteModule = module {
     single { AccountRemoteDataSource(get()) }
     single { DramaEvaluationDataSource(get()) }
     single { DramaSearchRemoteDataSource(get()) }
+    single { DramasBannerRemoteDataSource(get()) }
+    single { DramasTagRemoteDataSource(get()) }
+    single { DramasWatchingRemoteDataSource(get()) }
 }
