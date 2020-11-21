@@ -3,10 +3,7 @@ package com.leisurely.people.enjoyd.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchGetResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponseItem
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugGetResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponseItem
+import com.leisurely.people.enjoyd.data.remote.data.response.*
 import com.leisurely.people.enjoyd.data.repository.DramaRepository
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.coroutine.CoroutineKey
@@ -26,17 +23,29 @@ class DetailViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
     private val _startBackScreen: LiveEvent<Unit> = LiveEvent()
     val startBackScreen: LiveEvent<Unit> = _startBackScreen
 
-    // 상세 화면에 보여줄 드라마 아이템 정보
-    private val _detailDrama: MutableLiveData<DramasSlugGetResponse> = MutableLiveData()
-    var detailDrama: LiveData<DramasSlugGetResponse> = _detailDrama
-
     // 상단 actionBar 제목
     private val _title: MutableLiveData<String> = MutableLiveData()
     var title: LiveData<String> = _title
 
+    // 감독
+    private val _writer: MutableLiveData<String> = MutableLiveData()
+    var writer: LiveData<String> = _writer
+
+    // 포스터 URL
+    private val _poster: MutableLiveData<String> = MutableLiveData()
+    var poster: LiveData<String> = _poster
+
+    // 줄거리
+    private val _summary: MutableLiveData<String> = MutableLiveData()
+    var summary: LiveData<String> = _summary
+
+    // 평점
+    private val _avgRating: MutableLiveData<String> = MutableLiveData()
+    var avgRating: LiveData<String> = _avgRating
+
     // 다른 회차 둘러보기 목록
-    private val _others: MutableLiveData<List<DramasSlugResponseItem>> = MutableLiveData()
-    var others: LiveData<List<DramasSlugResponseItem>> = _others
+    private val _others: MutableLiveData<List<DramasSlugEpisodesResponseItem>> = MutableLiveData()
+    var others: LiveData<List<DramasSlugEpisodesResponseItem>> = _others
 
     // 연관 드라마 목록
     private val _rels: MutableLiveData<List<DramasSlugRelatedSearchResponseItem>> =
@@ -49,8 +58,6 @@ class DetailViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
     }
 
     init {
-        _detailDrama.value = null
-
         _title.value = ""
 
         _others.value = listOf()
@@ -67,23 +74,39 @@ class DetailViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
                 .applySingleSchedulers()
                 .subscribeWith(object : DisposableSingleObserver<DramasSlugGetResponse>() {
                     override fun onSuccess(detailDrama: DramasSlugGetResponse) {
-                        _detailDrama.value = detailDrama
-
-                        _title.value = _detailDrama.value?.title
-                        _others.value = _detailDrama.value?.dramas
+                        _title.value = detailDrama.title
+                        _writer.value = detailDrama.writer
+                        _poster.value = detailDrama.poster
+                        _summary.value = detailDrama.summary
+                        _avgRating.value = "${detailDrama.avgRating}"
                     }
 
                     override fun onError(e: Throwable) {
                         super.onError(e)
-                        _detailDrama.value = null
-
                         _title.value = "일치하는 데이터를 찾을 수 없습니다."
+                        _writer.value = ""
+                        _poster.value = ""
+                        _summary.value = ""
+                        _avgRating.value = ""
+                    }
+                })
+
+            // 다른 회차 둘러보기 목록을 보여주기 위한 데이터를 세팅한다.
+            dramaRepository.getDramasSlugEpisodes(dramasSlug)
+                .applySingleSchedulers()
+                .subscribeWith(object : DisposableSingleObserver<DramasSlugEpisodesResponse>() {
+                    override fun onSuccess(episodes: DramasSlugEpisodesResponse) {
+                        _others.value = episodes.results
+                    }
+
+                    override fun onError(e: Throwable) {
+                        super.onError(e)
                         _others.value = listOf()
                     }
                 })
 
-            // 연관 드라마 목록을 보여주기 위한 데이터를 세팅한다.
-            dramaRepository.getDramasSearch("", "avg_rating")
+            // 다른 회차 둘러보기 목록을 보여주기 위한 데이터를 세팅한다.
+            dramaRepository.getDramasSlugRelatedSearch(dramasSlug)
                 .applySingleSchedulers()
                 .subscribeWith(object :
                     DisposableSingleObserver<DramasSlugRelatedSearchResponse>() {

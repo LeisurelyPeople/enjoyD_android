@@ -72,16 +72,14 @@ class VideoActivity : BaseActivity<ActivityVideoBinding, VideoViewModel>(
 
     override fun onResume() {
         super.onResume()
-        if (requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-            ypv_drama?.player?.playWhenReady = true
-        }
+        ypv_drama?.player?.playWhenReady = true
+
     }
 
     override fun onPause() {
         super.onPause()
-        if (requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-            ypv_drama?.player?.playWhenReady = false
-        }
+        ypv_drama?.player?.playWhenReady = false
+
     }
 
     override fun onDestroy() {

@@ -1,13 +1,11 @@
 package com.leisurely.people.enjoyd.ui.detail
 
 import android.os.Bundle
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.Observer
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.ActivityDetailBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.layout_detail_other_reco.*
+import kotlinx.android.synthetic.main.layout_detail_other_rel.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**

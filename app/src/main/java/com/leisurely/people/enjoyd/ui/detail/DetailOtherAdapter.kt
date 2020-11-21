@@ -3,13 +3,16 @@ package com.leisurely.people.enjoyd.ui.detail
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import androidx.databinding.ViewDataBinding
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponseItem
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugEpisodesResponseItem
 import com.leisurely.people.enjoyd.databinding.ItemOtherBinding
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseItemVH
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseRVAdapter
 import com.leisurely.people.enjoyd.ui.video.VideoActivity
 import com.leisurely.people.enjoyd.util.ext.setOnSingleClickListener
+import com.leisurely.people.enjoyd.util.ext.styledNumber
 
 /**
  * 다른 회차 둘러보기 adapter
@@ -17,11 +20,11 @@ import com.leisurely.people.enjoyd.util.ext.setOnSingleClickListener
  * @author ricky
  * @since v1.0.0 / 2020.10.18
  */
-class DetailOtherAdapter : BaseRVAdapter<DramasSlugResponseItem>() {
+class DetailOtherAdapter : BaseRVAdapter<DramasSlugEpisodesResponseItem>() {
     override fun onBindView(
         binding: ViewDataBinding,
         viewHolder: BaseItemVH,
-        item: DramasSlugResponseItem
+        item: DramasSlugEpisodesResponseItem
     ) {
         (binding as ItemOtherBinding).item = item
     }
@@ -40,5 +43,9 @@ class DetailOtherAdapter : BaseRVAdapter<DramasSlugResponseItem>() {
             }
         }
     }
+}
 
+@BindingAdapter("detailOtherEpisode", "detailOtherTitle")
+fun TextView.setDetailOtherTitle(episode: Int, title: String) {
+    text = "$title EP ${episode.styledNumber()}"
 }
