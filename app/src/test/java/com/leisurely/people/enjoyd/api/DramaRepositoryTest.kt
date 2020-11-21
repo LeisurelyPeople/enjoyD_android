@@ -64,6 +64,40 @@ class DramaRepositoryTest : AndroidBaseTest() {
             .assertComplete()
     }
 
+    /** 해당 드라마의 에피소드 목록 API [getDramasSlugEpisodes] 를 테스트한다 */
+    @Test
+    fun dramasInfoEpisodesTest() {
+        val dramasSlugEpisodesResponse = authApi.getDramasSlugEpisodes("manjjijnamnyeo")
+        dramasSlugEpisodesResponse.doOnSuccess {
+            println("doOnSuccess : $it")
+        }.doOnError { error ->
+            println("doOnError : $error")
+        }.test()
+            .awaitDone(3, TimeUnit.SECONDS)
+            .assertValue {
+                println("assertValue : $it")
+                true
+            }
+            .assertComplete()
+    }
+
+    /** 해당 드라마의 연관 드라마 목록 API [getDramasSlugRelatedSearch] 를 테스트한다 */
+    @Test
+    fun dramasSlugRelatedSearchTest() {
+        val dramasSlugRelatedSearchResponse = authApi.getDramasSlugRelatedSearch("manjjijnamnyeo")
+        dramasSlugRelatedSearchResponse.doOnSuccess {
+            println("doOnSuccess : $it")
+        }.doOnError { error ->
+            println("doOnError : $error")
+        }.test()
+            .awaitDone(3, TimeUnit.SECONDS)
+            .assertValue {
+                println("assertValue : $it")
+                true
+            }
+            .assertComplete()
+    }
+
     /** 드라마 정보 검색 API [getDramasSearch] 를 테스트한다. */
     @Test
     fun dramasSearchTest() {

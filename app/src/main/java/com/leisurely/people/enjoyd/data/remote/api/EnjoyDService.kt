@@ -44,6 +44,18 @@ interface EnjoyDService {
         @Path("drama_info_slug") dramaInfoSlug: String
     ): Single<DramasSlugGetResponse>
 
+    /** 해당 드라마의 에피소드 목록 API (/dramas/{drama_info_slug}/episodes}) */
+    @GET("/dramas/{drama_info_slug}/episodes/")
+    fun getDramasSlugEpisodes(
+        @Path("drama_info_slug") dramaInfoSlug: String
+    ): Single<DramasSlugEpisodesResponse>
+
+    /** 해당 드라마의 연관 드라마 목록 API (/dramas/{drama_info_slug}/related/search) */
+    @GET("/dramas/{drama_info_slug}/related/search/")
+    fun getDramasSlugRelatedSearch(
+        @Path("drama_info_slug") dramaInfoSlug: String
+    ): Single<DramasSlugRelatedSearchResponse>
+
     /** 드라마 정보 검색 API (/dramas/search) */
     @GET("/dramas/search/")
     fun getDramasSearch(

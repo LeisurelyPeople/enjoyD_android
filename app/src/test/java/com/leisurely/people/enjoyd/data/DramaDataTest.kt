@@ -46,53 +46,46 @@ class DramaDataTest : AndroidBaseTest() {
         Assert.assertEquals(fullData.results?.get(0)?.title, "이씨 모임")
     }
 
-    /** 드라마정보 디테일 API [getDramasInfoPk] 데이터 파싱이 정상적으로 이루어지는지 확인한다. */
+    /** 드라마정보 디테일 API [getDramasSlug] 데이터 파싱이 정상적으로 이루어지는지 확인한다. */
     @Test
     fun dramasInfoPkTest() {
         // GIVEN1 : 문자열화된 json 데이터 (완벽한 데이터)
-        val fullJsonObject = """{
-            "pk": 1,
-            "poster": "이미지 주소",
-            "title": "소녀의 세계",
-            "avg_rating": 5,
-            "summary": "이씨들이 모여서 발생하는 사건 사고들",
-            "tag": [
-                "멜로",
-                "액션",
-                "스릴러"
-            ],
-            "cast": [
-                "이배우",
-                "고배우",
-                "삼배우"
-            ],
-            "director": "이감독",
-            "dramas": [
-            {
-                "pk": "drama_id",
-                "video_id": "PsTWEzt1GTw",
-                "title": "엽떡을 먹는 방법 ",
-                "episode": 1,
-                "summary": "더미값더미값",
-                "duration": 1,
-                "small_thumbnail": "더미값더미값"
-            }
-            ]
-        }""".trimIndent().asJson
+        val fullJsonObject = """
+        {
+          "slug": "manjjijnamnyeo",
+          "poster": "http://3.35.87.123/media/manjjijnamnyeo/2020091019021-----.jpg",
+          "title": "만찢남녀",
+          "summary": "얼굴도 이름도 <선녀와 남욱군> 만화 속 여주인공과 똑같지만 성격은 정반대인 한선녀. 그런 한선녀 앞에 만화책 속에서 튀어나온 진짜 만찢남 천남욱이 나타나며 벌어지는 좌충우돌 로맨스",
+          "avg_rating": 5,
+          "release_year": 2020,
+          "tag": [
+            "10대",
+            "로맨스"
+          ],
+          "cast": [
+            "김민규",
+            "김도연",
+            "최현욱",
+            "한지효",
+            "임보라"
+          ],
+          "writer": "최요지"
+        }
+        """.trimIndent().asJson
 
         // WHEN1 : 문자열 json 데이터를 파싱한다.
         val fullData = DramasSlugGetResponse.serializer().parse(fullJsonObject)
 
         // THEN1 : 문자열 json 데이터와 객체 데이터가 정상적으로 매치되어야 한다.
-        Assert.assertEquals(fullData.pk, 1)
-        Assert.assertEquals(fullData.poster, "이미지 주소")
-        Assert.assertEquals(fullData.title, "소녀의 세계")
-        Assert.assertEquals(fullData.avgRating, 5)
-        Assert.assertEquals(fullData.summary, "이씨들이 모여서 발생하는 사건 사고들")
-        Assert.assertEquals(fullData.tag?.get(0), "멜로")
-        Assert.assertEquals(fullData.cast?.get(1), "고배우")
-        Assert.assertEquals(fullData.director, "이감독")
-        Assert.assertEquals(fullData.dramas?.get(0)?.summary, "더미값더미값")
+        Assert.assertEquals(fullData.slug, "manjjijnamnyeo")
+        Assert.assertEquals(fullData.poster, "http://3.35.87.123/media/manjjijnamnyeo/2020091019021-----.jpg")
+        Assert.assertEquals(fullData.title, "만찢남녀")
+        Assert.assertEquals(fullData.summary, "얼굴도 이름도 <선녀와 남욱군> 만화 속 여주인공과 똑같지만 성격은 정반대인 한선녀. 그런 한선녀 앞에 만화책 속에서 튀어나온 진짜 만찢남 천남욱이 나타나며 벌어지는 좌충우돌 로맨스")
+        Assert.assertEquals(fullData.avgRating, 5f)
+        Assert.assertEquals(fullData.releaseYear, 2020)
+        Assert.assertEquals(fullData.tag[0], "10대")
+        Assert.assertEquals(fullData.cast[1], "김도연")
+        Assert.assertEquals(fullData.writer, "최요지")
     }
 
     /** 드라마 정보 검색 API [dramaInfoSearch] 데이터 파싱이 정상적으로 이루어지는지 확인한다. */

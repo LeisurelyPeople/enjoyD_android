@@ -1,5 +1,6 @@
 package com.leisurely.people.enjoyd.data.remote.data.response
 
+import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -11,14 +12,19 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class DramasSlugGetResponse(
-    val pk: Int,
+    val slug: String,
 
     val poster: String,
 
     val title: String,
 
+    @SerializedName("avg_rating")
     @SerialName("avg_rating")
-    val avgRating: Double,
+    val avgRating: Float,
+
+    @SerializedName("release_year")
+    @SerialName("release_year")
+    val releaseYear: Int,
 
     val summary: String,
 
@@ -26,7 +32,5 @@ data class DramasSlugGetResponse(
 
     val cast: List<String>,
 
-    val director: String,
-
-    val dramas: List<DramasSlugResponseItem>
+    val writer: String
 )

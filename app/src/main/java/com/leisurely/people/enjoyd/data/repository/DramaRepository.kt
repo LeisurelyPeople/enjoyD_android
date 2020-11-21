@@ -1,8 +1,10 @@
 package com.leisurely.people.enjoyd.data.repository
 
 import com.leisurely.people.enjoyd.data.local.source.DramaLocalDataSource
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugEpisodesResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchGetResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugGetResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugRelatedSearchResponse
 import com.leisurely.people.enjoyd.data.remote.source.drama.DramaSearchRemoteDataSource
 import io.reactivex.Single
 import kotlinx.coroutines.Dispatchers
@@ -29,12 +31,29 @@ class DramaRepository(
         return@withContext dramaSearchRemoteDataSource.getDramasSlug(dramaInfoSlug)
     }
 
+    suspend fun getDramasSlugEpisodes(
+        dramaInfoSlug: String
+    ): Single<DramasSlugEpisodesResponse> = withContext(Dispatchers.IO) {
+        // 아직은 로컬 영역에서 별도로 하는 작업이 없음
+
+        // 리모트 영역에서 가져온 데이터 리턴
+        return@withContext dramaSearchRemoteDataSource.getDramasSlugEpisodes(dramaInfoSlug)
+    }
+
+    suspend fun getDramasSlugRelatedSearch(
+        dramaInfoSlug: String
+    ): Single<DramasSlugRelatedSearchResponse> = withContext(Dispatchers.IO) {
+        // 아직은 로컬 영역에서 별도로 하는 작업이 없음
+
+        // 리모트 영역에서 가져온 데이터 리턴
+        return@withContext dramaSearchRemoteDataSource.getDramasSlugRelatedSearch(dramaInfoSlug)
+    }
+
     suspend fun getDramasSearch(
         search: String?,
         ordering: String
     ): Single<DramasSearchGetResponse> = withContext(Dispatchers.IO) {
-        // 아직은 로컬 영역에서 별도로 하는 작업이 없음 (더미 함수 넣어놓음)
-        dramaLocalDataSource.dramaInfoSearch()
+        // 아직은 로컬 영역에서 별도로 하는 작업이 없음
 
         // 리모트 영역에서 가져온 데이터 리턴
         return@withContext dramaSearchRemoteDataSource.getDramasSearch(search, ordering)
