@@ -27,8 +27,8 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(
         val otherAdapter = DetailOtherAdapter()
         rv_others.adapter = otherAdapter
 
-        val recoAdapter = DetailRecoAdapter()
-        rv_recos.adapter = recoAdapter
+        val relAdapter = DetailRelAdapter()
+        rv_rels.adapter = relAdapter
 
         viewModel.init("manjjijnamnyeo")
 

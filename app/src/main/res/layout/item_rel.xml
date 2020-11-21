@@ -2,57 +2,65 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="item"
-            type="com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponseItem" />
+            type="com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugRelatedSearchResponseItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="161dp"
+        android:layout_height="144dp"
         android:background="@color/color_grey_500"
         android:orientation="vertical"
         android:padding="6dp">
 
         <ImageView
-            android:id="@+id/reco_poster"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/rel_poster"
+            android:layout_width="149dp"
+            android:layout_height="85dp"
             android:scaleType="fitXY"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            bind:imgUrl="@{item.thumbnail}"
             tools:src="@drawable/dummy_detail_other_poster" />
 
         <TextView
-            android:id="@+id/reco_title"
-            android:layout_width="wrap_content"
+            android:id="@+id/rel_title"
+            android:layout_width="149dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
+            android:ellipsize="marquee"
             android:lineSpacingExtra="6sp"
+            android:singleLine="true"
             android:textColor="@color/color_grey_0"
+            android:text="@{item.title}"
             android:textSize="14sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/reco_poster"
+            app:layout_constraintTop_toBottomOf="@+id/rel_poster"
             tools:text="두개의 빛" />
 
         <TextView
-            android:id="@+id/reco_episode_entire"
-            android:layout_width="wrap_content"
+            android:id="@+id/rel_episode_entire"
+            android:layout_width="149dp"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:lineSpacingExtra="6sp"
+            android:singleLine="true"
+            android:text="@{item.producer}"
             android:textColor="@color/color_grey_0"
             android:textSize="14sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/reco_title"
+            app:layout_constraintTop_toBottomOf="@+id/rel_title"
             tools:text="EP.1 ~ 4" />
 
         <ImageView
-            android:id="@+id/reco_bookmark"
+            android:id="@+id/rel_bookmark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="4dp"

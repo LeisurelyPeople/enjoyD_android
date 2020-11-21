@@ -41,7 +41,7 @@
             tools:listitem="@layout/item_other" />
 
         <TextView
-            android:id="@+id/tv_detail_reco_title"
+            android:id="@+id/tv_detail_rel_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -53,15 +53,15 @@
             android:text="연관 드라마" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_recos"
-            replaceAll="@{vm.recos}"
+            android:id="@+id/rv_rels"
+            replaceAll="@{vm.rels}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@+id/tv_detail_reco_title"
-            tools:listitem="@layout/item_reco" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_rel_title"
+            tools:listitem="@layout/item_rel" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

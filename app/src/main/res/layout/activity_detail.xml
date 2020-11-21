@@ -6,9 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <import type="String" />
-
         <variable
             name="vm"
             type="com.leisurely.people.enjoyd.ui.detail.DetailViewModel" />
@@ -37,7 +34,7 @@
                     app:contentInsetLeft="0dp"
                     app:contentInsetStart="0dp"
                     app:contentInsetStartWithNavigation="0dp"
-                    app:layout_collapseMode="pin">
+                    app:layout_scrollFlags="scroll|enterAlways" >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -74,13 +71,13 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="?android:attr/actionBarSize"
                     app:layout_collapseMode="parallax"
-                    bind:imgUrl="@{vm.detailDrama.poster}"
+                    app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+                    bind:imgUrl="@{vm.poster}"
                     tools:src="@drawable/dummy_detail_poster" />
-
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
@@ -101,6 +98,7 @@
                     android:lineSpacingExtra="4sp"
                     android:textColor="@color/color_grey_0"
                     android:textSize="12sp"
+                    android:text="@{vm.writer}"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Samsung Electronics" />
@@ -111,6 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="8dp"
+                    android:text="@{vm.title}"
                     android:fontFamily="@font/noto_sans_kr_bold"
                     android:lineSpacingExtra="4sp"
                     android:textColor="@color/color_grey_0"
@@ -164,7 +163,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="16dp"
                     android:lineSpacingExtra="4sp"
-                    android:text="@{vm.detailDrama.summary}"
+                    android:text="@{vm.summary}"
                     android:textColor="@color/color_grey_050"
                     android:textSize="12sp"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -203,8 +202,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="2dp"
                         android:gravity="center_horizontal"
-                        android:text="@{Double.toString(vm.detailDrama.avgRating)}"
                         android:textColor="@color/color_grey_0"
+                        android:text="@{vm.avgRating}"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toRightOf="@+id/img_detail_star"
@@ -230,14 +229,14 @@
                     app:layout_constraintTop_toBottomOf="@+id/cl_detail_star_share" />
 
                 <include
-                    layout="@layout/layout_detail_other_reco"
+                    layout="@layout/layout_detail_other_rel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/cl_detail_star_share"
                     app:vm="@{vm}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

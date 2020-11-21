@@ -39,8 +39,9 @@ class DetailViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
     var others: LiveData<List<DramasSlugResponseItem>> = _others
 
     // 연관 드라마 목록
-    private val _recos: MutableLiveData<List<DramasSearchResponseItem>> = MutableLiveData()
-    var recos: LiveData<List<DramasSearchResponseItem>> = _recos
+    private val _rels: MutableLiveData<List<DramasSlugRelatedSearchResponseItem>> =
+        MutableLiveData()
+    var rels: LiveData<List<DramasSlugRelatedSearchResponseItem>> = _rels
 
     /** 뒤로가기 버튼을 동작시키기 위한 메소드 */
     fun onClickBackScreen() {
@@ -54,7 +55,7 @@ class DetailViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
 
         _others.value = listOf()
 
-        _recos.value = listOf()
+        _rels.value = listOf()
 
     }
 
@@ -84,14 +85,15 @@ class DetailViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
             // 연관 드라마 목록을 보여주기 위한 데이터를 세팅한다.
             dramaRepository.getDramasSearch("", "avg_rating")
                 .applySingleSchedulers()
-                .subscribeWith(object : DisposableSingleObserver<DramasSearchGetResponse>() {
-                    override fun onSuccess(searchDramas: DramasSearchGetResponse) {
-                        _recos.value = searchDramas
+                .subscribeWith(object :
+                    DisposableSingleObserver<DramasSlugRelatedSearchResponse>() {
+                    override fun onSuccess(episodes: DramasSlugRelatedSearchResponse) {
+                        _rels.value = episodes.results
                     }
 
                     override fun onError(e: Throwable) {
                         super.onError(e)
-                        _recos.value = listOf()
+                        _rels.value = listOf()
                     }
                 })
         }
