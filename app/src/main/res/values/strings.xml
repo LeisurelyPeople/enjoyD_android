@@ -34,7 +34,7 @@
     <string name="evaluation">평가</string>
     <string name="my_page">마이페이지</string>
     <string name="view_all">전체보기</string>
-    <string name="dramas_episode_title_format">[EP.%02d] %s</string>
+    <string name="dramas_episode_title_format">EP.%02d %s</string>
 
     <!-- 메인 (Main) -->
     <string name="screen_title">Enjoy:D</string>
