@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/view_divider_1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/color_grey_300"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_first_tab_layout"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/view_divider_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_divider_1">
+
+        <TextView
+            android:id="@+id/tv_first_tab_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            tools:text="찜한 목록 134"
+            tools:textColor="@color/color_grey_0"
+            tools:textSize="@dimen/text_size_14sp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_divider_2"
+        android:layout_width="1dp"
+        android:layout_height="48dp"
+        android:background="@color/color_grey_300"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_second_tab_layout"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view_divider_2"
+        app:layout_constraintTop_toBottomOf="@+id/view_divider_1">
+
+        <TextView
+            android:id="@+id/tv_second_tab_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            tools:text="문의/제안"
+            tools:textColor="@color/color_grey_200"
+            tools:textSize="@dimen/text_size_14sp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_divider_3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/color_grey_300"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_second_tab_layout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

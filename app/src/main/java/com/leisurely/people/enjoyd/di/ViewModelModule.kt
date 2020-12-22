@@ -7,6 +7,8 @@ import com.leisurely.people.enjoyd.ui.main.MainViewModel
 import com.leisurely.people.enjoyd.ui.main.evaluation.EvaluationViewModel
 import com.leisurely.people.enjoyd.ui.main.home.HomeViewModel
 import com.leisurely.people.enjoyd.ui.main.mypage.MyPageViewModel
+import com.leisurely.people.enjoyd.ui.main.mypage.dibs.SavedDramasViewModel
+import com.leisurely.people.enjoyd.ui.main.mypage.inquire.InquireViewModel
 import com.leisurely.people.enjoyd.ui.onboarding.SummaryEvaluationViewModel
 import com.leisurely.people.enjoyd.ui.onboarding.UserInfoInputViewModel
 import com.leisurely.people.enjoyd.ui.search.SearchViewModel
@@ -28,6 +30,8 @@ val viewModelModule = module {
     viewModel { HomeViewModel(get(), get(), get(), get()) }
     viewModel { EvaluationViewModel(get()) }
     viewModel { MyPageViewModel(get()) }
+    viewModel { SavedDramasViewModel() }
+    viewModel { InquireViewModel() }
     viewModel { SearchViewModel(get()) }
     viewModel { (kakaoLogin: KakaoLogin) ->
         LoginViewModel(kakaoLogin, get())
