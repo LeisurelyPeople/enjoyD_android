@@ -11,6 +11,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.UserResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasBannerResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasWatchingResponse
@@ -26,6 +27,11 @@ import retrofit2.http.Query
  * @since v1.0.0 / 2020.09.08
  */
 interface EnjoyDService {
+
+    /** 사용자 정보 가져오는 API */
+    @GET("accounts/")
+    suspend fun getAccounts(): UserResponse
+
     /** 드라마 평가를 위한 데이터 가져오는 API */
     @GET("accounts/dramas/ratings/")
     fun getDramasRatings(

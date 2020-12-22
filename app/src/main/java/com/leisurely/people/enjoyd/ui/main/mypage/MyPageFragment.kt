@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.FragmentMyPageBinding
 import com.leisurely.people.enjoyd.ui.base.BaseFragment
@@ -23,6 +24,16 @@ class MyPageFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeViewModelLiveData()
+    }
+
+    private fun observeViewModelLiveData() {
+        with(viewModel) {
+            /** 사용자 수정 화면 이동 여부 observer */
+            startProfileEditPage.observe(viewLifecycleOwner, Observer {
+                // TODO 사용자 정보 수정화면으로 전환 (담당자 : Wayne)
+            })
+        }
     }
 
     companion object {

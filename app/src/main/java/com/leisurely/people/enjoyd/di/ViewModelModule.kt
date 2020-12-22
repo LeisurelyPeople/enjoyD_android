@@ -27,7 +27,7 @@ val viewModelModule = module {
     viewModel { MainViewModel() }
     viewModel { HomeViewModel(get(), get(), get(), get()) }
     viewModel { EvaluationViewModel(get()) }
-    viewModel { MyPageViewModel() }
+    viewModel { MyPageViewModel(get()) }
     viewModel { SearchViewModel(get()) }
     viewModel { (kakaoLogin: KakaoLogin) ->
         LoginViewModel(kakaoLogin, get())
