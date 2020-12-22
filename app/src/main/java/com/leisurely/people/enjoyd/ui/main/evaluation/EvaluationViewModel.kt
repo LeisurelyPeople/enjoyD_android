@@ -5,6 +5,7 @@ import com.leisurely.people.enjoyd.data.remote.data.request.evaluation.DramaEval
 import com.leisurely.people.enjoyd.data.remote.data.response.evaluation.DramaEvaluationResponse
 import com.leisurely.people.enjoyd.data.repository.evaluation.DramaEvaluationRepository
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
+import com.leisurely.people.enjoyd.util.lifecycle.LiveEvent
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onCompletion
@@ -23,6 +24,10 @@ class EvaluationViewModel(private val dramaEvaluationRepository: DramaEvaluation
     /** 로딩 관련 LiveData */
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
+
+    /** 검색 화면으로 이동하기 위한 LiveData */
+    private val _startSearchPage: LiveEvent<Unit> = LiveEvent()
+    val startSearchPage: LiveEvent<Unit> = _startSearchPage
 
     /** 페이징 처리 부분에서 다음 항목의 데이터를 가지고 있는지 판단하는 boolean 값을 담고 있는 LiveData */
     private val _hasNextData: MutableLiveData<Boolean> = MutableLiveData(true)
@@ -69,6 +74,9 @@ class EvaluationViewModel(private val dramaEvaluationRepository: DramaEvaluation
                     }
                 }
         }
+    }
 
+    fun goToSearchPage() {
+        _startSearchPage.value = null
     }
 }
