@@ -22,7 +22,18 @@ class DramaEvaluationDataSource(private val enjoyDService: EnjoyDService) {
         return enjoyDService.getDramasRatings(page, pageSize)
     }
 
+    suspend fun getDramasRatingsUsingCoroutine(
+        page: Int,
+        pageSize: Int
+    ): PagingResponse<DramaEvaluationResponse> {
+        return enjoyDService.getDramasRatingsUsingCoroutine(page, pageSize)
+    }
+
     fun postDramasRatings(data: List<DramaEvaluationRequest>): Completable {
         return enjoyDService.postDramasRatings(hashMapOf("drama_rating_infos" to data))
+    }
+
+    suspend fun postDramasRatingsUsingCoroutine(data: List<DramaEvaluationRequest>) {
+        enjoyDService.postDramasRatingsUsingCoroutine(hashMapOf("drama_rating_infos" to data))
     }
 }

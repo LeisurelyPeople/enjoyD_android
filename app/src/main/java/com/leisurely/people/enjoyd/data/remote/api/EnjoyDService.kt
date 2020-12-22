@@ -27,15 +27,28 @@ import retrofit2.http.Query
  */
 interface EnjoyDService {
     /** 드라마 평가를 위한 데이터 가져오는 API */
-    @GET("accounts/dramas/ratings")
+    @GET("accounts/dramas/ratings/")
     fun getDramasRatings(
         @Query("page") page: Int,
         @Query("page_size") pageSize: Int
     ): Single<PagingResponse<DramaEvaluationResponse>>
 
+    /** 드라마 평가를 위한 데이터 가져오는 API (코루틴용) */
+    @GET("accounts/dramas/ratings/")
+    suspend fun getDramasRatingsUsingCoroutine(
+        @Query("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): PagingResponse<DramaEvaluationResponse>
+
     /** 드라마 평가한 데이터 서버로 보내는 API */
-    @POST("accounts/dramas/ratings")
+    @POST("accounts/dramas/ratings/")
     fun postDramasRatings(@Body data: HashMap<String, List<DramaEvaluationRequest>>): Completable
+
+    /** 드라마 평가한 데이터 서버로 보내는 API (코루틴용) */
+    @POST("accounts/dramas/ratings/")
+    suspend fun postDramasRatingsUsingCoroutine(
+        @Body data: HashMap<String, List<DramaEvaluationRequest>>
+    )
 
     /** 간략한 드라마 정보 리스트 API (/dramas) */
     @GET("/dramas/")

@@ -6,6 +6,9 @@ import com.leisurely.people.enjoyd.data.remote.data.response.evaluation.DramaEva
 import com.leisurely.people.enjoyd.data.remote.source.evaluation.DramaEvaluationDataSource
 import io.reactivex.Completable
 import io.reactivex.Single
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 /**
  * 드라마 평가 관련 Repository 클래스
@@ -22,7 +25,15 @@ class DramaEvaluationRepository(private val dramaEvaluationDataSource: DramaEval
         return dramaEvaluationDataSource.getDramasRatings(page, pageSize)
     }
 
+    fun getDramaEvaluationDataUsingCoroutine(page: Int, pageSize: Int) = flow {
+        emit(dramaEvaluationDataSource.getDramasRatingsUsingCoroutine(page, pageSize))
+    }.flowOn(Dispatchers.IO)
+
     fun postDramaEvaluationData(data: List<DramaEvaluationRequest>): Completable {
         return dramaEvaluationDataSource.postDramasRatings(data)
     }
+
+    fun postDramaEvaluationDataUsingCoroutine(data: List<DramaEvaluationRequest>) = flow {
+        emit(dramaEvaluationDataSource.postDramasRatingsUsingCoroutine(data))
+    }.flowOn(Dispatchers.IO)
 }
