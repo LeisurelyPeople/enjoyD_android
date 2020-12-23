@@ -90,4 +90,7 @@ interface EnjoyDService {
         @Query("page") page: Int,
         @Query("size") size: Int
     ): PagingResponse<DramasWatchingResponse>
+
+    @POST("/support/question/create")
+    suspend fun postSupportQuestionCreate(@Body data: HashMap<String, String>)
 }

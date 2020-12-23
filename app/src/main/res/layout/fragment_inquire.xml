@@ -1,23 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.leisurely.people.enjoyd.ui.main.mypage.inquire.InquireViewModel" />
+
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.main.mypage.inquire.InquireFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_left"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:text="문의 화면" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
 
-    </FrameLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_right"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_inquire"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_inquire_edit_text"
+            android:gravity="top"
+            android:hint="@string/inquire_edit_text_hint"
+            android:maxLines="10"
+            android:padding="16dp"
+            android:scrollbars="vertical"
+            android:text="@={vm.feedbackLiveData}"
+            android:textColor="@color/color_grey_050"
+            android:textColorHint="@color/color_grey_050"
+            app:layout_constraintBottom_toTopOf="@+id/btn_send_feedback"
+            app:layout_constraintEnd_toEndOf="@+id/guide_right"
+            app:layout_constraintStart_toStartOf="@+id/guide_left"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_send_feedback"
+            style="@style/SendFeedbackButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
+            android:onClick="@{() -> vm.sendFeedback()}"
+            android:text="@string/send_feedback"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/guide_right"
+            app:layout_constraintStart_toStartOf="@+id/guide_left"
+            app:layout_constraintTop_toBottomOf="@+id/edit_inquire"
+            app:layout_constraintVertical_bias="1"
+            tools:text="등록" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

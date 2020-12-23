@@ -31,7 +31,7 @@ val viewModelModule = module {
     viewModel { EvaluationViewModel(get()) }
     viewModel { MyPageViewModel(get()) }
     viewModel { SavedDramasViewModel() }
-    viewModel { InquireViewModel() }
+    viewModel { InquireViewModel(get()) }
     viewModel { SearchViewModel(get()) }
     viewModel { (kakaoLogin: KakaoLogin) ->
         LoginViewModel(kakaoLogin, get())

@@ -64,6 +64,14 @@
         <item name="android:textColor">@drawable/selector_text_color_in_summary_evalution</item>
     </style>
 
+    <style name="SendFeedbackButtonStyle" parent="TextAppearance.AppCompat.Button">
+        <item name="android:background">@drawable/bg_send_feedback_button</item>
+        <item name="android:fontFamily">@font/noto_sans_kr_medium</item>
+        <item name="android:textSize">@dimen/text_size_20sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/color_grey_050</item>
+    </style>
+
     <style name="UserBirthDayDatePickerStyle" parent="android:Widget.Holo.DatePicker">
         <item name="android:datePickerMode">spinner</item>
         <item name="android:calendarViewShown">false</item>
