@@ -30,7 +30,7 @@ val viewModelModule = module {
     viewModel { HomeViewModel(get(), get(), get(), get()) }
     viewModel { EvaluationViewModel(get()) }
     viewModel { MyPageViewModel(get()) }
-    viewModel { SavedDramasViewModel() }
+    viewModel { SavedDramasViewModel(get()) }
     viewModel { InquireViewModel(get()) }
     viewModel { SearchViewModel(get()) }
     viewModel { (kakaoLogin: KakaoLogin) ->

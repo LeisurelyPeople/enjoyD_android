@@ -13,6 +13,7 @@ import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasBannerRe
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasWatchingResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.mypage.DramasBookmarkResponse
+import retrofit2.Response
 import retrofit2.http.*
 
 /**
@@ -92,10 +93,10 @@ interface EnjoyDService {
     suspend fun getDramasBookmarks(): List<DramasBookmarkResponse>
 
     @DELETE("/accounts/dramas/{drama_info_slug}/episodes/{episode}/bookmark/")
-    suspend fun deleteDramasBookmarks(
+    suspend fun deleteDramasBookmark(
         @Path("drama_info_slug") dramaInfoSlug: String,
         @Path("episode") episode: String
-    )
+    ): Response<Unit>
 
     @POST("/support/question/create")
     suspend fun postSupportQuestionCreate(@Body data: HashMap<String, String>)

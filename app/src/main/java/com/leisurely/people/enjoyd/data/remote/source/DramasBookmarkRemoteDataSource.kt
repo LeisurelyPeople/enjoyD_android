@@ -13,6 +13,6 @@ class DramasBookmarkRemoteDataSource(private val enjoyDService: EnjoyDService) {
     suspend fun getDramasBookmarks(): List<DramasBookmarkResponse> =
         enjoyDService.getDramasBookmarks()
 
-    suspend fun deleteDramasBookmarks(dramaInfoSlug: String, episode: String) =
-        enjoyDService.deleteDramasBookmarks(dramaInfoSlug, episode)
+    suspend fun deleteDramasBookmark(dramaInfoSlug: String, episode: String) =
+        enjoyDService.deleteDramasBookmark(dramaInfoSlug, episode)
 }

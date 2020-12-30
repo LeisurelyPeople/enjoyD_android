@@ -19,7 +19,7 @@ class DramasBookmarkRepository(
         emit(dramasBookmarkRemoteDataSource.getDramasBookmarks())
     }.flowOn(Dispatchers.IO)
 
-    suspend fun deleteDramasBookmarks(dramaInfoSlug: String, episode: String) = flow {
-        emit(dramasBookmarkRemoteDataSource.deleteDramasBookmarks(dramaInfoSlug, episode))
+    suspend fun deleteDramasBookmark(dramaInfoSlug: String, episode: String) = flow {
+        emit(dramasBookmarkRemoteDataSource.deleteDramasBookmark(dramaInfoSlug, episode))
     }.flowOn(Dispatchers.IO)
 }
