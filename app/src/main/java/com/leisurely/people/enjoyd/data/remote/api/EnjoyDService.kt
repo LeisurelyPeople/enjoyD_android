@@ -6,17 +6,14 @@ import com.leisurely.people.enjoyd.data.remote.data.response.DramasItemResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.evaluation.DramaEvaluationResponse
 import io.reactivex.Completable
 import io.reactivex.Single
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.UserResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasBannerResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasWatchingResponse
-import retrofit2.http.Path
-import retrofit2.http.Query
+import com.leisurely.people.enjoyd.data.remote.data.response.mypage.DramasBookmarkResponse
+import retrofit2.http.*
 
 /**
  * EnjoyD Api 들을 관리하는 인터페이스
@@ -90,6 +87,15 @@ interface EnjoyDService {
         @Query("page") page: Int,
         @Query("size") size: Int
     ): PagingResponse<DramasWatchingResponse>
+
+    @GET("/accounts/dramas/bookmarks/")
+    suspend fun getDramasBookmarks(): List<DramasBookmarkResponse>
+
+    @DELETE("/accounts/dramas/{drama_info_slug}/episodes/{episode}/bookmark/")
+    suspend fun deleteDramasBookmarks(
+        @Path("drama_info_slug") dramaInfoSlug: String,
+        @Path("episode") episode: String
+    )
 
     @POST("/support/question/create")
     suspend fun postSupportQuestionCreate(@Body data: HashMap<String, String>)

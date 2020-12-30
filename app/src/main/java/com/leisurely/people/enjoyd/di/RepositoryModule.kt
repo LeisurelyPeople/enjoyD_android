@@ -18,5 +18,6 @@ val repositoryModule = module {
     single { DramasBannerRepository(get()) }
     single { DramasTagsRepository(get()) }
     single { DramasWatchingRepository(get()) }
+    single { DramasBookmarkRepository(get()) }
     single { QuestionRepository(get()) }
 }

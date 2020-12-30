@@ -19,5 +19,6 @@ val remoteModule = module {
     single { DramasBannerRemoteDataSource(get()) }
     single { DramasTagRemoteDataSource(get()) }
     single { DramasWatchingRemoteDataSource(get()) }
+    single { DramasBookmarkRemoteDataSource(get()) }
     single { QuestionRemoteDataSource(get()) }
 }
