@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit
  * @since v1.0.0 / 2020.07.12
  */
 class DramaRepositoryTest : AndroidBaseTest() {
-    /** 드라마 정보 배너 API [getDramasInfoBanner] 를 테스트한다. */
+    /** 자세한 드라마 정보 리스트 API 를 테스트한다. */
     @Test
     fun dramasInfoBannerTest() {
         val dramaInfoBannerResponse = authApi.getDramasBanner()

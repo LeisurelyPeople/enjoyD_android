@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.leisurely.people.enjoyd.data.remote.data.response.home.DramasBannerResponse" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:foreground="@drawable/bg_main_banner_gradient"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1:0.725"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:imgUrl="@{item.poster}"
+            tools:src="@drawable/dummy_image" />
+
+        <TextView
+            android:id="@+id/tv_drama_producer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="6dp"
+            android:fontFamily="@font/noto_sans_kr_regular"
+            android:text="@{item.producer}"
+            android:textColor="@color/color_grey_0"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_drama_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.69"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="PLAYLIST" />
+
+        <TextView
+            android:id="@+id/tv_drama_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/noto_sans_kr_bold"
+            android:text="@{item.title}"
+            android:textColor="@color/color_grey_0"
+            android:textSize="@dimen/text_size_24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_drama_producer"
+            tools:text="연애플레이리스트4" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

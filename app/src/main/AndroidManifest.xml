@@ -34,9 +34,6 @@
             android:name=".ui.main.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.evaluation.EvaluationActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.search.SearchActivity"
             android:screenOrientation="portrait" />
         <activity

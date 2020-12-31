@@ -1,14 +1,18 @@
 package com.leisurely.people.enjoyd.data.remote.api
 
-import com.google.gson.JsonObject
 import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
-import com.leisurely.people.enjoyd.data.remote.data.request.DeleteAccountsDramasDramaBookmarksRequest
 import com.leisurely.people.enjoyd.data.remote.data.request.evaluation.DramaEvaluationRequest
-import com.leisurely.people.enjoyd.data.remote.data.response.*
 import com.leisurely.people.enjoyd.data.remote.data.response.evaluation.DramaEvaluationResponse
 import io.reactivex.Completable
 import io.reactivex.Single
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * EnjoyD Api 들을 관리하는 인터페이스
@@ -30,13 +34,13 @@ interface EnjoyDService {
     @POST("accounts/dramas/ratings")
     fun postDramasRatings(@Body data: HashMap<String, List<DramaEvaluationRequest>>): Completable
 
-    /** 드라마 정보 배너 API (/dramas/banner/)  */
-    @GET("/dramas/banner/")
-    fun getDramasBanner(): Single<DramaBannerGetResponse>
-
     /** 드라마정보리스트API API (/dramas) */
     @GET("/dramas/")
-    fun getDramas(): Single<DramasGetResponse>
+    suspend fun getDramas(
+        @Query("tag") tag: String,
+        @Query("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): PagingResponse<DramasItemResponse>
 
     /** 드라마정보 디테일 API (/dramas/{drama_info_slug}) */
     @GET("/dramas/{drama_info_slug}/")
@@ -89,4 +93,18 @@ interface EnjoyDService {
     fun deleteAccountsDramasDramaPkBookmark(
         @Path("drama_pk") dramaPk: Int
     ): Single<JsonObject>
+
+    /** 드라마 배너 조회 API (/drmas/banner/) */
+    @GET("/dramas/banner/")
+    suspend fun getDramasBanner(): DramasBannerResponse
+
+    /** 드라마 태그 조회 API (/drmas/banner/) */
+    @GET("/dramas/tags/")
+    suspend fun getDramasTags(): PagingResponse<DramasTagsResponse>
+
+    @GET("accounts/dramas/watching/")
+    suspend fun getDramasWatching(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): PagingResponse<DramasWatchingResponse>
 }

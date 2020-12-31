@@ -8,7 +8,6 @@ import com.leisurely.people.enjoyd.util.TextDecoration.ColorUtil
 import com.leisurely.people.enjoyd.util.TextDecoration.StyledText
 import com.leisurely.people.enjoyd.util.TextDecoration.TextDecorationUtil
 import com.leisurely.people.enjoyd.util.ext.styledNumber
-import kotlinx.android.synthetic.main.activity_evaluation.*
 import kotlinx.android.synthetic.main.layout_search_result.view.*
 
 /**

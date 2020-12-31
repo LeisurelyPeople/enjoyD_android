@@ -1,12 +1,18 @@
 package com.leisurely.people.enjoyd.ui.base
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.leisurely.people.enjoyd.util.Constant
 import com.leisurely.people.enjoyd.util.NotNullMutableLiveData
 import com.leisurely.people.enjoyd.util.coroutine.CoroutineUtil
 import com.leisurely.people.enjoyd.util.lifecycle.LiveEvent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.CoroutineExceptionHandler
+import retrofit2.HttpException
+import java.net.ConnectException
 
 /**
  * ViewModel Base 클래스
@@ -17,10 +23,31 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 
 abstract class BaseViewModel : ViewModel() {
 
-    private var liveLoading: NotNullMutableLiveData<Boolean> = NotNullMutableLiveData(false)
-    var liveToastMessage = LiveEvent<String>()
+    private val _liveLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    val liveLoading: LiveData<Boolean> = _liveLoading
+
+    private val _liveToastMessage: LiveEvent<String> = LiveEvent()
+    var liveToastMessage = _liveToastMessage
+
+    private val _startLogout: LiveEvent<Unit> = LiveEvent()
+    val startLogout: LiveEvent<Unit> = _startLogout
 
     private val compositeDisposable = CompositeDisposable()
+
+    fun handleException(throwable: Throwable) {
+        when (throwable) {
+            is HttpException -> {
+                /** 토큰 값이 만료 되었을 경우 */
+                if (throwable.code() == 401) {
+                    _startLogout.value = null // 로그아웃 처리
+                }
+            }
+            /** 네트워크 연결 끊김 및 불특정한 이유로 서버 연결 불가 */
+            is ConnectException -> {
+                showToast("연결에 실패하였습니다.\n네트워크 상태 확인 또는 잠시 후 다시 시도해주세요.")
+            }
+        }
+    }
 
     /**
      * ViewModel 기본 예외 처리기
@@ -37,15 +64,15 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     fun showLoading() {
-        liveLoading.value = true
+        _liveLoading.value = true
     }
 
     fun hideLoading() {
-        liveLoading.value = false
+        _liveLoading.value = false
     }
 
     fun showToast(message: String) {
-        liveToastMessage.value = message
+        _liveToastMessage.value = message
     }
 
     protected fun Disposable.addDisposable() {

@@ -15,8 +15,8 @@ data class DramaEvaluationResponse(
     val avgRating: Float,
     @SerializedName("pk")
     val pk: Int,
-    @SerializedName("poster")
-    val poster: String,
+    @SerializedName("thumbnail")
+    val thumbnail: String,
     @SerializedName("release_year")
     val releaseYear: Int,
     @SerializedName("title")

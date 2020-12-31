@@ -3,7 +3,7 @@ package com.leisurely.people.enjoyd.data.remote.data.response
 import kotlinx.serialization.Serializable
 
 /**
- * 드라마정보리스트API API (/dramas) 내
+ * 드라마정보리스트API (/dramas) 내
  * [DramasGetResponse.results] 내에서 사용되는 데이터 구조
  *
  * @author ricky

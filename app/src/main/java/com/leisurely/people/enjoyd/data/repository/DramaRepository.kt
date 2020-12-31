@@ -1,10 +1,7 @@
 package com.leisurely.people.enjoyd.data.repository
 
 import com.leisurely.people.enjoyd.data.local.source.DramaLocalDataSource
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugEpisodesResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchGetResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugGetResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugRelatedSearchResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
 import com.leisurely.people.enjoyd.data.remote.source.drama.DramaSearchRemoteDataSource
 import io.reactivex.Single
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +16,7 @@ import kotlinx.coroutines.withContext
  */
 class DramaRepository(
     private val dramaSearchRemoteDataSource: DramaSearchRemoteDataSource,
+    private val dramasTagRemoteDataSource: DramasTagRemoteDataSource,
     private val dramaLocalDataSource: DramaLocalDataSource
 ) {
     suspend fun getDramasSlug(
@@ -57,5 +55,15 @@ class DramaRepository(
 
         // 리모트 영역에서 가져온 데이터 리턴
         return@withContext dramaSearchRemoteDataSource.getDramasSearch(search, ordering)
+    }
+
+    suspend fun getDramasUsingTags(
+        tag: String,
+        page: Int,
+        pageSize: Int
+    ): ApiCallResultWrapper<PagingResponse<DramasItemResponse>> {
+        return safeApiCall(Dispatchers.IO) {
+            dramasTagRemoteDataSource.getDramas(tag, page, pageSize)
+        }
     }
 }
