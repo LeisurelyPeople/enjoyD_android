@@ -11,5 +11,7 @@ data class DramasSlugRelatedSearchResponseItem(
 
     val thumbnail: String,
 
-    val title: String
+    val title: String,
+
+    val slug: String
 )

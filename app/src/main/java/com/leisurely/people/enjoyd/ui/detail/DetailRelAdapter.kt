@@ -34,7 +34,7 @@ class DetailRelAdapter : BaseRVAdapter<DramasSlugRelatedSearchResponseItem>() {
             this.root.setOnSingleClickListener {
                 val intent = Intent(parent.context, DetailActivity::class.java).apply {
                     // TODO 이 값은 바뀌어야 함
-                    putExtra("dramaSlug", item.title ?: "")
+                    putExtra("dramaSlug", item?.slug ?: "")
                 }
                 parent.context.startActivity(intent)
             }

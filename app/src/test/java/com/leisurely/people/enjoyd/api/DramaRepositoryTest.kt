@@ -138,22 +138,22 @@ class DramaRepositoryTest : AndroidBaseTest() {
         // .assertComplete()
     }
 
-    /** 북마크 리스트 API [getAccountsDramasDramaBookmarks] 를 테스트한다. */
-    @Test
-    fun dramasBookmarkPkTest() {
-        val dramaBookmarkPkResponse = authApi.getAccountsDramasDramaBookmarks()
-        dramaBookmarkPkResponse.doOnSuccess {
-            println("doOnSuccess : $it")
-        }.doOnError { error ->
-            println("doOnError : $error")
-        }.test()
-            .awaitDone(3, TimeUnit.SECONDS)
-            .assertValue {
-                println("assertValue : $it")
-                true
-            }
-            .assertComplete()
-    }
+//    /** 북마크 리스트 API [getAccountsDramasDramaBookmarks] 를 테스트한다. */
+//    @Test
+//    fun dramasBookmarkPkTest() {
+//        val dramaBookmarkPkResponse = authApi.getAccountsDramasDramaBookmarks()
+//        dramaBookmarkPkResponse.doOnSuccess {
+//            println("doOnSuccess : $it")
+//        }.doOnError { error ->
+//            println("doOnError : $error")
+//        }.test()
+//            .awaitDone(3, TimeUnit.SECONDS)
+//            .assertValue {
+//                println("assertValue : $it")
+//                true
+//            }
+//            .assertComplete()
+//    }
 
     /** 북마크 다중 해제 API [deleteAccountsDramasDramaBookmarks] 를 테스트한다. */
     @Test

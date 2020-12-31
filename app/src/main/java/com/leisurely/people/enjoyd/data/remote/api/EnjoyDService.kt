@@ -67,10 +67,10 @@ interface EnjoyDService {
     @GET("/dramas/tag/")
     fun getDramasTag(): Single<DramaTagGetResponse>
 
-    /** 북마크 리스트 API (/accounts/dramas/drama/bookmarks/) */
-    @GET("/accounts/dramas/drama/bookmarks/")
-    fun getAccountsDramasDramaBookmarks(
-    ): Single<AccountsDramasDramaBookmarksGetResponse>
+//    /** 북마크 리스트 API (/accounts/dramas/drama/bookmarks/) */
+//    @GET("/accounts/dramas/drama/bookmarks/")
+//    fun getAccountsDramasDramaBookmarks(
+//    ): Single<AccountsDramasDramaBookmarksGetResponse>
 
     /** 북마크 다중 해제 API (/accounts/dramas/drama/bookmarks/) */
     @HTTP(method = "DELETE", path = "/accounts/dramas/drama/bookmarks/", hasBody = true)
