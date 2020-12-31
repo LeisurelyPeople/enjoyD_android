@@ -14,6 +14,7 @@ import com.google.android.exoplayer2.util.Util
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.ActivityVideoBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
+import com.leisurely.people.enjoyd.util.Constant.Companion.EXTRA_VIDEO_ID
 import com.leisurely.people.enjoyd.util.time.seconds
 import kotlinx.android.synthetic.main.activity_video.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -62,7 +63,7 @@ class VideoActivity : BaseActivity<ActivityVideoBinding, VideoViewModel>(
         super.onCreate(savedInstanceState)
 
         if (requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-            val videoId = intent.getStringExtra("video_id") ?: ""
+            val videoId = intent.getStringExtra(EXTRA_VIDEO_ID) ?: ""
             val youtubeLink = "http://youtube.com/watch?v=$videoId"
 
             YoutubeExtractor(this) { initPlayer(it) }
@@ -114,7 +115,7 @@ class VideoActivity : BaseActivity<ActivityVideoBinding, VideoViewModel>(
         ypv_drama?.player?.playWhenReady = true
 
         // 특정 지점으로 이동
-        ypv_drama.player.seekTo(30.seconds.asMillis)
+        ypv_drama.player.seekTo(0)
 
         simpleExoPlayer?.addListener(playerListener)
     }

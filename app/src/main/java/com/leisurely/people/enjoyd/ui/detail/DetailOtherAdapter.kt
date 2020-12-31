@@ -11,6 +11,7 @@ import com.leisurely.people.enjoyd.databinding.ItemOtherBinding
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseItemVH
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseRVAdapter
 import com.leisurely.people.enjoyd.ui.video.VideoActivity
+import com.leisurely.people.enjoyd.util.Constant.Companion.EXTRA_VIDEO_ID
 import com.leisurely.people.enjoyd.util.ext.setOnSingleClickListener
 import com.leisurely.people.enjoyd.util.ext.styledNumber
 
@@ -37,7 +38,7 @@ class DetailOtherAdapter : BaseRVAdapter<DramasSlugEpisodesResponseItem>() {
         ).apply {
             this.root.setOnSingleClickListener {
                 val intent = Intent(parent.context, VideoActivity::class.java).apply {
-                    putExtra("video_id", item?.videoId ?: "")
+                    putExtra(EXTRA_VIDEO_ID, item?.videoId ?: "")
                 }
                 parent.context.startActivity(intent)
             }

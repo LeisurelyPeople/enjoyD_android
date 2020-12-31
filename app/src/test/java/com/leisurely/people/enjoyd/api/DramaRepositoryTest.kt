@@ -2,6 +2,8 @@ package com.leisurely.people.enjoyd.api
 
 import com.leisurely.people.enjoyd.AndroidBaseTest
 import com.leisurely.people.enjoyd.data.remote.data.request.DeleteAccountsDramasDramaBookmarksRequest
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert
 import org.junit.Test
 import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
@@ -15,36 +17,28 @@ import java.util.concurrent.TimeUnit
 class DramaRepositoryTest : AndroidBaseTest() {
     /** 자세한 드라마 정보 리스트 API 를 테스트한다. */
     @Test
-    fun dramasInfoBannerTest() {
-        val dramaInfoBannerResponse = authApi.getDramasBanner()
-        dramaInfoBannerResponse.doOnSuccess {
-            println("doOnSuccess : $it")
-        }.doOnError { error ->
-            println("doOnError : $error")
-        }.test()
-            .awaitDone(3, TimeUnit.SECONDS)
-            .assertValue {
-                println("assertValue : $it")
-                true
-            }
-            .assertComplete()
+    fun dramasInfoBannerTest() = runBlocking<Unit> {
+        val dramaInfoBannerResponse = try {
+            authApi.getDramasBanner()
+        } catch (t: Throwable) {
+            t.printStackTrace()
+            null
+        }
+
+        Assert.assertNotNull(dramaInfoBannerResponse)
     }
 
     /** 드라마정보리스트API API [getDramas] 를 테스트한다. */
     @Test
-    fun dramasTest() {
-        val dramaInfoResponse = authApi.getDramas()
-        dramaInfoResponse.doOnSuccess {
-            println("doOnSuccess : $it")
-        }.doOnError { error ->
-            println("doOnError : $error")
-        }.test()
-            .awaitDone(3, TimeUnit.SECONDS)
-            .assertValue {
-                println("assertValue : $it")
-                true
-            }
-            .assertComplete()
+    fun dramasTest() = runBlocking {
+        val dramaInfoResponse = try {
+            authApi.getDramas(tag = "", page = 1, pageSize = 10)
+        } catch (t: Throwable) {
+            t.printStackTrace()
+            null
+        }
+
+        Assert.assertNotNull(dramaInfoResponse)
     }
 
     /** 드라마정보 디테일 API [getDramasSlug] 를 테스트한다 */

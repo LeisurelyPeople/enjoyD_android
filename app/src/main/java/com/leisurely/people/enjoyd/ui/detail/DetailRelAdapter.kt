@@ -8,6 +8,7 @@ import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugRelatedSe
 import com.leisurely.people.enjoyd.databinding.ItemRelBinding
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseItemVH
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseRVAdapter
+import com.leisurely.people.enjoyd.util.Constant.Companion.EXTRA_VIDEO_ID
 import com.leisurely.people.enjoyd.util.ext.setOnSingleClickListener
 
 /**
@@ -33,8 +34,7 @@ class DetailRelAdapter : BaseRVAdapter<DramasSlugRelatedSearchResponseItem>() {
         ).apply {
             this.root.setOnSingleClickListener {
                 val intent = Intent(parent.context, DetailActivity::class.java).apply {
-                    // TODO 이 값은 바뀌어야 함
-                    putExtra("dramaSlug", item?.slug ?: "")
+                    putExtra(EXTRA_VIDEO_ID, item?.slug ?: "")
                 }
                 parent.context.startActivity(intent)
             }

@@ -1,18 +1,17 @@
 package com.leisurely.people.enjoyd.data.remote.api
 
 import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
+import com.leisurely.people.enjoyd.data.remote.data.request.DeleteAccountsDramasDramaBookmarksRequest
 import com.leisurely.people.enjoyd.data.remote.data.request.evaluation.DramaEvaluationRequest
+import com.leisurely.people.enjoyd.data.remote.data.response.*
 import com.leisurely.people.enjoyd.data.remote.data.response.evaluation.DramaEvaluationResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasBannerResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasWatchingResponse
 import io.reactivex.Completable
 import io.reactivex.Single
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
-import retrofit2.http.Path
-import retrofit2.http.Query
+import kotlinx.serialization.json.JsonObject
+import retrofit2.http.*
 
 /**
  * EnjoyD Api 들을 관리하는 인터페이스

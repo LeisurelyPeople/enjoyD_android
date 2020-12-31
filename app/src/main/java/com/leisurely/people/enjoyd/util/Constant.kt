@@ -23,6 +23,7 @@ interface Constant {
         // Intent
         const val EXTRA_SIGN_UP_REQUEST = "EXTRA_SIGN_UP_REQUEST"
         const val EXTRA_SOCIAL_LOGIN_INFO = "EXTRA_SOCIAL_LOGIN_INFO"
+        const val EXTRA_VIDEO_ID = "EXTRA_VIDEO_ID"
 
         // SharedPreferences
         const val PREF_NAME = "ENJOY_D_PREF"

@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.ActivityDetailBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
+import com.leisurely.people.enjoyd.util.Constant.Companion.EXTRA_VIDEO_ID
 import kotlinx.android.synthetic.main.layout_detail_other_rel.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,10 +29,10 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(
         val relAdapter = DetailRelAdapter()
         rv_rels.adapter = relAdapter
 
-        viewModel.init("manjjijnamnyeo")
+        val videoId = intent.getStringExtra(EXTRA_VIDEO_ID) ?: ""
 
-        viewModel.startBackScreen.observe(this, Observer {
-            finish()
-        })
+        viewModel.init(videoId)
+
+        viewModel.startBackScreen.observe(this, Observer { finish() })
     }
 }
