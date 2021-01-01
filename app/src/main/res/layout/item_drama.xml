@@ -22,46 +22,31 @@
             android:id="@+id/iv_drama_poster"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="1 : 0.607"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1 : 0.664"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            bind:imgRadius="@{@dimen/image_view_radius_4dp}"
             bind:imgUrl="@{item.poster}"
             tools:src="@drawable/dummy_search_poster" />
 
         <TextView
-            android:id="@+id/tv_drama_producer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ellipsize="end"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:fontFamily="@font/noto_sans_kr_medium"
             android:lines="1"
             android:maxLines="1"
-            android:text="@{item.producer}"
-            android:textColor="@color/color_grey_050"
-            android:textSize="@dimen/text_size_14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_drama_poster"
-            tools:text="PLAYLIST" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="12dp"
-            android:fontFamily="@font/noto_sans_kr_medium"
             android:text="@{item.title}"
             android:textColor="@color/color_grey_0"
             android:textSize="@dimen/text_size_14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_drama_producer"
+            app:layout_constraintTop_toBottomOf="@+id/iv_drama_poster"
             tools:text="연애플레이리스트4" />
 
 

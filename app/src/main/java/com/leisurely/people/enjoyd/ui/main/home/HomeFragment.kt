@@ -112,6 +112,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
             binding.srlHome.isRefreshing = it
         })
 
+        /** 검색 화면 이동 여부 observer */
+        viewModel.startSearchPage.observe(viewLifecycleOwner, Observer {
+            // TODO 검색 화면으로 연결 작업 하는 곳 (담당장 : ricky)
+        })
+
         /** 드라마 배너 데이터 observe */
         viewModel.dramasBannerData.observe(viewLifecycleOwner, Observer {
             homeBannerListAdapter.submitList(it)

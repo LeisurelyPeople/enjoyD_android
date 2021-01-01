@@ -13,6 +13,8 @@ data class DramasWatchingResponse(
     val slug: String, // 에피소드가 속하는 드라마 고유 값
     @SerializedName("episode")
     val episode: Int, // 에피소드 회차 값 (1화 = 1, 2화 = 2)
+    @SerializedName("drama_title")
+    val dramaTitle: String, // 드라마 제목
     @SerializedName("video_id")
     val videoId: String, // 유튜브 video id
     @SerializedName("episode_title")

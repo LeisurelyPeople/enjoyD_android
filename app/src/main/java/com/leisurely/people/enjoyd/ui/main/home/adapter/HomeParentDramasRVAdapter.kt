@@ -58,7 +58,7 @@ class HomeParentDramasRVAdapter(private val childAdapter: DramaListAdapter) :
                         outRect.left = column * spacing / 2
                         outRect.right = spacing - (column + 1) * spacing / 2
                         outRect.bottom =
-                            resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_16dp)
+                            resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_12dp)
                     }
                 })
             }

@@ -3,6 +3,7 @@ package com.leisurely.people.enjoyd.util
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
+import android.annotation.SuppressLint
 import android.view.MotionEvent
 import android.view.View
 import java.lang.ref.WeakReference
@@ -16,6 +17,7 @@ import java.lang.ref.WeakReference
 
 private const val SHRINK_VALUE = 0.97f
 
+@SuppressLint("ClickableViewAccessibility")
 class ClickShrinkEffect(view: View) {
 
     private val weakRefView = WeakReference(view)
@@ -26,6 +28,7 @@ class ClickShrinkEffect(view: View) {
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> buildShrinkAnimator()?.start()
                 MotionEvent.ACTION_UP -> buildGrowAnimator()?.start()
+                MotionEvent.ACTION_CANCEL -> buildGrowAnimator()?.start()
             }
             return@setOnTouchListener false
         }

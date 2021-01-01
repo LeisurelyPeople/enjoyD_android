@@ -22,10 +22,12 @@
             android:id="@+id/iv_drama_poster"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="1 : 0.607"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1 : 0.664"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            bind:imgRadius="@{@dimen/image_view_radius_4dp}"
             bind:imgUrl="@{item.defaultThumbnail}"
             tools:src="@drawable/dummy_search_poster" />
 
@@ -40,7 +42,7 @@
             android:fontFamily="@font/noto_sans_kr_medium"
             android:lines="1"
             android:maxLines="1"
-            android:text="@{item.producer}"
+            android:text="@{item.dramaTitle}"
             android:textColor="@color/color_grey_050"
             android:textSize="@dimen/text_size_14sp"
             app:layout_constraintEnd_toEndOf="parent"
