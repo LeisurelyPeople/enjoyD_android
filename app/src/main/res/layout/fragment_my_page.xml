@@ -73,7 +73,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/app_bar"
-            bind:firstTabTitle='@{"찜한 목록"}'
+            bind:firstTabTitle='@{String.format(@string/first_tab_title_format, vm.totalCount)}'
             bind:secondTabTitle='@{"문의/제안"}' />
 
         <androidx.viewpager2.widget.ViewPager2

@@ -28,7 +28,14 @@ class MyPageViewModel(private val accountRepository: AccountRepository) : BaseVi
     val userLiveData: LiveData<UserResponse> = accountRepository.getAccounts()
         .catch { handleException(throwable = it) }.asLiveData()
 
+    private val _totalCount: MutableLiveData<Int> = MutableLiveData(0)
+    val totalCount: LiveData<Int> = _totalCount
+
     fun goToProfileEditPage() {
         _startProfileEditPage.value = null
+    }
+
+    fun setDramasTotalCount(totalCount: Int) {
+        _totalCount.value = totalCount
     }
 }

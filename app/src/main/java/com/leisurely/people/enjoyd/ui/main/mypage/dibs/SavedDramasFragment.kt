@@ -10,10 +10,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.FragmentSavedDramasBinding
 import com.leisurely.people.enjoyd.ui.base.BaseFragment
+import com.leisurely.people.enjoyd.ui.main.mypage.MyPageViewModel
 import com.leisurely.people.enjoyd.ui.main.mypage.dibs.adapter.SavedDramasListAdapter
 import com.leisurely.people.enjoyd.util.CustomItemDecoration
 import com.leisurely.people.enjoyd.util.EndlessRVScrollListener
 import io.reactivex.disposables.CompositeDisposable
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -27,6 +29,10 @@ class SavedDramasFragment :
     SwipeRefreshLayout.OnRefreshListener {
 
     override val viewModel: SavedDramasViewModel by viewModel()
+
+    private val parentViewModel by lazy {
+        requireParentFragment().getViewModel<MyPageViewModel>()
+    }
 
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
@@ -100,6 +106,11 @@ class SavedDramasFragment :
         /** 로딩 observe */
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
             binding.srlEvaluation.isRefreshing = it
+        })
+
+        /** 드라마 개수 observe */
+        viewModel.totalCount.observe(viewLifecycleOwner, Observer {
+            parentViewModel.setDramasTotalCount(it)
         })
     }
 

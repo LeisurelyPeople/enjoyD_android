@@ -25,6 +25,10 @@ class SavedDramasViewModel(private val dramasBookmarkRepository: DramasBookmarkR
     private val _hasNextData: MutableLiveData<Boolean> = MutableLiveData(true)
     val hasNextData: LiveData<Boolean> = _hasNextData
 
+    /** 북마크 드라마 정보 전체 아이템 개수 */
+    private val _totalCount: MutableLiveData<Int> = MutableLiveData(0)
+    val totalCount: LiveData<Int> = _totalCount
+
     /** 북마크한 드라마 정보 LiveData */
     private val _dramasBookmarkLiveData: MutableLiveData<List<DramasBookmarkResponse>> =
         MutableLiveData(listOf())
@@ -40,6 +44,7 @@ class SavedDramasViewModel(private val dramasBookmarkRepository: DramasBookmarkR
                 .catch { handleException(throwable = it) }
                 .collect {
                     _hasNextData.value = it.next
+                    _totalCount.value = it.totalCount
                     _dramasBookmarkLiveData.value = _dramasBookmarkLiveData.value?.plus(it.results)
                 }
         }
