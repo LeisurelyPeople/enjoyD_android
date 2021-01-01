@@ -38,6 +38,13 @@ class HomeBannerListAdapter :
         viewHolder: BaseItemVH,
         item: DramasBannerResponse
     ) {
-        (binding as ItemHomeBannerBinding).item = item
+        (binding as ItemHomeBannerBinding).run {
+            this.item = item
+            tvDramaEpisodes.text = if (item.episodeCount < 2) {
+                "Episode 1"
+            } else {
+                "Episode 1 ~ ${item.episodeCount}"
+            }
+        }
     }
 }

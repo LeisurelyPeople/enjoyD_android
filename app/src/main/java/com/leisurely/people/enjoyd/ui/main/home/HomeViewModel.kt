@@ -15,6 +15,7 @@ import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.coroutine.onError
 import com.leisurely.people.enjoyd.util.coroutine.onSuccess
 import com.leisurely.people.enjoyd.util.coroutine.zip
+import com.leisurely.people.enjoyd.util.lifecycle.LiveEvent
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
@@ -34,6 +35,10 @@ class HomeViewModel(
     /** 로딩 관련 LiveData */
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
+
+    /** 검색 화면으로 이동하기 위한 LiveData */
+    private val _startSearchPage: LiveEvent<Unit> = LiveEvent()
+    val startSearchPage: LiveEvent<Unit> = _startSearchPage
 
     /** 드라마 배너 정보를 가지고 있는 LiveData */
     private val _dramasBannerData: MutableLiveData<DramasBannerResponse> = MutableLiveData()
@@ -129,5 +134,9 @@ class HomeViewModel(
         }
         // 클릭된 태그에 해당되는 드라마 정보 갱신
         getDramaItemsUsingTags(1, dramasTagModel.name)
+    }
+
+    fun goToSearchPage() {
+        _startSearchPage.value = null
     }
 }

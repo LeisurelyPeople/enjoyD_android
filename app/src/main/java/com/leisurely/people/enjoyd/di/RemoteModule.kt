@@ -13,11 +13,12 @@ import org.koin.dsl.module
  */
 
 val remoteModule = module {
-    single { AccountRemoteDataSource(get()) }
+    single { AccountRemoteDataSource(get(), get()) }
     single { DramaEvaluationDataSource(get()) }
     single { DramaSearchRemoteDataSource(get()) }
     single { DramasBannerRemoteDataSource(get()) }
     single { DramasTagRemoteDataSource(get()) }
     single { DramasWatchingRemoteDataSource(get()) }
     single { DramasBookmarkRemoteDataSource(get()) }
+    single { QuestionRemoteDataSource(get()) }
 }

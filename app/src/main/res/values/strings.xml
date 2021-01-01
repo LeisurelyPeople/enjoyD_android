@@ -34,7 +34,7 @@
     <string name="evaluation">평가</string>
     <string name="my_page">마이페이지</string>
     <string name="view_all">전체보기</string>
-    <string name="dramas_episode_title_format">[EP.%02d] %s</string>
+    <string name="dramas_episode_title_format">EP.%02d %s</string>
 
     <!-- 메인 (Main) -->
     <string name="screen_title">Enjoy:D</string>
@@ -42,11 +42,18 @@
     <!-- 홈 (Home) -->
     <string name="dramas_view_more_text">%s 장르 더보기</string>
 
+    <!-- 마이페이지 (MyPage) -->
+    <string name="user_name_format">%s 님</string>
+    <string name="inquire_edit_text_hint">보고싶은 웹 드라마를 요청해보세요.</string>
+    <string name="send_feedback">등록</string>
+    <string name="first_tab_title_format">찜한/목록  %d</string>
+
     <!-- 상세 (common) -->
     <string name="detail_avg_rating">%.1f</string>
 
     <!-- 에러 관련 -->
     <string name="network_disconnected_notice">네트워크 상태를 확인해주세요.</string>
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

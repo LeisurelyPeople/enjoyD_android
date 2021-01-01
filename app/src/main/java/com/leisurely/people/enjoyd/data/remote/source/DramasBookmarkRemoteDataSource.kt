@@ -1,16 +1,24 @@
 package com.leisurely.people.enjoyd.data.remote.source
 
 import com.leisurely.people.enjoyd.data.remote.api.EnjoyDService
+import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.mypage.DramasBookmarkResponse
 import okhttp3.ResponseBody
-import retrofit2.Response
 
 /**
- * 북마크 관련 Remote DataSource 클래스
+ * 드라마 북마크 정보 관련 Remote DataSource 클래스
  *
  * @author Wayne
- * @since v1.0.0 / 2020.07.20
+ * @since v1.0.0 / 2020.12.30
  */
 class DramasBookmarkRemoteDataSource(private val enjoyDService: EnjoyDService) {
+    suspend fun getDramasBookmarks(
+        page: Int,
+        pageSize: Int
+    ): PagingResponse<DramasBookmarkResponse> {
+        return enjoyDService.getDramasBookmarks(page, pageSize)
+    }
+
     suspend fun postAccountsDramasSlugEpisodeBookmark(
         dramaInfoSlug: String,
         episode: String
@@ -18,10 +26,6 @@ class DramasBookmarkRemoteDataSource(private val enjoyDService: EnjoyDService) {
         return enjoyDService.postAccountsDramasSlugEpisodeBookmark(dramaInfoSlug, episode)
     }
 
-    suspend fun deleteAccountsDramasSlugEpisodeBookmark(
-        dramaInfoSlug: String,
-        episode: String
-    ): Response<Unit?> {
-        return enjoyDService.deleteAccountsDramasSlugEpisodeBookmark(dramaInfoSlug, episode)
-    }
+    suspend fun deleteDramasBookmark(dramaInfoSlug: String, episode: String) =
+        enjoyDService.deleteDramasBookmark(dramaInfoSlug, episode)
 }

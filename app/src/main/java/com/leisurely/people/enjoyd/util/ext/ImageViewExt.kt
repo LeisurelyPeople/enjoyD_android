@@ -26,16 +26,24 @@ fun ImageView.loadRoundedImageUrl(url: String?) {
         .apply(RequestOptions.bitmapTransform(RoundedCorners(cornerRadius)))
         .transition(GenericTransitionOptions.with(R.anim.fragment_fade_enter))
         .into(this)
-
 }
 
-@BindingAdapter("imgUrl")
-fun ImageView.loadImageUrl(url: String?) {
+/** Url imageView */
+@BindingAdapter(value = ["imgUrl", "imgRadius"], requireAll = false)
+fun ImageView.bindImageUrl(url: String?, radius: Float = 0F) {
     url?.let {
-        Glide.with(this)
-            .load(it)
-            .transition(GenericTransitionOptions.with(R.anim.fragment_fade_enter))
-            .into(this)
+        if (radius == 0F) {
+            Glide.with(this)
+                .load(it)
+                .transition(GenericTransitionOptions.with(R.anim.fragment_fade_enter))
+                .into(this)
+        } else {
+            Glide.with(this)
+                .load(it)
+                .apply(RequestOptions().transform(RoundedCorners(radius.toInt())))
+                .transition(GenericTransitionOptions.with(R.anim.fragment_fade_enter))
+                .into(this)
+        }
     }
 }
 

@@ -2,15 +2,13 @@ package com.leisurely.people.enjoyd.data.remote.api
 
 import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
 import com.leisurely.people.enjoyd.data.remote.data.request.evaluation.DramaEvaluationRequest
-import com.leisurely.people.enjoyd.data.remote.data.response.*
+import com.leisurely.people.enjoyd.data.remote.data.response.DramasItemResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.evaluation.DramaEvaluationResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasBannerResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasWatchingResponse
 import io.reactivex.Completable
 import io.reactivex.Single
-import okhttp3.ResponseBody
-import retrofit2.Response
 import retrofit2.http.*
 
 /**
@@ -22,18 +20,36 @@ import retrofit2.http.*
  * @since v1.0.0 / 2020.09.08
  */
 interface EnjoyDService {
+
+    /** 사용자 정보 가져오는 API */
+    @GET("accounts/")
+    suspend fun getAccounts(): UserResponse
+
     /** 드라마 평가를 위한 데이터 가져오는 API */
-    @GET("accounts/dramas/ratings")
+    @GET("accounts/dramas/ratings/")
     fun getDramasRatings(
         @Query("page") page: Int,
         @Query("page_size") pageSize: Int
     ): Single<PagingResponse<DramaEvaluationResponse>>
 
+    /** 드라마 평가를 위한 데이터 가져오는 API (코루틴용) */
+    @GET("accounts/dramas/ratings/")
+    suspend fun getDramasRatingsUsingCoroutine(
+        @Query("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): PagingResponse<DramaEvaluationResponse>
+
     /** 드라마 평가한 데이터 서버로 보내는 API */
-    @POST("accounts/dramas/ratings")
+    @POST("accounts/dramas/ratings/")
     fun postDramasRatings(@Body data: HashMap<String, List<DramaEvaluationRequest>>): Completable
 
-    /** 드라마정보리스트API API (/dramas) */
+    /** 드라마 평가한 데이터 서버로 보내는 API (코루틴용) */
+    @POST("accounts/dramas/ratings/")
+    suspend fun postDramasRatingsUsingCoroutine(
+        @Body data: HashMap<String, List<DramaEvaluationRequest>>
+    )
+
+    /** 간략한 드라마 정보 리스트 API (/dramas) */
     @GET("/dramas/")
     suspend fun getDramas(
         @Query("tag") tag: String,
@@ -70,25 +86,6 @@ interface EnjoyDService {
     @GET("/dramas/tag/")
     fun getDramasTag(): Single<DramaTagGetResponse>
 
-//    /** 북마크 리스트 API (/accounts/dramas/drama/bookmarks/) */
-//    @GET("/accounts/dramas/drama/bookmarks/")
-//    fun getAccountsDramasDramaBookmarks(
-//    ): Single<AccountsDramasDramaBookmarksGetResponse>
-
-    /** 북마크 해제 API */
-    @DELETE("/accounts/dramas/{drama_info_slug}/episodes/{episode}/bookmark/")
-    suspend fun deleteAccountsDramasSlugEpisodeBookmark(
-        @Path("drama_info_slug") dramaInfoSlug: String,
-        @Path("episode") episode: String
-    ): Response<Unit?>
-
-    /** 북마크 등록 API */
-    @POST("/accounts/dramas/{drama_info_slug}/episodes/{episode}/bookmark/")
-    suspend fun postAccountsDramasSlugEpisodeBookmark(
-        @Path("drama_info_slug") dramaInfoSlug: String,
-        @Path("episode") episode: String
-    ): ResponseBody
-
     /** 드라마 배너 조회 API (/drmas/banner/) */
     @GET("/dramas/banner/")
     suspend fun getDramasBanner(): DramasBannerResponse
@@ -102,4 +99,27 @@ interface EnjoyDService {
         @Query("page") page: Int,
         @Query("size") size: Int
     ): PagingResponse<DramasWatchingResponse>
+
+    @GET("/accounts/dramas/bookmarks/")
+    suspend fun getDramasBookmarks(
+        @Query("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): PagingResponse<DramasBookmarkResponse>
+
+    /** 북마크 등록 API */
+    @POST("/accounts/dramas/{drama_info_slug}/episodes/{episode}/bookmark/")
+    suspend fun postAccountsDramasSlugEpisodeBookmark(
+        @Path("drama_info_slug") dramaInfoSlug: String,
+        @Path("episode") episode: String
+    ): ResponseBody
+
+    /** 북마크 해제 API */
+    @DELETE("/accounts/dramas/{drama_info_slug}/episodes/{episode}/bookmark/")
+    suspend fun deleteDramasBookmark(
+        @Path("drama_info_slug") dramaInfoSlug: String,
+        @Path("episode") episode: String
+    ): Response<Unit>
+
+    @POST("/support/question/create")
+    suspend fun postSupportQuestionCreate(@Body data: HashMap<String, String>)
 }
