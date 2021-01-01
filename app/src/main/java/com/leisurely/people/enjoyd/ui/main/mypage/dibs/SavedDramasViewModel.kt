@@ -1,6 +1,7 @@
 package com.leisurely.people.enjoyd.ui.main.mypage.dibs
 
 import androidx.lifecycle.*
+import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.mypage.DramasBookmarkResponse
 import com.leisurely.people.enjoyd.data.repository.DramasBookmarkRepository
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
@@ -20,6 +21,10 @@ class SavedDramasViewModel(private val dramasBookmarkRepository: DramasBookmarkR
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
+    /** 페이징 처리 부분에서 다음 항목의 데이터를 가지고 있는지 판단하는 boolean 값을 담고 있는 LiveData */
+    private val _hasNextData: MutableLiveData<Boolean> = MutableLiveData(true)
+    val hasNextData: LiveData<Boolean> = _hasNextData
+
     /** 북마크한 드라마 정보 LiveData */
     private val _dramasBookmarkLiveData: MutableLiveData<List<DramasBookmarkResponse>> =
         MutableLiveData(listOf())
@@ -27,13 +32,16 @@ class SavedDramasViewModel(private val dramasBookmarkRepository: DramasBookmarkR
         _dramasBookmarkLiveData
 
     /** 북마크한 드라마 정보 가져오기 */
-    fun getDramasBookmark() {
+    fun getDramasBookmark(page: Int) {
         viewModelScope.launch {
-            dramasBookmarkRepository.getDramasBookmarks()
+            dramasBookmarkRepository.getDramasBookmarks(page, 20)
                 .onStart { _isLoading.value = true }
                 .onCompletion { _isLoading.value = false }
                 .catch { handleException(throwable = it) }
-                .collect { _dramasBookmarkLiveData.value = it }
+                .collect {
+                    _hasNextData.value = it.next
+                    _dramasBookmarkLiveData.value = _dramasBookmarkLiveData.value?.plus(it.results)
+                }
         }
     }
 
@@ -44,7 +52,12 @@ class SavedDramasViewModel(private val dramasBookmarkRepository: DramasBookmarkR
                 .onStart { _isLoading.value = true }
                 .onCompletion { _isLoading.value = false }
                 .catch { handleException(throwable = it) }
-                .collect { getDramasBookmark() }
+                .collect { resetData() }
         }
+    }
+
+    fun resetData() {
+        _dramasBookmarkLiveData.value = listOf()
+        getDramasBookmark(1)
     }
 }

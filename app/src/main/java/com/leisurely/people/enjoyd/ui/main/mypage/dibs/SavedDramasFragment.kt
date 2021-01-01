@@ -12,6 +12,7 @@ import com.leisurely.people.enjoyd.databinding.FragmentSavedDramasBinding
 import com.leisurely.people.enjoyd.ui.base.BaseFragment
 import com.leisurely.people.enjoyd.ui.main.mypage.dibs.adapter.SavedDramasListAdapter
 import com.leisurely.people.enjoyd.util.CustomItemDecoration
+import com.leisurely.people.enjoyd.util.EndlessRVScrollListener
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -38,11 +39,11 @@ class SavedDramasFragment :
 
     override fun onResume() {
         super.onResume()
-        viewModel.getDramasBookmark()
+        viewModel.resetData()
     }
 
     override fun onRefresh() {
-        viewModel.getDramasBookmark()
+        viewModel.resetData()
     }
 
     override fun onDestroy() {
@@ -83,6 +84,15 @@ class SavedDramasFragment :
                         resources.getDimensionPixelSize(R.dimen.recyclerview_spacing_size_12dp)
                 }
             })
+            layoutManager?.let {
+                addOnScrollListener(object : EndlessRVScrollListener(it, 4) {
+                    override fun onLoadMore(page: Int) {
+                        if (viewModel.hasNextData.value != false) {
+                            viewModel.getDramasBookmark(page)
+                        }
+                    }
+                })
+            }
         }
     }
 

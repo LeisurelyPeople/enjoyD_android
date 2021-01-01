@@ -15,8 +15,8 @@ class DramasBookmarkRepository(
     private val dramasBookmarkRemoteDataSource: DramasBookmarkRemoteDataSource
 ) {
 
-    suspend fun getDramasBookmarks() = flow {
-        emit(dramasBookmarkRemoteDataSource.getDramasBookmarks())
+    suspend fun getDramasBookmarks(page: Int, pageSize: Int) = flow {
+        emit(dramasBookmarkRemoteDataSource.getDramasBookmarks(page, pageSize))
     }.flowOn(Dispatchers.IO)
 
     suspend fun deleteDramasBookmark(dramaInfoSlug: String, episode: String) = flow {

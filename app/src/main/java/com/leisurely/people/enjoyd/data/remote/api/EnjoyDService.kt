@@ -90,7 +90,10 @@ interface EnjoyDService {
     ): PagingResponse<DramasWatchingResponse>
 
     @GET("/accounts/dramas/bookmarks/")
-    suspend fun getDramasBookmarks(): List<DramasBookmarkResponse>
+    suspend fun getDramasBookmarks(
+        @Query("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): PagingResponse<DramasBookmarkResponse>
 
     @DELETE("/accounts/dramas/{drama_info_slug}/episodes/{episode}/bookmark/")
     suspend fun deleteDramasBookmark(
