@@ -80,7 +80,7 @@ class DramaRepository(
         episode: String
     ): ApiCallResultWrapper<ResponseBody> {
         return safeApiCall(Dispatchers.IO) {
-            dramasBookmarkRemoteDataSource.postAccountsDramasSlugEpisodeBookmark(
+            dramasBookmarkRemoteDataSource.postDramasBookmark(
                 dramaInfoSlug, episode
             )
         }
@@ -89,9 +89,9 @@ class DramaRepository(
     suspend fun deleteAccountsDramasSlugEpisodeBookmark(
         dramaInfoSlug: String,
         episode: String
-    ): ApiCallResultWrapper<Response<Unit?>> {
+    ): ApiCallResultWrapper<Response<Unit>> {
         return safeApiCall(Dispatchers.IO) {
-            dramasBookmarkRemoteDataSource.deleteAccountsDramasSlugEpisodeBookmark(
+            dramasBookmarkRemoteDataSource.deleteDramasBookmark(
                 dramaInfoSlug, episode
             )
         }

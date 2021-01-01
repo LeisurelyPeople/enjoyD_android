@@ -19,7 +19,7 @@ class DramasBookmarkRemoteDataSource(private val enjoyDService: EnjoyDService) {
         return enjoyDService.getDramasBookmarks(page, pageSize)
     }
 
-    suspend fun postAccountsDramasSlugEpisodeBookmark(
+    suspend fun postDramasBookmark(
         dramaInfoSlug: String,
         episode: String
     ): ResponseBody {

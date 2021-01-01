@@ -2,13 +2,16 @@ package com.leisurely.people.enjoyd.data.remote.api
 
 import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
 import com.leisurely.people.enjoyd.data.remote.data.request.evaluation.DramaEvaluationRequest
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasItemResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.*
 import com.leisurely.people.enjoyd.data.remote.data.response.evaluation.DramaEvaluationResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasBannerResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasWatchingResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.mypage.DramasBookmarkResponse
 import io.reactivex.Completable
 import io.reactivex.Single
+import okhttp3.ResponseBody
+import retrofit2.Response
 import retrofit2.http.*
 
 /**

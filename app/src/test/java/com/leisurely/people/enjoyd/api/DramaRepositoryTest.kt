@@ -149,18 +149,6 @@ class DramaRepositoryTest : AndroidBaseTest() {
 //            .assertComplete()
 //    }
 
-    /** 북마크 다중 해제 API 를 테스트한다. */
-    @Test
-    fun dramasBookmarkDeleteTest() = runBlocking {
-        try {
-            authApi.deleteAccountsDramasSlugEpisodeBookmark("manjjijnamnyeo", "1")
-            Assert.assertTrue(true)
-        } catch (t: Throwable) {
-            t.printStackTrace()
-            Assert.assertTrue(false)
-        }
-    }
-
     /**
      * 북마크 설정 API, 북마크 해제 API 를 테스트한다.
      */
@@ -170,7 +158,7 @@ class DramaRepositoryTest : AndroidBaseTest() {
             authApi.postAccountsDramasSlugEpisodeBookmark("manjjijnamnyeo", "1")
             Assert.assertTrue(true)
 
-            authApi.deleteAccountsDramasSlugEpisodeBookmark("manjjijnamnyeo", "1")
+            authApi.deleteDramasBookmark("manjjijnamnyeo", "1")
             Assert.assertTrue(true)
         } catch (t: Throwable) {
             t.printStackTrace()
