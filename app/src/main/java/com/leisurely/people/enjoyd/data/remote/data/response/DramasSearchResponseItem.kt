@@ -11,9 +11,9 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class DramasSearchResponseItem(
-    val id: Int,
+    val slug: String,
 
-    val poster: String,
+    val thumbnail: String,
 
     val title: String
 )
