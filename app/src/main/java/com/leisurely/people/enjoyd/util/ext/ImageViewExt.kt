@@ -20,13 +20,13 @@ import com.leisurely.people.enjoyd.R
 fun ImageView.loadRoundedImageUrl(url: String?) {
     val cornerRadius = context.resources.getDimensionPixelSize(R.dimen.detail_rel_other_radius)
 
-    url?.let {
-        Glide.with(this)
-            .load(it)
-            .apply(RequestOptions.bitmapTransform(RoundedCorners(cornerRadius)))
-            .transition(GenericTransitionOptions.with(R.anim.fragment_fade_enter))
-            .into(this)
-    }
+    Glide.with(this)
+        .load(url)
+        .error(R.drawable.img_poster_empty)
+        .apply(RequestOptions.bitmapTransform(RoundedCorners(cornerRadius)))
+        .transition(GenericTransitionOptions.with(R.anim.fragment_fade_enter))
+        .into(this)
+
 }
 
 @BindingAdapter("imgUrl")
