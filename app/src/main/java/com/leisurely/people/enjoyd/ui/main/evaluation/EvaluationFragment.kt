@@ -1,5 +1,6 @@
 package com.leisurely.people.enjoyd.ui.main.evaluation
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,7 @@ import com.leisurely.people.enjoyd.databinding.FragmentEvaluationBinding
 import com.leisurely.people.enjoyd.ui.base.BaseFragment
 import com.leisurely.people.enjoyd.ui.main.evaluation.adapter.EvaluationHeaderTextRVAdapter
 import com.leisurely.people.enjoyd.ui.main.evaluation.adapter.EvaluationListAdapter
+import com.leisurely.people.enjoyd.ui.search.SearchActivity
 import com.leisurely.people.enjoyd.util.EndlessRVScrollListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -100,7 +102,7 @@ class EvaluationFragment :
 
         /** 검색 화면 이동 여부 observer */
         viewModel.startSearchPage.observe(viewLifecycleOwner, Observer {
-            // TODO 검색 화면으로 연결 작업 하는 곳 (담당장 : ricky)
+            startActivity(Intent(activity, SearchActivity::class.java))
         })
 
         /** 드라마(팡가하기 위한) 데이터 observer */

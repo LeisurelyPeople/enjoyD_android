@@ -1,5 +1,6 @@
 package com.leisurely.people.enjoyd.ui.main.mypage.dibs
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,8 +11,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.FragmentSavedDramasBinding
 import com.leisurely.people.enjoyd.ui.base.BaseFragment
+import com.leisurely.people.enjoyd.ui.detail.DetailActivity
 import com.leisurely.people.enjoyd.ui.main.mypage.MyPageViewModel
 import com.leisurely.people.enjoyd.ui.main.mypage.dibs.adapter.SavedDramasListAdapter
+import com.leisurely.people.enjoyd.util.Constant.Companion.EXTRA_VIDEO_ID
 import com.leisurely.people.enjoyd.util.CustomItemDecoration
 import com.leisurely.people.enjoyd.util.EndlessRVScrollListener
 import io.reactivex.disposables.CompositeDisposable
@@ -64,7 +67,9 @@ class SavedDramasFragment :
     private fun setSavedDramasRV() {
         binding.rvSavedDramas.run {
             adapter = SavedDramasListAdapter(compositeDisposable, onItemClick = {
-                // TODO 드라마 상세 화면을 연결 작업 하는 곳 (담당자 : ricky)
+                startActivity(Intent(activity, DetailActivity::class.java).apply {
+                    putExtra(EXTRA_VIDEO_ID, it.videoId)
+                })
             }, onItemDelete = {
                 viewModel.deleteBookmarkedDrama(it.dramaInfoSlug, it.episode.toString())
             })
