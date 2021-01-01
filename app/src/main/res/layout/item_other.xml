@@ -14,27 +14,27 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="161dp"
-        android:layout_height="144dp"
+        android:layout_height="wrap_content"
         android:background="@color/color_grey_500"
         android:orientation="vertical"
         android:padding="6dp">
 
         <ImageView
             android:id="@+id/other_poster"
-            android:layout_width="149dp"
-            android:layout_height="85dp"
+            android:layout_width="146dp"
+            android:layout_height="97dp"
             android:scaleType="fitXY"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            bind:imgUrl="@{item.defaultThumbnail}"
+            bind:imgUrlRound="@{item.defaultThumbnail}"
             tools:src="@drawable/dummy_detail_other_poster" />
 
         <TextView
             android:id="@+id/other_title_episode"
-            android:layout_width="149dp"
+            android:layout_width="146dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="6dp"
             android:ellipsize="marquee"
             android:lineSpacingExtra="6sp"
             android:singleLine="true"
@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/rel_episode_entire"
-            android:layout_width="149dp"
+            android:layout_width="146dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lineSpacingExtra="6sp"
@@ -56,17 +56,20 @@
             android:text="@{item.episodeTitle}"
             android:textColor="@color/color_grey_0"
             android:textSize="14sp"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/other_title_episode"
             tools:text="굳세어라 청춘" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/other_bookmark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="4dp"
+            android:src="@drawable/selector_bookmark_bt"
+            app:detailOtherSelected="@{item.isBookmark}"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/icon_bookmark_enabled" />
+            tools:src="@drawable/icon_bookmark_selected" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

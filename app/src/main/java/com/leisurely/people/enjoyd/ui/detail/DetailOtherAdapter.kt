@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ViewDataBinding
 import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugEpisodesResponseItem
@@ -21,7 +22,9 @@ import com.leisurely.people.enjoyd.util.ext.styledNumber
  * @author ricky
  * @since v1.0.0 / 2020.10.18
  */
-class DetailOtherAdapter : BaseRVAdapter<DramasSlugEpisodesResponseItem>() {
+class DetailOtherAdapter(
+    val onItemClick: (Boolean, String, String, () -> Unit) -> Unit
+) : BaseRVAdapter<DramasSlugEpisodesResponseItem>() {
     override fun onBindView(
         binding: ViewDataBinding,
         viewHolder: BaseItemVH,
@@ -42,6 +45,20 @@ class DetailOtherAdapter : BaseRVAdapter<DramasSlugEpisodesResponseItem>() {
                 }
                 parent.context.startActivity(intent)
             }
+
+            this.otherBookmark.setOnSingleClickListener {
+                item?.let {
+                    val prevEnabled = it.isBookmark
+                    val prevItem = it.copy()
+                    val newItem = it.copy(isBookmark = !prevEnabled)
+
+                    replace(prevItem, newItem)
+
+                    onItemClick(!prevEnabled, it.slug, "${it.episode}") {
+                        replace(newItem, prevItem)
+                    }
+                }
+            }
         }
     }
 }
@@ -49,4 +66,9 @@ class DetailOtherAdapter : BaseRVAdapter<DramasSlugEpisodesResponseItem>() {
 @BindingAdapter("detailOtherEpisode", "detailOtherTitle")
 fun TextView.setDetailOtherTitle(episode: Int, title: String) {
     text = "$title EP ${episode.styledNumber()}"
+}
+
+@BindingAdapter("detailOtherSelected")
+fun AppCompatImageView.setDetailOtherSelected(selected: Boolean) {
+    this.isSelected = selected
 }

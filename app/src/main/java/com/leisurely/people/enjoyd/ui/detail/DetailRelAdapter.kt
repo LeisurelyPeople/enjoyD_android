@@ -10,6 +10,9 @@ import com.leisurely.people.enjoyd.ui.base.adapter.BaseItemVH
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseRVAdapter
 import com.leisurely.people.enjoyd.util.Constant.Companion.EXTRA_VIDEO_ID
 import com.leisurely.people.enjoyd.util.ext.setOnSingleClickListener
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.suspendCoroutine
 
 /**
  * 연관 드라마 adapter
@@ -38,7 +41,16 @@ class DetailRelAdapter : BaseRVAdapter<DramasSlugRelatedSearchResponseItem>() {
                 }
                 parent.context.startActivity(intent)
             }
+
+//            this.relBookmark.setOnSingleClickListener {
+//                val prevEnabled = this.relBookmark.isEnabled
+//                this.relBookmark.isEnabled = !prevEnabled
+//
+//                // TODO 연관드라마인 경우 북마크 설정을 어떻게 해주는지 확인 필요
+//                onItemClick(!prevEnabled, item?.slug ?: "", "0") {
+//                    this.relBookmark.isEnabled = prevEnabled
+//                }
+//            }
         }
     }
-
 }

@@ -1,8 +1,6 @@
 package com.leisurely.people.enjoyd.data
 
 import com.leisurely.people.enjoyd.AndroidBaseTest
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponseItem
 import com.leisurely.people.enjoyd.data.remote.data.response.*
 import com.leisurely.people.enjoyd.util.Serializer.asJson
 import com.leisurely.people.enjoyd.util.Serializer.asJsonArray

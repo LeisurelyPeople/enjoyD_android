@@ -22,11 +22,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="27dp"
+            android:text="다른 회차 둘러보기"
             android:textColor="@color/color_grey_0"
             android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="다른 회차 둘러보기" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_others"
@@ -46,11 +47,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="27dp"
+            android:text="연관 드라마"
             android:textColor="@color/color_grey_0"
             android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_others"
-            android:text="연관 드라마" />
+            app:layout_constraintTop_toBottomOf="@+id/rv_others" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_rels"

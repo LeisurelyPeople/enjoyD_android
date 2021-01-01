@@ -3,6 +3,7 @@ package com.leisurely.people.enjoyd.data.repository
 import com.leisurely.people.enjoyd.data.local.source.DramaLocalDataSource
 import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.*
+import com.leisurely.people.enjoyd.data.remote.source.DramasBookmarkRemoteDataSource
 import com.leisurely.people.enjoyd.data.remote.source.DramasTagRemoteDataSource
 import com.leisurely.people.enjoyd.data.remote.source.drama.DramaSearchRemoteDataSource
 import com.leisurely.people.enjoyd.util.coroutine.ApiCallResultWrapper
@@ -10,6 +11,8 @@ import com.leisurely.people.enjoyd.util.coroutine.safeApiCall
 import io.reactivex.Single
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
+import retrofit2.Response
 
 /**
  * 드라마 관련 api 를 호출해 데이터를 받아와 클라이언트에서 바로 사용할 수 있도록
@@ -21,7 +24,8 @@ import kotlinx.coroutines.withContext
 class DramaRepository(
     private val dramaSearchRemoteDataSource: DramaSearchRemoteDataSource,
     private val dramasTagRemoteDataSource: DramasTagRemoteDataSource,
-    private val dramaLocalDataSource: DramaLocalDataSource
+    private val dramaLocalDataSource: DramaLocalDataSource,
+    private val dramasBookmarkRemoteDataSource: DramasBookmarkRemoteDataSource
 ) {
     suspend fun getDramasSlug(
         dramaInfoSlug: String
@@ -68,6 +72,28 @@ class DramaRepository(
     ): ApiCallResultWrapper<PagingResponse<DramasItemResponse>> {
         return safeApiCall(Dispatchers.IO) {
             dramasTagRemoteDataSource.getDramas(tag, page, pageSize)
+        }
+    }
+
+    suspend fun postAccountsDramasSlugEpisodeBookmark(
+        dramaInfoSlug: String,
+        episode: String
+    ): ApiCallResultWrapper<ResponseBody> {
+        return safeApiCall(Dispatchers.IO) {
+            dramasBookmarkRemoteDataSource.postAccountsDramasSlugEpisodeBookmark(
+                dramaInfoSlug, episode
+            )
+        }
+    }
+
+    suspend fun deleteAccountsDramasSlugEpisodeBookmark(
+        dramaInfoSlug: String,
+        episode: String
+    ): ApiCallResultWrapper<Response<Unit?>> {
+        return safeApiCall(Dispatchers.IO) {
+            dramasBookmarkRemoteDataSource.deleteAccountsDramasSlugEpisodeBookmark(
+                dramaInfoSlug, episode
+            )
         }
     }
 }

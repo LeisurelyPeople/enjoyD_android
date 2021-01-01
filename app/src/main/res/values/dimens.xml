@@ -19,4 +19,6 @@
     <dimen name="text_size_18sp">18sp</dimen>
     <dimen name="text_size_20sp">20sp</dimen>
     <dimen name="text_size_24sp">24sp</dimen>
+
+    <dimen name="detail_rel_other_radius">4dp</dimen>
 </resources>

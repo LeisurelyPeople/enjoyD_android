@@ -23,7 +23,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val otherAdapter = DetailOtherAdapter()
+        val otherAdapter = DetailOtherAdapter(viewModel.onBookmarkAction)
         rv_others.adapter = otherAdapter
 
         val relAdapter = DetailRelAdapter()

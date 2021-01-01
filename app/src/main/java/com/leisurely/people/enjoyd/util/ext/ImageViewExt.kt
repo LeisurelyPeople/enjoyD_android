@@ -4,6 +4,8 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.leisurely.people.enjoyd.R
 
 /**
@@ -14,6 +16,19 @@ import com.leisurely.people.enjoyd.R
  */
 
 /** Url imageView */
+@BindingAdapter("imgUrlRound")
+fun ImageView.loadRoundedImageUrl(url: String?) {
+    val cornerRadius = context.resources.getDimensionPixelSize(R.dimen.detail_rel_other_radius)
+
+    url?.let {
+        Glide.with(this)
+            .load(it)
+            .apply(RequestOptions.bitmapTransform(RoundedCorners(cornerRadius)))
+            .transition(GenericTransitionOptions.with(R.anim.fragment_fade_enter))
+            .into(this)
+    }
+}
+
 @BindingAdapter("imgUrl")
 fun ImageView.loadImageUrl(url: String?) {
     url?.let {

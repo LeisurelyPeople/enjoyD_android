@@ -1,7 +1,6 @@
 package com.leisurely.people.enjoyd.data.remote.api
 
 import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
-import com.leisurely.people.enjoyd.data.remote.data.request.DeleteAccountsDramasDramaBookmarksRequest
 import com.leisurely.people.enjoyd.data.remote.data.request.evaluation.DramaEvaluationRequest
 import com.leisurely.people.enjoyd.data.remote.data.response.*
 import com.leisurely.people.enjoyd.data.remote.data.response.evaluation.DramaEvaluationResponse
@@ -10,7 +9,8 @@ import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResp
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasWatchingResponse
 import io.reactivex.Completable
 import io.reactivex.Single
-import kotlinx.serialization.json.JsonObject
+import okhttp3.ResponseBody
+import retrofit2.Response
 import retrofit2.http.*
 
 /**
@@ -75,23 +75,19 @@ interface EnjoyDService {
 //    fun getAccountsDramasDramaBookmarks(
 //    ): Single<AccountsDramasDramaBookmarksGetResponse>
 
-    /** 북마크 다중 해제 API (/accounts/dramas/drama/bookmarks/) */
-    @HTTP(method = "DELETE", path = "/accounts/dramas/drama/bookmarks/", hasBody = true)
-    fun deleteAccountsDramasDramaBookmarks(
-        @Body data: DeleteAccountsDramasDramaBookmarksRequest
-    ): Single<JsonObject>
+    /** 북마크 해제 API */
+    @DELETE("/accounts/dramas/{drama_info_slug}/episodes/{episode}/bookmark/")
+    suspend fun deleteAccountsDramasSlugEpisodeBookmark(
+        @Path("drama_info_slug") dramaInfoSlug: String,
+        @Path("episode") episode: String
+    ): Response<Unit?>
 
-    /** 북마크 API (/accounts/dramas/drama/{drama_pk}/bookmark/) */
-    @POST("/accounts/dramas/drama/{drama_pk}/bookmark/")
-    fun postAccountsDramasDramaPkBookmark(
-        @Path("drama_pk") dramaPk: Int
-    ): Single<JsonObject>
-
-    /** 북마크 해제 API (/accounts/dramas/drama/<int:drama_pk>/bookmark/)  */
-    @DELETE("/accounts/dramas/drama/{drama_pk}/bookmark/")
-    fun deleteAccountsDramasDramaPkBookmark(
-        @Path("drama_pk") dramaPk: Int
-    ): Single<JsonObject>
+    /** 북마크 등록 API */
+    @POST("/accounts/dramas/{drama_info_slug}/episodes/{episode}/bookmark/")
+    suspend fun postAccountsDramasSlugEpisodeBookmark(
+        @Path("drama_info_slug") dramaInfoSlug: String,
+        @Path("episode") episode: String
+    ): ResponseBody
 
     /** 드라마 배너 조회 API (/drmas/banner/) */
     @GET("/dramas/banner/")

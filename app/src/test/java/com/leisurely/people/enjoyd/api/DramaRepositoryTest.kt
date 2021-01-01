@@ -149,47 +149,32 @@ class DramaRepositoryTest : AndroidBaseTest() {
 //            .assertComplete()
 //    }
 
-    /** 북마크 다중 해제 API [deleteAccountsDramasDramaBookmarks] 를 테스트한다. */
+    /** 북마크 다중 해제 API 를 테스트한다. */
     @Test
-    fun dramasBookmarkDeleteTest() {
-        val deleteDramasBookmarkResponse =
-            authApi.deleteAccountsDramasDramaBookmarks(
-                data = DeleteAccountsDramasDramaBookmarksRequest(
-                    arrayListOf(3)
-                )
-            )
-        deleteDramasBookmarkResponse.doOnSuccess {
-            println("doOnSuccess : $it")
-        }.doOnError { error ->
-            println("doOnError : $error")
-        }.test()
-            .awaitDone(3, TimeUnit.SECONDS)
+    fun dramasBookmarkDeleteTest() = runBlocking {
+        try {
+            authApi.deleteAccountsDramasSlugEpisodeBookmark("manjjijnamnyeo", "1")
+            Assert.assertTrue(true)
+        } catch (t: Throwable) {
+            t.printStackTrace()
+            Assert.assertTrue(false)
+        }
     }
 
     /**
-     * 북마크 API [postAccountsDramasDramaPkBookmark]
-     * 북마크 해제 API [deleteAccountsDramasDramaPkBookmark] 를 테스트한다.
+     * 북마크 설정 API, 북마크 해제 API 를 테스트한다.
      */
     @Test
-    fun dramasBookmarkPostDeleteTest() {
-        // 북마크 API [postAccountsDramasDramaPkBookmark]
-        val postDramasBookmarkResponse =
-            authApi.postAccountsDramasDramaPkBookmark(3)
-        postDramasBookmarkResponse.doOnSuccess {
-            println("doOnSuccess : $it")
-        }.doOnError { error ->
-            println("doOnError : $error")
-        }.test()
-            .awaitDone(3, TimeUnit.SECONDS)
+    fun dramasBookmarkPostDeleteTest() = runBlocking {
+        try {
+            authApi.postAccountsDramasSlugEpisodeBookmark("manjjijnamnyeo", "1")
+            Assert.assertTrue(true)
 
-        // 북마크 해제 API [deleteAccountsDramasDramaPkBookmark]
-        val deleteDramasBookmarkResponse =
-            authApi.deleteAccountsDramasDramaPkBookmark(dramaPk = 3)
-        deleteDramasBookmarkResponse.doOnSuccess {
-            println("doOnSuccess : $it")
-        }.doOnError { error ->
-            println("doOnError : $error")
-        }.test()
-            .awaitDone(3, TimeUnit.SECONDS)
+            authApi.deleteAccountsDramasSlugEpisodeBookmark("manjjijnamnyeo", "1")
+            Assert.assertTrue(true)
+        } catch (t: Throwable) {
+            t.printStackTrace()
+            Assert.assertTrue(false)
+        }
     }
 }
