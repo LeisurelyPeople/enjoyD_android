@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/layout_search_background"
+        android:background="@color/color_grey_350"
         android:paddingTop="120dp">
 
         <!-- 보여줄 내용이 없을 때 띄워주는 레이아웃의 이미지 -->
@@ -34,7 +34,7 @@
             android:gravity="center_horizontal"
             android:lineSpacingExtra="0sp"
             android:text="@{description}"
-            android:textColor="#a1a1a1"
+            android:textColor="@color/color_grey_050"
             android:textSize="14sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
