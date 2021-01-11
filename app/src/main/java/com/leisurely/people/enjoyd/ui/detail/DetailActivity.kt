@@ -23,6 +23,11 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        initLayout()
+    }
+
+    /** UI 초기 설정을 진행한다. */
+    private fun initLayout() {
         val otherAdapter = DetailOtherAdapter(viewModel.onBookmarkAction)
         rv_others.adapter = otherAdapter
 
