@@ -111,7 +111,7 @@ interface EnjoyDService {
 
     /** 북마크 등록 API */
     @POST("/accounts/dramas/{drama_info_slug}/episodes/{episode}/bookmark/")
-    suspend fun postAccountsDramasSlugEpisodeBookmark(
+    suspend fun postDramasBookmark(
         @Path("drama_info_slug") dramaInfoSlug: String,
         @Path("episode") episode: String
     ): ResponseBody

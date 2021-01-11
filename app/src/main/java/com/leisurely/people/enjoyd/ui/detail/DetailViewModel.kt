@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.leisurely.people.enjoyd.data.remote.data.response.*
 import com.leisurely.people.enjoyd.data.repository.DramaRepository
+import com.leisurely.people.enjoyd.data.repository.DramasBookmarkRepository
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.coroutine.CoroutineKey
 import com.leisurely.people.enjoyd.util.coroutine.onError
@@ -13,6 +14,10 @@ import com.leisurely.people.enjoyd.util.ext.applySingleSchedulers
 import com.leisurely.people.enjoyd.util.lifecycle.LiveEvent
 import com.leisurely.people.enjoyd.util.observer.DisposableSingleObserver
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -22,7 +27,10 @@ import kotlinx.coroutines.withContext
  * @author ricky
  * @since v1.0.0 / 2020.09.28
  */
-class DetailViewModel(private val dramaRepository: DramaRepository) : BaseViewModel() {
+class DetailViewModel(
+    private val dramaRepository: DramaRepository,
+    private val dramasBookmarkRepository: DramasBookmarkRepository
+) : BaseViewModel() {
     /** 뒤로가기 버튼을 동작시키기 위한 LiveData */
     private val _startBackScreen: LiveEvent<Unit> = LiveEvent()
     val startBackScreen: LiveEvent<Unit> = _startBackScreen
@@ -149,28 +157,28 @@ class DetailViewModel(private val dramaRepository: DramaRepository) : BaseViewMo
         failAction: () -> Unit
     ) = withContext(Dispatchers.IO) {
         // 북마크를 등록해야 하는 경우
-        if (newEnabled) dramaRepository.postAccountsDramasSlugEpisodeBookmark(slug, episode)
-            .onSuccess {
-                withContext(Dispatchers.Main) {
-                    liveToastMessage.value = "북마크에 등록되었습니다."
-                }
-            }
-            .onError {
+        if (newEnabled) dramasBookmarkRepository.postDramasBookmark(slug, episode)
+            .catch {
                 withContext(Dispatchers.Main) {
                     failAction()
                     liveToastMessage.value = "북마크 등록을 실패했습니다."
                 }
             }
-        else dramaRepository.deleteAccountsDramasSlugEpisodeBookmark(slug, episode)
-            .onSuccess {
+            .collect {
                 withContext(Dispatchers.Main) {
-                    liveToastMessage.value = "북마크를 해제했습니다."
+                    liveToastMessage.value = "북마크에 등록되었습니다."
                 }
             }
-            .onError {
+        else dramasBookmarkRepository.deleteDramasBookmark(slug, episode)
+            .catch {
                 withContext(Dispatchers.Main) {
                     failAction()
                     liveToastMessage.value = "북마크 해제를 실패했습니다."
+                }
+            }
+            .collect {
+                withContext(Dispatchers.Main) {
+                    liveToastMessage.value = "북마크를 해제했습니다."
                 }
             }
     }

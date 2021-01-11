@@ -42,6 +42,6 @@ val viewModelModule = module {
         UserInfoInputViewModel(socialLoginModel, get())
     }
     viewModel { SummaryEvaluationViewModel(get()) }
-    viewModel { DetailViewModel(get()) }
+    viewModel { DetailViewModel(get(), get()) }
     viewModel { VideoViewModel() }
 }

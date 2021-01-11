@@ -23,7 +23,7 @@ class DramasBookmarkRemoteDataSource(private val enjoyDService: EnjoyDService) {
         dramaInfoSlug: String,
         episode: String
     ): ResponseBody {
-        return enjoyDService.postAccountsDramasSlugEpisodeBookmark(dramaInfoSlug, episode)
+        return enjoyDService.postDramasBookmark(dramaInfoSlug, episode)
     }
 
     suspend fun deleteDramasBookmark(dramaInfoSlug: String, episode: String) =

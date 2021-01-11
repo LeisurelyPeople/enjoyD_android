@@ -74,26 +74,4 @@ class DramaRepository(
             dramasTagRemoteDataSource.getDramas(tag, page, pageSize)
         }
     }
-
-    suspend fun postAccountsDramasSlugEpisodeBookmark(
-        dramaInfoSlug: String,
-        episode: String
-    ): ApiCallResultWrapper<ResponseBody> {
-        return safeApiCall(Dispatchers.IO) {
-            dramasBookmarkRemoteDataSource.postDramasBookmark(
-                dramaInfoSlug, episode
-            )
-        }
-    }
-
-    suspend fun deleteAccountsDramasSlugEpisodeBookmark(
-        dramaInfoSlug: String,
-        episode: String
-    ): ApiCallResultWrapper<Response<Unit>> {
-        return safeApiCall(Dispatchers.IO) {
-            dramasBookmarkRemoteDataSource.deleteDramasBookmark(
-                dramaInfoSlug, episode
-            )
-        }
-    }
 }

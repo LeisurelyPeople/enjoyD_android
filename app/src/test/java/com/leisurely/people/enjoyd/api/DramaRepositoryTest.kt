@@ -155,7 +155,7 @@ class DramaRepositoryTest : AndroidBaseTest() {
     @Test
     fun dramasBookmarkPostDeleteTest() = runBlocking {
         try {
-            authApi.postAccountsDramasSlugEpisodeBookmark("manjjijnamnyeo", "1")
+            authApi.postDramasBookmark("manjjijnamnyeo", "1")
             Assert.assertTrue(true)
 
             authApi.deleteDramasBookmark("manjjijnamnyeo", "1")
