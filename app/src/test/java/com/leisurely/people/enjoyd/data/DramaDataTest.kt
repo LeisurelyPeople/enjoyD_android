@@ -94,27 +94,6 @@ class DramaDataTest : AndroidBaseTest() {
         Assert.assertEquals(fullData.writer, "최요지")
     }
 
-    /** 드라마 정보 검색 API [dramaInfoSearch] 데이터 파싱이 정상적으로 이루어지는지 확인한다. */
-    @Test
-    fun dramasInfoSearchTest() {
-        // GIVEN1 : 문자열화된 json 데이터 (완벽한 데이터)
-        val fullJsonArray = """[
-            {
-                "id": 2,
-                "title": "소녀의 세계",
-                "poster": "http://www.naver.com"
-            }
-        ]""".trimIndent().asJsonArray
-
-        // WHEN1 : 문자열 json 데이터를 파싱한다.
-        val fullData = DramasSearchResponseItem.serializer().list.parseArray(fullJsonArray)
-
-        // THEN1 : 문자열 json 데이터와 객체 데이터가 정상적으로 매치되어야 한다.
-        Assert.assertEquals(fullData[0].id, 2)
-        Assert.assertEquals(fullData[0].title, "소녀의 세계")
-        Assert.assertEquals(fullData[0].poster, "http://www.naver.com")
-    }
-
     /** 드라마 정보 배너 API [getDramasInfoBanner] 데이터 파싱이 정상적으로 이루어지는지 확인한다.*/
     @Test
     fun dramasInfoBannerTest() {
