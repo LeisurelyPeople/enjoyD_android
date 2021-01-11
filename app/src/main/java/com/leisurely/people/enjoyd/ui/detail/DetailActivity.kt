@@ -30,9 +30,11 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>(
     private fun initLayout() {
         val otherAdapter = DetailOtherAdapter(viewModel.onBookmarkAction)
         rv_others.adapter = otherAdapter
+        rv_others.isNestedScrollingEnabled = false
 
         val relAdapter = DetailRelAdapter()
         rv_rels.adapter = relAdapter
+        rv_rels.isNestedScrollingEnabled = false
 
         val videoId = intent.getStringExtra(EXTRA_VIDEO_ID) ?: ""
 
