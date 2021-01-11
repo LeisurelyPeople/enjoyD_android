@@ -1,11 +1,13 @@
 package com.leisurely.people.enjoyd.ui.detail
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.leisurely.people.enjoyd.data.remote.data.response.*
 import com.leisurely.people.enjoyd.data.repository.DramaRepository
 import com.leisurely.people.enjoyd.data.repository.DramasBookmarkRepository
+import com.leisurely.people.enjoyd.model.detail.ShareDrama
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
 import com.leisurely.people.enjoyd.util.coroutine.CoroutineKey
 import com.leisurely.people.enjoyd.util.coroutine.onError
@@ -20,6 +22,7 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.net.URL
 
 /**
  * 상세 화면의 ViewModel
@@ -63,6 +66,11 @@ class DetailViewModel(
     private val _rels: MutableLiveData<List<DramasSlugRelatedSearchResponseItem>> =
         MutableLiveData()
     var rels: LiveData<List<DramasSlugRelatedSearchResponseItem>> = _rels
+
+    // 공유할 드라마 정보
+    private val _shareDrama: MutableLiveData<ShareDrama?> = MutableLiveData()
+    var shareDrama: LiveData<ShareDrama?> = _shareDrama
+
 
     val onBookmarkAction: (Boolean, String, String, () -> Unit) -> Unit =
         { newEnabled, slug, episode, failAction ->
@@ -181,5 +189,23 @@ class DetailViewModel(
                     liveToastMessage.value = "북마크를 해제했습니다."
                 }
             }
+    }
+
+    /** 공유 버튼을 클릭할 시 동작하는 메서드 */
+    fun shareBtnClick() {
+        _shareDrama.value = try {
+            ShareDrama(
+                title = title.value!!,
+                writer = writer.value!!,
+                poster = poster.value!!,
+                summary = summary.value!!,
+                avgRating = avgRating.value!!,
+                others = others.value!!,
+                rels = rels.value!!
+            )
+        } catch (throwable: Throwable) {
+            Log.e(this::class.java.canonicalName, "shareBtnClick() error", throwable)
+            null
+        }
     }
 }
