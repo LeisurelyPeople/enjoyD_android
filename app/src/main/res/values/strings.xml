@@ -50,6 +50,8 @@
 
     <!-- 상세 (common) -->
     <string name="detail_avg_rating">%.1f</string>
+    <string name="detail_other_title">다른 회차 둘러보기</string>
+    <string name="detail_rel_title">연관 드라마</string>
 
     <!-- 에러 관련 -->
     <string name="network_disconnected_notice">네트워크 상태를 확인해주세요.</string>

@@ -20,7 +20,7 @@
         android:orientation="vertical"
         android:padding="6dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/other_poster"
             android:layout_width="146dp"
             android:layout_height="97dp"
