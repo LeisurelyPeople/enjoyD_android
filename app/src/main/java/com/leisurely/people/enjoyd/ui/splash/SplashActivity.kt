@@ -1,7 +1,6 @@
 package com.leisurely.people.enjoyd.ui.splash
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -11,6 +10,8 @@ import com.leisurely.people.enjoyd.databinding.ActivitySplashBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
 import com.leisurely.people.enjoyd.ui.login.LoginActivity
 import com.leisurely.people.enjoyd.ui.main.MainActivity
+import com.leisurely.people.enjoyd.util.Constant.Companion.EXTRA_KAKAO_LINK_VIDEO_ID
+import com.leisurely.people.enjoyd.util.Constant.Companion.KAKAO_LINK_SLUG
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -47,7 +48,13 @@ class SplashActivity :
             })
 
             startMain.observe(this@SplashActivity, Observer {
-                setIntentHandler(MainActivity.getIntent(this@SplashActivity))
+                setIntentHandler(MainActivity.getIntent(this@SplashActivity).apply {
+                    if (intent.action == Intent.ACTION_VIEW) {
+                        intent.data?.getQueryParameter(KAKAO_LINK_SLUG)?.let {
+                            putExtra(EXTRA_KAKAO_LINK_VIDEO_ID, it)
+                        }
+                    }
+                })
             })
         }
     }

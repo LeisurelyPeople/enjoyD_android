@@ -16,6 +16,19 @@ import com.leisurely.people.enjoyd.R
  */
 
 /** Url imageView */
+@BindingAdapter("imgUrlRound")
+fun ImageView.loadRoundedImageUrl(url: String?) {
+    val cornerRadius = context.resources.getDimensionPixelSize(R.dimen.detail_rel_other_radius)
+
+    Glide.with(this)
+        .load(url)
+        .error(R.drawable.img_poster_empty)
+        .apply(RequestOptions.bitmapTransform(RoundedCorners(cornerRadius)))
+        .transition(GenericTransitionOptions.with(R.anim.fragment_fade_enter))
+        .into(this)
+}
+
+/** Url imageView */
 @BindingAdapter(value = ["imgUrl", "imgRadius"], requireAll = false)
 fun ImageView.bindImageUrl(url: String?, radius: Float = 0F) {
     url?.let {

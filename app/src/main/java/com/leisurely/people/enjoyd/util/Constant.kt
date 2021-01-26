@@ -23,6 +23,8 @@ interface Constant {
         // Intent
         const val EXTRA_SIGN_UP_REQUEST = "EXTRA_SIGN_UP_REQUEST"
         const val EXTRA_SOCIAL_LOGIN_INFO = "EXTRA_SOCIAL_LOGIN_INFO"
+        const val EXTRA_VIDEO_ID = "EXTRA_VIDEO_ID"
+        const val EXTRA_KAKAO_LINK_VIDEO_ID = "EXTRA_KAKAO_LINK_VIDEO_ID"
 
         // SharedPreferences
         const val PREF_NAME = "ENJOY_D_PREF"
@@ -36,6 +38,9 @@ interface Constant {
 
         // Fragment Tag
         const val FRAGMENT_TAG_PROGRESS_BAR_DIALOG = "FRAGMENT_TAG_PROGRESS_BAR_DIALOG"
+        
+        // 카카오에서 쓰이는 상수값
+        const val KAKAO_LINK_SLUG = "KAKAO_LINK_SLUG"
 
         // 기타
         // 지금 실행되는 코드가 Unit Test 인지 확인하는 flag

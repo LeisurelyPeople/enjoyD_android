@@ -98,6 +98,17 @@ abstract class BaseRVAdapter<T>(
         }
     }
 
+    /** 리스트 특정 위치 아이템 수정 */
+    fun replace(prevItem: T?, newItem: T?) {
+        val position = this.items.indexOf(prevItem)
+        this.items.run {
+            newItem?.let {
+                this[position] = newItem
+                notifyItemChanged(position)
+            }
+        }
+    }
+
     /** 원하는 아이템 제거 */
     fun remove(item: T?) {
         val position = this.items.indexOf(item)

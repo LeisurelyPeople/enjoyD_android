@@ -1,11 +1,14 @@
 package com.leisurely.people.enjoyd.ui.search.header
 
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView.OnEditorActionListener
 import com.leisurely.people.enjoyd.ui.search.SearchActivity
 import com.leisurely.people.enjoyd.ui.search.SearchViewModel
 import com.leisurely.people.enjoyd.util.ext.hideKeyboard
 import com.leisurely.people.enjoyd.util.ext.setOnSingleClickListener
 import kotlinx.android.synthetic.main.layout_search_header.view.*
+
 
 /**
  * 검색화면 헤더 레이아웃 (검색 바)
@@ -22,6 +25,15 @@ class SearchHeaderLayout(activity: SearchActivity, layout: View, vm: SearchViewM
             btn_back.setOnSingleClickListener {
                 layout.hideKeyboard()
             }
+
+            et_query.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    btn_search.performClick()
+                    layout.hideKeyboard()
+                    return@OnEditorActionListener true
+                }
+                false
+            })
         }
     }
 

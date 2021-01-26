@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugEpisodesResponseItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="161dp"
+        android:layout_height="wrap_content"
+        android:background="@color/color_grey_500"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="6dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/other_poster"
+            android:layout_width="146dp"
+            android:layout_height="97dp"
+            android:scaleType="fitXY"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:imgUrlRound="@{item.defaultThumbnail}"
+            tools:src="@drawable/dummy_detail_other_poster" />
+
+        <TextView
+            android:id="@+id/other_title_episode"
+            android:layout_width="146dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:ellipsize="marquee"
+            android:lineSpacingExtra="6sp"
+            android:singleLine="true"
+            android:textColor="@color/color_grey_0"
+            android:textSize="14sp"
+            app:detailOtherEpisode="@{item.episode}"
+            app:detailOtherTitle="@{item.episodeTitle}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/other_poster"
+            tools:text="최고의 선물 EP.01" />
+
+        <TextView
+            android:id="@+id/rel_episode_entire"
+            android:layout_width="146dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lineSpacingExtra="6sp"
+            android:singleLine="true"
+            android:text="@{item.episodeTitle}"
+            android:textColor="@color/color_grey_0"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/other_title_episode"
+            tools:text="굳세어라 청춘" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/other_bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:src="@drawable/selector_bookmark_bt"
+            app:detailOtherSelected="@{item.isBookmark}"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/icon_bookmark_selected" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

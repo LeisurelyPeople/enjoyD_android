@@ -6,4 +6,4 @@ package com.leisurely.people.enjoyd.data.remote.data.response
  * @author ricky
  * @since v1.0.0 / 2020.09.08
  */
-class DramasSearchResponse : ArrayList<DramasSearchResponseItem>()
+class DramasSearchGetResponse : ArrayList<DramasSearchResponseItem>()

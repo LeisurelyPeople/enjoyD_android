@@ -2,6 +2,7 @@ package com.leisurely.people.enjoyd.di
 
 import com.leisurely.people.enjoyd.ui.login.LoginViewModel
 import com.leisurely.people.enjoyd.model.login.SocialLoginModel
+import com.leisurely.people.enjoyd.ui.detail.DetailViewModel
 import com.leisurely.people.enjoyd.ui.login.sociallogin.KakaoLogin
 import com.leisurely.people.enjoyd.ui.main.MainViewModel
 import com.leisurely.people.enjoyd.ui.main.evaluation.EvaluationViewModel
@@ -13,6 +14,7 @@ import com.leisurely.people.enjoyd.ui.onboarding.SummaryEvaluationViewModel
 import com.leisurely.people.enjoyd.ui.onboarding.UserInfoInputViewModel
 import com.leisurely.people.enjoyd.ui.search.SearchViewModel
 import com.leisurely.people.enjoyd.ui.splash.SplashViewModel
+import com.leisurely.people.enjoyd.ui.video.VideoViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -40,4 +42,6 @@ val viewModelModule = module {
         UserInfoInputViewModel(socialLoginModel, get())
     }
     viewModel { SummaryEvaluationViewModel(get()) }
+    viewModel { DetailViewModel(get(), get()) }
+    viewModel { VideoViewModel() }
 }

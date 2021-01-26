@@ -1,8 +1,8 @@
 package com.leisurely.people.enjoyd.ui.search.searchResult
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.DiffUtil
@@ -10,6 +10,9 @@ import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchRespons
 import com.leisurely.people.enjoyd.databinding.ItemSearchResultBinding
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseItemVH
 import com.leisurely.people.enjoyd.ui.base.adapter.BaseListAdapter
+import com.leisurely.people.enjoyd.ui.detail.DetailActivity
+import com.leisurely.people.enjoyd.util.Constant
+import com.leisurely.people.enjoyd.util.ext.setOnSingleClickListener
 
 /**
  * 검색 결과를 보여줄 때 사용되는 List 의 어뎁터
@@ -23,7 +26,7 @@ class SearchResultAdapter : BaseListAdapter<DramasSearchResponseItem>(
             oldItem: DramasSearchResponseItem,
             newItem: DramasSearchResponseItem
         ): Boolean {
-            return oldItem.id == newItem.id // check uniqueness
+            return oldItem.slug == newItem.slug // check uniqueness
         }
 
         override fun areContentsTheSame(
@@ -46,8 +49,12 @@ class SearchResultAdapter : BaseListAdapter<DramasSearchResponseItem>(
         return ItemSearchResultBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         ).apply {
-            root.setOnClickListener {
-                Toast.makeText(it.context, searchResult?.title, Toast.LENGTH_SHORT).show()
+            root.setOnSingleClickListener {
+                val item = this.searchResult
+                parent.context.startActivity(
+                    Intent(parent.context, DetailActivity::class.java).apply {
+                        putExtra(Constant.EXTRA_VIDEO_ID, item?.slug ?: "")
+                    })
             }
         }
     }

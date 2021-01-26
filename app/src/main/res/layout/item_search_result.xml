@@ -13,15 +13,16 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp"
         android:layout_marginTop="8dp"
-        android:layout_marginRight="6dp"
-        android:layout_marginBottom="8dp">
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="8dp"
+        android:foreground="?android:attr/selectableItemBackground">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#212224"
+            android:background="@color/color_grey_300"
             android:paddingBottom="8dp">
 
             <!-- 검색 결과 아이템 이미지 -->
@@ -30,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:scaleType="fitXY"
-                app:imgUrl="@{searchResult.poster}"
+                app:imgUrl="@{searchResult.thumbnail}"
                 app:layout_constraintDimensionRatio="H, 5:3"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -46,24 +47,24 @@
                 android:layout_marginTop="6dp"
                 android:lineSpacingExtra="6sp"
                 android:text="@{searchResult.title}"
-                android:textColor="#a1a1a1"
+                android:textColor="@color/color_grey_050"
                 android:textSize="14sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_result_poster"
                 tools:text="오늘부터 하모니" />
 
-            <!-- 검색 결과 아이템 설명 -->
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/search_result_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:lineSpacingExtra="6sp"
-                android:textColor="#ffffff"
-                android:textSize="14sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/search_result_title"
-                tools:text="[EP.04] 우연이 운명 … " />
+            <!--            &lt;!&ndash; 검색 결과 아이템 설명 &ndash;&gt;-->
+            <!--            <androidx.appcompat.widget.AppCompatTextView-->
+            <!--                android:id="@+id/search_result_description"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="8dp"-->
+            <!--                android:lineSpacingExtra="6sp"-->
+            <!--                android:textColor="#ffffff"-->
+            <!--                android:textSize="14sp"-->
+            <!--                app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/search_result_title"-->
+            <!--                tools:text="[EP.04] 우연이 운명 … " />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

@@ -1,24 +1,30 @@
 package com.leisurely.people.enjoyd.data.remote.data.response
 
+import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * 자세한 드라마 정보 리스트 API (/dramas/{drama_info_slug}) 응답 데이터 구조
+ * 드라마정보 디테일 API (/dramas/{drama_info_slug}) 응답 데이터 구조
  *
  * @author ricky
  * @since v1.0.0 / 2020.07.12
  */
 @Serializable
-data class DramasSlugResponse(
-    val pk: Int,
+data class DramasSlugGetResponse(
+    val slug: String,
 
     val poster: String,
 
     val title: String,
 
+    @SerializedName("avg_rating")
     @SerialName("avg_rating")
-    val avgRating: Int,
+    val avgRating: Float,
+
+    @SerializedName("release_year")
+    @SerialName("release_year")
+    val releaseYear: Int,
 
     val summary: String,
 
@@ -26,7 +32,5 @@ data class DramasSlugResponse(
 
     val cast: List<String>,
 
-    val director: String,
-
-    val dramas: List<DramasSlugResponseItem>
+    val writer: String
 )

@@ -2,6 +2,8 @@
     <string name="app_name">enjoyD</string>
 
     <string name="kakao_app_key">78cddb09932cc648839f9f20cccdd872</string>
+    <string name="kakao_scheme">kakao78cddb09932cc648839f9f20cccdd872</string>
+    <string name="kakaolink_host">kakaolink</string>
 
     <string name="kakao_login_title">Kakaotalk 계정으로 로그인하기</string>
 
@@ -47,6 +49,13 @@
     <string name="inquire_edit_text_hint">보고싶은 웹 드라마를 요청해보세요.</string>
     <string name="send_feedback">등록</string>
     <string name="first_tab_title_format">찜한/목록  %d</string>
+
+    <!-- 상세 (common) -->
+    <string name="detail_avg_rating">%.1f</string>
+    <string name="detail_other_title">다른 회차 둘러보기</string>
+    <string name="detail_rel_title">연관 드라마</string>
+    <string name="detail_share_image_upload_fail">공유할 이미지가 없거나 업로드를 실패하였습니다.</string>
+    <string name="detail_share_fail">공유를 실패하였습니다.</string>
 
     <!-- 에러 관련 -->
     <string name="network_disconnected_notice">네트워크 상태를 확인해주세요.</string>

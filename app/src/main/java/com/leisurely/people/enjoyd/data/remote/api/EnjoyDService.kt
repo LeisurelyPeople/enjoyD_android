@@ -2,17 +2,15 @@ package com.leisurely.people.enjoyd.data.remote.api
 
 import com.leisurely.people.enjoyd.data.remote.data.PagingResponse
 import com.leisurely.people.enjoyd.data.remote.data.request.evaluation.DramaEvaluationRequest
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasItemResponse
+import com.leisurely.people.enjoyd.data.remote.data.response.*
 import com.leisurely.people.enjoyd.data.remote.data.response.evaluation.DramaEvaluationResponse
-import io.reactivex.Completable
-import io.reactivex.Single
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.DramasSearchResponse
-import com.leisurely.people.enjoyd.data.remote.data.response.UserResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasBannerResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasTagsResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.home.DramasWatchingResponse
 import com.leisurely.people.enjoyd.data.remote.data.response.mypage.DramasBookmarkResponse
+import io.reactivex.Completable
+import io.reactivex.Single
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -62,18 +60,34 @@ interface EnjoyDService {
         @Query("page_size") pageSize: Int
     ): PagingResponse<DramasItemResponse>
 
-    /** 자세한 드라마 정보 리스트 API (/dramas/{drama_info_slug}) */
+    /** 드라마정보 디테일 API (/dramas/{drama_info_slug}) */
     @GET("/dramas/{drama_info_slug}/")
     fun getDramasSlug(
         @Path("drama_info_slug") dramaInfoSlug: String
-    ): Single<DramasSlugResponse>
+    ): Single<DramasSlugGetResponse>
+
+    /** 해당 드라마의 에피소드 목록 API (/dramas/{drama_info_slug}/episodes}) */
+    @GET("/dramas/{drama_info_slug}/episodes/")
+    fun getDramasSlugEpisodes(
+        @Path("drama_info_slug") dramaInfoSlug: String
+    ): Single<DramasSlugEpisodesResponse>
+
+    /** 해당 드라마의 연관 드라마 목록 API (/dramas/{drama_info_slug}/related/search) */
+    @GET("/dramas/{drama_info_slug}/related/search/")
+    fun getDramasSlugRelatedSearch(
+        @Path("drama_info_slug") dramaInfoSlug: String
+    ): Single<DramasSlugRelatedSearchResponse>
 
     /** 드라마 정보 검색 API (/dramas/search) */
     @GET("/dramas/search/")
     fun getDramasSearch(
         @Query("search") search: String?,
         @Query("order") order: String = "avg_rating"
-    ): Single<DramasSearchResponse>
+    ): Single<DramasSearchGetResponse>
+
+    /** 태그 리스트 API (/dramas/tag/) */
+    @GET("/dramas/tag/")
+    fun getDramasTag(): Single<DramaTagGetResponse>
 
     /** 드라마 배너 조회 API (/drmas/banner/) */
     @GET("/dramas/banner/")
@@ -95,6 +109,14 @@ interface EnjoyDService {
         @Query("page_size") pageSize: Int
     ): PagingResponse<DramasBookmarkResponse>
 
+    /** 북마크 등록 API */
+    @POST("/accounts/dramas/{drama_info_slug}/episodes/{episode}/bookmark/")
+    suspend fun postDramasBookmark(
+        @Path("drama_info_slug") dramaInfoSlug: String,
+        @Path("episode") episode: String
+    ): ResponseBody
+
+    /** 북마크 해제 API */
     @DELETE("/accounts/dramas/{drama_info_slug}/episodes/{episode}/bookmark/")
     suspend fun deleteDramasBookmark(
         @Path("drama_info_slug") dramaInfoSlug: String,

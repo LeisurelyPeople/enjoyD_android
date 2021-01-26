@@ -10,5 +10,7 @@ package com.leisurely.people.enjoyd.util.coroutine
  */
 object CoroutineKey {
     const val SEARCH_CLICK_SEARCH_BTN = "SEARCH_CLICK_SEARCH_BTN"   // 검색 화면에서, 서치 버튼 (돋보기 버튼)을 누른다.
+
+    const val DETAIL_GET_DRAMAS_SLUG = "DETAIL_GET_DRAMAS_SLUG"   // 상세 화면에서, 드라마 상세 아이템 정보를 가져온다.
 }
 // @formatter:on

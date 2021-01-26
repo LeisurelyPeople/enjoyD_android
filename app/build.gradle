@@ -112,4 +112,12 @@ dependencies {
 
     // social login
     implementation group: 'com.kakao.sdk', name: 'usermgmt', version: '1.29.0'
+
+    // kakao link
+    implementation group: 'com.kakao.sdk', name: 'kakaolink', version: '1.29.0'
+
+    // youtube player view api
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
+    implementation 'com.google.android.exoplayer:exoplayer:2.9.0'
+    implementation 'com.github.HaarigerHarald:android-youtubeExtractor:master-SNAPSHOT'
 }

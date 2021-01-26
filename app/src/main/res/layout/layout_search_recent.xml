@@ -14,7 +14,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/color_grey_350">
 
         <!-- 보여줄 최근 검색어 아이템이 없을 때 띄워주는 레이아웃 -->
         <include
@@ -44,7 +45,7 @@
                 android:paddingTop="6dp"
                 android:paddingBottom="6dp"
                 android:text="최근 검색어"
-                android:textColor="#a1a1a1"
+                android:textColor="@color/color_grey_050"
                 android:textSize="14sp" />
 
             <androidx.recyclerview.widget.RecyclerView

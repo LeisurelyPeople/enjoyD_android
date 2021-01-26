@@ -25,7 +25,7 @@
             android:lineSpacingExtra="6sp"
             android:paddingLeft="16dp"
             android:text="@{recent.title}"
-            android:textColor="#a1a1a1"
+            android:textColor="@color/color_grey_050"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

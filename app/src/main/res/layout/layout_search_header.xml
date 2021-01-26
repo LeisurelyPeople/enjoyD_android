@@ -48,6 +48,7 @@
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="검색어를 입력해주세요."
+                android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:singleLine="true"
                 android:text="@={vm.query}"

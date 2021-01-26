@@ -1,5 +1,6 @@
 package com.leisurely.people.enjoyd.ui.main.home
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
@@ -13,7 +14,11 @@ import com.leisurely.people.enjoyd.databinding.FragmentHomeBinding
 import com.leisurely.people.enjoyd.ui.base.BaseFragment
 import com.leisurely.people.enjoyd.ui.common.adapter.DramaListAdapter
 import com.leisurely.people.enjoyd.ui.common.adapter.DramaTagsListAdapter
+import com.leisurely.people.enjoyd.ui.detail.DetailActivity
 import com.leisurely.people.enjoyd.ui.main.home.adapter.*
+import com.leisurely.people.enjoyd.ui.search.SearchActivity
+import com.leisurely.people.enjoyd.ui.video.VideoActivity
+import com.leisurely.people.enjoyd.util.Constant.Companion.EXTRA_VIDEO_ID
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -45,8 +50,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     /** 홈화면 시청중인 드라마 리스트 UI를 보여주기 위한 Child Adapter */
     private val homeChildDramasWatchingListAdapter by lazy {
         HomeChildDramasWatchingListAdapter {
-            // TODO 유튜브 플레이어로 바로 열어주기 (담당자 : ricky)
-            Toast.makeText(requireContext(), it.episodeTitle, Toast.LENGTH_SHORT).show()
+            startActivity(Intent(activity, VideoActivity::class.java).apply {
+                putExtra(EXTRA_VIDEO_ID, it.slug)
+            })
         }
     }
 
@@ -76,8 +82,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
     /** 홈화면 드라마 리스트 UI를 보여주기 위한 child Adapter */
     private val homeChildDramaListAdapter by lazy {
         DramaListAdapter {
-            // TODO 드라마 상세 화면을 연결 작업 하는 곳 (담당자 : ricky)
-            Toast.makeText(requireContext(), it.poster, Toast.LENGTH_SHORT).show()
+            startActivity(Intent(activity, DetailActivity::class.java).apply {
+                putExtra(EXTRA_VIDEO_ID, it.slug)
+            })
         }
     }
 
@@ -114,7 +121,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
         /** 검색 화면 이동 여부 observer */
         viewModel.startSearchPage.observe(viewLifecycleOwner, Observer {
-            // TODO 검색 화면으로 연결 작업 하는 곳 (담당장 : ricky)
+            startActivity(Intent(activity, SearchActivity::class.java))
         })
 
         /** 드라마 배너 데이터 observe */

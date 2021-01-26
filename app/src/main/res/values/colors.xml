@@ -3,6 +3,7 @@
     <color name="colorPrimary">#6E47FF</color>
     <color name="colorPrimaryDark">#171819</color>
     <color name="colorAccent">#d21762</color>
+    <color name="transparent">#00FFFFFF</color>
 
     <color name="color_grey_0">#FFFFFF</color>
     <color name="color_grey_050">#A1A1A1</color>
@@ -28,8 +29,6 @@
     <color name="color_app_background">#212121</color>
 
     <color name="color_black">#000000</color>
-
-    <color name="layout_search_background">#212121</color>
 
     <color name="layout_search_header_background">#212121</color>
     <color name="layout_search_header_et_normal">#141516</color>

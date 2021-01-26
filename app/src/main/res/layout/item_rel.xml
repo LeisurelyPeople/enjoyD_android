@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugRelatedSearchResponseItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="161dp"
+        android:layout_height="wrap_content"
+        android:background="@color/color_grey_500"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="6dp">
+
+        <ImageView
+            android:id="@+id/rel_poster"
+            android:layout_width="146dp"
+            android:layout_height="97dp"
+            android:scaleType="fitXY"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:imgUrlRound="@{item.thumbnail}"
+            tools:src="@drawable/dummy_detail_other_poster" />
+
+        <TextView
+            android:id="@+id/rel_title"
+            android:layout_width="149dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:ellipsize="marquee"
+            android:lineSpacingExtra="6sp"
+            android:singleLine="true"
+            android:text="@{item.title}"
+            android:textColor="@color/color_grey_0"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rel_poster"
+            tools:text="두개의 빛" />
+
+<!--        <ImageView-->
+<!--            android:id="@+id/rel_bookmark"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:padding="4dp"-->
+<!--            android:src="@drawable/selector_bookmark_bt"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            tools:src="@drawable/icon_bookmark_selected" />-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
