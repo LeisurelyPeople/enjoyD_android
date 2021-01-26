@@ -11,6 +11,7 @@ import com.kakao.network.storage.ImageUploadResponse
 import com.leisurely.people.enjoyd.model.detail.ShareDrama
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
 import com.leisurely.people.enjoyd.ui.base.BaseViewModel
+import com.leisurely.people.enjoyd.util.Constant.Companion.KAKAO_LINK_SLUG
 import java.net.URL
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -28,16 +29,22 @@ import kotlin.coroutines.suspendCoroutine
  *
  * @param sharedDrama 피드 템플릿에 들어갈 드라마 데이터 정보
  */
-fun generateMessage(sharedDrama: ShareDrama): TemplateParams = FeedTemplate.newBuilder(
-    ContentObject.newBuilder(
-        sharedDrama.title,
-        sharedDrama.poster,
-        LinkObject.newBuilder()
-            .setWebUrl("")
-            .setMobileWebUrl("")
-            .build()
-    ).setDescrption("감독 : ${sharedDrama.writer}, 평점 : ${sharedDrama.avgRating}").build()
-).build()
+fun generateMessage(sharedDrama: ShareDrama): TemplateParams = FeedTemplate
+    .newBuilder(
+        ContentObject.newBuilder(
+            sharedDrama.title,
+            sharedDrama.poster,
+            LinkObject.newBuilder().build()
+        ).setDescrption("감독 : ${sharedDrama.writer}, 평점 : ${sharedDrama.avgRating}").build()
+    ).addButton(
+        ButtonObject(
+            "앱에서 보기",
+            LinkObject.newBuilder()
+                .setAndroidExecutionParams("$KAKAO_LINK_SLUG=${sharedDrama.slug}")
+                .setIosExecutionParams("$KAKAO_LINK_SLUG=${sharedDrama.slug}")
+                .build()
+        )
+    ).build()
 
 /**
  * 카카오톡으로 만든 피드 템플릿 [TemplateParams] 을 전송한다.

@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">enjoyD</string>
 
-    <string name="kakao_app_key_scheme">kakao78cddb09932cc648839f9f20cccdd872</string>
     <string name="kakao_app_key">78cddb09932cc648839f9f20cccdd872</string>
+    <string name="kakao_scheme">kakao78cddb09932cc648839f9f20cccdd872</string>
+    <string name="kakaolink_host">kakaolink</string>
 
     <string name="kakao_login_title">Kakaotalk 계정으로 로그인하기</string>
 

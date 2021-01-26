@@ -39,6 +39,10 @@ class DetailViewModel(
     val startBackScreen: LiveEvent<Unit> = _startBackScreen
 
     // 상단 actionBar 제목
+    private val _slug: MutableLiveData<String> = MutableLiveData()
+    var slug: LiveData<String> = _slug
+
+    // 상단 actionBar 제목
     private val _title: MutableLiveData<String> = MutableLiveData()
     var title: LiveData<String> = _title
 
@@ -85,6 +89,8 @@ class DetailViewModel(
     }
 
     init {
+        _slug.value = ""
+
         _title.value = ""
 
         _others.value = listOf()
@@ -101,6 +107,7 @@ class DetailViewModel(
                 .applySingleSchedulers()
                 .subscribeWith(object : DisposableSingleObserver<DramasSlugGetResponse>() {
                     override fun onSuccess(detailDrama: DramasSlugGetResponse) {
+                        _slug.value = detailDrama.slug
                         _title.value = detailDrama.title
                         _writer.value = detailDrama.writer
                         _poster.value = detailDrama.poster
@@ -110,6 +117,7 @@ class DetailViewModel(
 
                     override fun onError(e: Throwable) {
                         super.onError(e)
+                        _slug.value = ""
                         _title.value = "일치하는 데이터를 찾을 수 없습니다."
                         _writer.value = ""
                         _poster.value = ""
@@ -195,6 +203,7 @@ class DetailViewModel(
     fun shareBtnClick() {
         _shareDrama.value = try {
             ShareDrama(
+                slug = slug.value!!,
                 title = title.value!!,
                 writer = writer.value!!,
                 poster = poster.value!!,

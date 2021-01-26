@@ -7,9 +7,12 @@ import androidx.fragment.app.Fragment
 import com.leisurely.people.enjoyd.R
 import com.leisurely.people.enjoyd.databinding.ActivityMainBinding
 import com.leisurely.people.enjoyd.ui.base.BaseActivity
+import com.leisurely.people.enjoyd.ui.detail.DetailActivity
 import com.leisurely.people.enjoyd.ui.main.evaluation.EvaluationFragment
 import com.leisurely.people.enjoyd.ui.main.home.HomeFragment
 import com.leisurely.people.enjoyd.ui.main.mypage.MyPageFragment
+import com.leisurely.people.enjoyd.util.Constant
+import com.leisurely.people.enjoyd.util.Constant.Companion.EXTRA_KAKAO_LINK_VIDEO_ID
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.activity_main) {
@@ -26,6 +29,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         super.onCreate(savedInstanceState)
         setBottomNavigation()
         setViewPager()
+        checkKakaoLinkSlug()
     }
 
     override fun onBackPressed() {
@@ -34,6 +38,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
             return
         }
         super.onBackPressed()
+    }
+
+    /** 카카오로부터 유입된 slug 내용이 있는지 확인한다. 있다면 해당 내용을 기반으로 상세 화면으로 이동한다. */
+    private fun checkKakaoLinkSlug() {
+        val deepLinkSlug = intent.getStringExtra(EXTRA_KAKAO_LINK_VIDEO_ID) ?: ""
+        if (deepLinkSlug.isNotEmpty()) {
+            startActivity(Intent(this, DetailActivity::class.java)
+                .apply { putExtra(Constant.EXTRA_VIDEO_ID, deepLinkSlug) })
+        }
     }
 
     private fun setBottomNavigation() {

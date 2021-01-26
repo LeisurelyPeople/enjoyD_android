@@ -6,6 +6,7 @@ import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugRelatedSe
 /**
  * 공유할 때 사용하는 드라마 데이터 클래스
  *
+ * @param slug 영화 id
  * @param title 영화 제목
  * @param writer 감독
  * @param poster 포스터 URL
@@ -18,6 +19,7 @@ import com.leisurely.people.enjoyd.data.remote.data.response.DramasSlugRelatedSe
  * @since v1.0.0 / 2021.01.12
  */
 data class ShareDrama(
+    val slug: String,
     val title: String,
     val writer: String,
     val poster: String,
